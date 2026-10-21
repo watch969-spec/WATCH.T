@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Admin Dashboard | WATCH.T</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #c9a24a;
+      --gold-light: #e2c477;
+      --ink: #0a0a0a;
+      --panel: #141414;
+      --panel-light: #1a1a1a;
+      --border: #2a2a2a;
+      --border-light: #333;
+      --muted: #8a8a8a;
+      --white: #f5f5f5;
+      --success: #2e7d32;
+      --danger: #c62828;
+    }
+    body {
+      background: #0a0a0a;
+      color: var(--white);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input, select, textarea { font-family: inherit; font-size: inherit; }
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* LOGIN */
+    .login-gate {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #0a0a0a;
+    }
+    .login-gate-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 40px;
+      text-align: center;
+    }
+    .login-gate-card h1 {
+      color: var(--gold);
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    .login-gate-card p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+    .login-gate-card form { text-align: left; }
+    .login-gate-card .field { margin-bottom: 16px; }
+    .login-gate-card .field label {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .login-gate-card .field input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0d0d0d;
+      color: var(--white);
+      border: 1px solid var(--border);
+      outline: none;
+      transition: border-color .3s;
+    }
+    .login-gate-card .field input:focus { border-color: var(--gold); }
+    .login-gate-card .btn { width: 100%; padding: 16px; }
+    .login-gate-message {
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      display: none;
+    }
+    .login-gate-message.error {
+      background: #3a1717;
+      color: #ffb5b5;
+      border-left: 3px solid var(--danger);
+      display: block;
+    }
+
+    /* LAYOUT */
+    .layout { display: flex; min-height: 100vh; }
+    aside {
+      width: 250px;
+      background: #050505;
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .logo {
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 0 24px 28px;
+    }
+    .logo span { color: var(--white); font-style: italic; font-weight: 500; }
+    .nav-title {
+      color: #555;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 16px 24px 8px;
+      font-weight: 600;
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      padding: 12px 24px;
+      color: #999;
+      background: transparent;
+      border: 0;
+      border-left: 2px solid transparent;
+      cursor: pointer;
+      transition: all .25s;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .nav-btn:hover { background: #0f0f0f; color: var(--white); }
+    .nav-btn.active {
+      background: linear-gradient(90deg, rgba(201,162,74,.15), transparent);
+      color: var(--gold);
+      border-left-color: var(--gold);
+    }
+    .nav-btn .nav-icon { width: 18px; text-align: center; font-size: 14px; }
+    .shop-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: auto 16px 0;
+      padding: 12px 16px;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      margin-top: 24px;
+      transition: color .25s;
+    }
+    .shop-link:hover { color: var(--gold-light); }
+    main { flex: 1; min-width: 0; padding: 32px 40px; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { font-size: 32px; margin-bottom: 4px; }
+    .muted { color: var(--muted); font-size: 13px; }
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gold);
+      border: 1px solid rgba(201,162,74,.3);
+      background: rgba(201,162,74,.08);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 24px;
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold);
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    /* SECTIONS */
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn .3s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .panel-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-heading h2 {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .panel-heading h2::before {
+      content: '';
+      width: 3px;
+      height: 20px;
+      background: var(--gold);
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--ink);
+      border: 1px solid var(--gold);
+      padding: 11px 20px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .btn:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+    .btn.secondary {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border-light);
+    }
+    .btn.secondary:hover { border-color: var(--gold); color: var(--gold); }
+    .btn.danger {
+      background: rgba(198,40,40,.1);
+      color: #ff8a8a;
+      border: 1px solid rgba(198,40,40,.4);
+    }
+    .btn.danger:hover { background: rgba(198,40,40,.2); color: #ffb5b5; }
+    .btn.small { padding: 7px 12px; font-size: 10px; letter-spacing: 1px; }
+
+    /* TABLE */
+    .table-wrap { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+    th {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.02);
+    }
+    tbody tr:hover { background: rgba(255,255,255,.02); }
+
+    /* STATUS */
+    .status {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 20px;
+    }
+    .status.pending { background: #3a2a0f; color: #ffb84d; }
+    .status.confirmed { background: #0f243a; color: #64b5f6; }
+    .status.shipped { background: #2a0f3a; color: #ba68c8; }
+    .status.delivered { background: #0f3a1f; color: #66bb6a; }
+    .status.cancelled { background: #3a0f0f; color: #ef5350; }
+    .status.new { background: #0f2a3a; color: #4fc3f7; }
+
+    /* FORM */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+    .field label {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: #0d0d0d;
+      color: var(--white);
+      border: 1px solid var(--border);
+      outline: none;
+      transition: border-color .3s;
+      font-size: 13px;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--gold); }
+    .field textarea { min-height: 100px; resize: vertical; }
+    .field .hint {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* IMAGE PREVIEW */
+    .image-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .image-preview-grid img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      background: #1a1a1a;
+    }
+    .product-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      vertical-align: middle;
+      margin-right: 10px;
+      border: 1px solid var(--border);
+    }
+
+    /* FILTERS */
+    .filters-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .filter-chip {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .filter-chip:hover { border-color: var(--gold); color: var(--gold); }
+    .filter-chip.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+    .search-box {
+      padding: 12px 16px;
+      background: #0d0d0d;
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-size: 13px;
+      outline: none;
+      min-width: 240px;
+      transition: border-color .3s;
+    }
+    .search-box:focus { border-color: var(--gold); }
+
+    /* NOTICE */
+    .notice {
+      color: var(--gold-light);
+      background: rgba(201,162,74,.08);
+      border: 1px solid rgba(201,162,74,.3);
+      border-left: 3px solid var(--gold);
+      padding: 14px 18px;
+      line-height: 1.6;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    .empty {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 40px 20px;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .order-row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    /* MESSAGES */
+    .message-card {
+      padding: 20px;
+      background: #0d0d0d;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+    .message-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .message-subject { color: var(--gold); font-weight: 600; font-size: 14px; }
+    .message-body {
+      color: #ccc;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    /* SETTINGS TABS */
+    .settings-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .settings-tab {
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .settings-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .settings-panel { display: none; }
+    .settings-panel.active { display: block; }
+
+    /* BILL MODAL */
+    .bill-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .bill-overlay.active { display: flex; }
+    .bill-wrapper { width: 100%; max-width: 800px; margin: auto; }
+    .bill-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .bill-paper {
+      background: #ffffff;
+      color: #111;
+      padding: 48px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      position: relative;
+    }
+    .bill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #111;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .bill-brand h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+    .bill-brand h1 span { color: var(--gold); font-style: italic; font-weight: 500; }
+    .bill-brand p { font-size: 12px; color: #666; line-height: 1.5; }
+    .bill-title { text-align: right; }
+    .bill-title h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: #111;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+    .bill-title p { font-size: 12px; color: #666; line-height: 1.6; }
+    .bill-title p strong { color: #111; font-weight: 700; }
+    .bill-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+    .bill-info-block h3 {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .bill-info-block p { font-size: 13px; color: #111; line-height: 1.6; margin-bottom: 3px; }
+    .bill-items { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+    .bill-items thead th {
+      background: #f5f5f5;
+      color: #111;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 12px 10px;
+      text-align: left;
+      font-weight: 700;
+      border-bottom: 2px solid #111;
+    }
+    .bill-items thead th:last-child,
+    .bill-items tbody td:last-child { text-align: right; }
+    .bill-items tbody td {
+      padding: 14px 10px;
+      font-size: 13px;
+      color: #111;
+      border-bottom: 1px solid #e5e5e5;
+      vertical-align: top;
+    }
+    .bill-totals { margin-left: auto; max-width: 320px; margin-bottom: 24px; }
+    .bill-totals-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 13px;
+      color: #555;
+    }
+    .bill-totals-row.total {
+      border-top: 2px solid #111;
+      margin-top: 8px;
+      padding-top: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #111;
+    }
+    .bill-totals-row.total span:last-child {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .bill-payment-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #111;
+    }
+    .bill-payment-badge.paid {
+      background: #e8f5e9;
+      border-color: #2e7d32;
+      color: #2e7d32;
+    }
+    .bill-payment-badge.pending {
+      background: #fff3e0;
+      border-color: #e65100;
+      color: #e65100;
+    }
+    .bill-footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px dashed #ccc;
+      text-align: center;
+    }
+    .bill-footer p {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .bill-footer .thanks {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: #111;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    @media print {
+      body * { visibility: hidden; }
+      .bill-overlay,
+      .bill-overlay * { visibility: visible; }
+      .bill-overlay {
+        position: absolute;
+        inset: 0;
+        background: white;
+        padding: 0;
+        display: block;
+      }
+      .bill-actions { display: none !important; }
+      .bill-paper { box-shadow: none; padding: 20px; max-width: 100%; }
+      @page { margin: 15mm; size: A4; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1000px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      aside { width: 200px; }
+      main { padding: 24px; }
+    }
+    @media (max-width: 700px) {
+      .layout { display: block; }
+      aside {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px 0;
+      }
+      .logo { padding: 0 16px 14px; font-size: 22px; }
+      .nav-title { display: none; }
+      nav { display: flex; overflow-x: auto; gap: 0; padding: 0 8px; }
+      .nav-btn {
+        width: auto;
+        white-space: nowrap;
+        padding: 10px 14px;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+      }
+      .nav-btn.active {
+        border-left: none;
+        border-bottom-color: var(--gold);
+        background: transparent;
+      }
+      .shop-link { display: none; }
+      main { padding: 20px 14px; }
+      h1 { font-size: 26px; }
+      .panel { padding: 20px 16px; }
+      .stat-value { font-size: 28px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .bill-overlay { padding: 12px; }
+      .bill-paper { padding: 24px 20px; }
+      .bill-header { flex-direction: column; }
+      .bill-title { text-align: left; }
+      .bill-info-grid { grid-template-columns: 1fr; gap: 16px; }
+      .bill-totals { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN GATE -->
+<div class="login-gate" id="loginGate">
+  <div class="login-gate-card">
+    <h1>WATCH<span style="font-style:italic;">.T</span></h1>
+    <p>Admin Panel Access</p>
+    <div class="login-gate-message" id="loginMessage"></div>
+    <form id="loginForm">
+      <div class="field">
+        <label for="adminEmail">Email</label>
+        <input type="email" id="adminEmail" placeholder="admin@watcht.com" required>
+      </div>
+      <div class="field">
+        <label for="adminPassword">Password</label>
+        <input type="password" id="adminPassword" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn" id="loginBtn">Sign In</button>
+    </form>
+    <p style="margin-top: 20px; font-size: 11px;">
+      <a href="index.html" style="color: var(--muted);">← Back to store</a>
+    </p>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout" id="adminLayout" style="display:none;">
+
+  <aside>
+    <div class="logo">WATCH<span>.T</span></div>
+    <div class="nav-title">Management</div>
+    <nav>
+      <button class="nav-btn active" data-section="dashboard"><span class="nav-icon">◈</span> Dashboard</button>
+      <button class="nav-btn" data-section="products"><span class="nav-icon">◷</span> Products</button>
+      <button class="nav-btn" data-section="orders"><span class="nav-icon">▣</span> Orders</button>
+      <button class="nav-btn" data-section="categories"><span class="nav-icon">◆</span> Categories</button>
+      <button class="nav-btn" data-section="messages"><span class="nav-icon">✉</span> Messages</button>
+      <button class="nav-btn" data-section="settings"><span class="nav-icon">⚙</span> Site Settings</button>
+      <button class="nav-btn" data-section="sales"><span class="nav-icon">₹</span> Sales</button>
+    </nav>
+    <a class="shop-link" href="index.html" target="_blank">← Visit Store</a>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <p class="muted" id="pageSubtitle">WATCH.T store management</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <span class="admin-badge">● Admin</span>
+        <span class="muted" id="adminEmailDisplay"></span>
+        <button class="btn secondary small" id="signOutBtn">Sign Out</button>
+      </div>
+    </div>
+
+    <div class="notice" id="globalNotice">Connected to Supabase. All changes are saved live.</div>
+
+    <!-- DASHBOARD -->
+    <section class="section active" id="dashboard">
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-label">Total Products</div>
+          <div class="stat-value" id="productCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Orders</div>
+          <div class="stat-value" id="orderCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Revenue</div>
+          <div class="stat-value" id="revenue">₹0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending Orders</div>
+          <div class="stat-value" id="pendingCount">0</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading"><h2>Quick Actions</h2></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn" data-go="products">+ Add Product</button>
+          <button class="btn secondary" data-go="orders">View Orders</button>
+          <button class="btn secondary" data-go="settings">Edit Site Content</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading"><h2>Recent Orders</h2></div>
+        <div id="recentOrders" class="empty">Loading...</div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="section" id="products">
+      <div class="panel">
+        <div class="panel-heading">
+          <h2>Products (<span id="productCountInline">0</span>)</h2>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <input class="search-box" id="productSearch" placeholder="Search products...">
+            <button class="btn" id="addProductBtn">+ Add Product</button>
+          </div>
+        </div>
+
+        <form id="productForm" hidden>
+          <input type="hidden" id="editingProductId">
+          <div class="form-grid">
+            <div class="field">
+              <label>Product Name *</label>
+              <input id="productName" required placeholder="Luxury Gold Watch">
+            </div>
+            <div class="field">
+              <label>Category *</label>
+              <select id="productCategory" required>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Smart Watch">Smart Watch</option>
+                <option value="Luxury">Luxury</option>
+                <option value="Wall Clock">Wall Clock</option>
+                <option value="Accessories">Accessories</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Selling Price (₹) *</label>
+              <input id="productPrice" type="number" min="1" required placeholder="299">
+            </div>
+            <div class="field">
+              <label>Original Price (₹)</label>
+              <input id="productOldPrice" type="number" min="1" placeholder="400">
+            </div>
+            <div class="field">
+              <label>Stock *</label>
+              <input id="productStock" type="number" min="0" required placeholder="10">
+            </div>
+            <div class="field">
+              <label>Tag (optional)</label>
+              <input id="productTag" placeholder="POPULAR, NEW, TRENDING...">
+            </div>
+            <div class="field full">
+              <label>Product Description</label>
+              <textarea id="productDescription" placeholder="Product description (optional)"></textarea>
+            </div>
+            <div class="field full">
+              <label>Upload Product Images (max 6)</label>
+              <input id="productImageFile" type="file" accept="image/*" multiple>
+              <p class="hint">JPG, PNG, or WebP. Max 5 MB each.</p>
+              <div id="productImagePreview" class="image-preview-grid"></div>
+            </div>
+            <div class="field full">
+              <label>Upload Product Video (optional)</label>
+              <input id="productVideoFile" type="file" accept="video/mp4,video/webm,video/ogg,video/quicktime">
+              <p class="hint">MP4, WebM, or OGG. Max 50 MB.</p>
+              <div id="productVideoPreview" style="margin-top:12px;"></div>
+            </div>
+            <div class="field full">
+              <label>Image URL (optional)</label>
+              <input id="productImage" type="url" placeholder="https://example.com/watch.jpg">
+            </div>
+          </div>
+          <div style="margin-top: 20px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn" type="submit" id="saveProductBtn">Save Product</button>
+            <button class="btn secondary" type="button" id="cancelProductBtn">Cancel</button>
+          </div>
+        </form>
+
+        <div class="table-wrap" style="margin-top:24px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Tag</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="productTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section class="section" id="orders">
+      <div class="panel">
+        <div class="panel-heading">
+          <h2>Orders</h2>
+          <div class="filters-row" style="margin:0;">
+            <button class="filter-chip active" data-order-filter="all">All</button>
+            <button class="filter-chip" data-order-filter="Pending">Pending</button>
+            <button class="filter-chip" data-order-filter="Shipped">Shipped</button>
+            <button class="filter-chip" data-order-filter="Delivered">Delivered</button>
+            <button class="filter-chip" data-order-filter="Cancelled">Cancelled</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Customer</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orderTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="section" id="categories">
+      <div class="panel">
+        <div class="panel-heading"><h2>Categories</h2></div>
+        <p class="muted" style="margin-bottom: 20px;">
+          Categories are fixed and predefined. They control how products are organized on the store.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Product Count</th>
+              </tr>
+            </thead>
+            <tbody id="categoryTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- MESSAGES -->
+    <section class="section" id="messages">
+      <div class="panel">
+        <div class="panel-heading">
+          <h2>Contact Messages</h2>
+          <button class="btn secondary small" id="refreshMessagesBtn">↻ Refresh</button>
+        </div>
+        <div id="messagesList"></div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="section" id="settings">
+      <div class="panel">
+        <div class="panel-heading"><h2>Site Settings</h2></div>
+        <div class="settings-tabs">
+          <button class="settings-tab active" data-settings-tab="store">Store Info</button>
+          <button class="settings-tab" data-settings-tab="homepage">Homepage Content</button>
+          <button class="settings-tab" data-settings-tab="contact">Contact & Social</button>
+        </div>
+
+        <div class="settings-panel active" id="settings-store">
+          <form id="storeInfoForm">
+            <div class="form-grid">
+              <div class="field">
+                <label>Store Name</label>
+                <input id="settingStoreName" value="WATCH.T">
+              </div>
+              <div class="field">
+                <label>Tagline</label>
+                <input id="settingTagline" value="Timepieces for every style and every moment.">
+              </div>
+              <div class="field full">
+                <label>Store Description (footer)</label>
+                <textarea id="settingDescription">Timepieces for every style and every moment.</textarea>
+              </div>
+              <div class="field">
+                <label>Free Shipping Threshold (₹)</label>
+                <input id="settingFreeShipping" type="number" value="999" min="0">
+              </div>
+              <div class="field">
+                <label>Return Window (days)</label>
+                <input id="settingReturnWindow" type="number" value="7" min="0">
+              </div>
+            </div>
+            <div style="margin-top:20px;">
+              <button class="btn" type="submit">Save Store Info</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="settings-panel" id="settings-homepage">
+          <form id="homepageForm">
+            <div class="form-grid">
+              <div class="field full">
+                <label>Hero Eyebrow Text</label>
+                <input id="settingHeroEyebrow" value="Timeless Style · Premium Collection">
+              </div>
+              <div class="field full">
+                <label>Hero Headline (Line 1)</label>
+                <input id="settingHeroLine1" value="Time for a">
+              </div>
+              <div class="field full">
+                <label>Hero Headline (Line 2)</label>
+                <input id="settingHeroLine2" value="better you.">
+              </div>
+              <div class="field full">
+                <label>Hero Subtext</label>
+                <textarea id="settingHeroText">Discover watches that match your style.</textarea>
+              </div>
+              <div class="field">
+                <label>Hero CTA Button Text</label>
+                <input id="settingHeroCta" value="Explore Collection →">
+              </div>
+              <div class="field">
+                <label>Hero Image URL</label>
+                <input id="settingHeroImage" type="url">
+              </div>
+              <div class="field full">
+                <label>Promo Headline</label>
+                <input id="settingPromoHeadline" value="Make every second count.">
+              </div>
+              <div class="field full">
+                <label>Promo Subtext</label>
+                <input id="settingPromoText" value="Discover a style that feels like you.">
+              </div>
+            </div>
+            <div style="margin-top:20px;">
+              <button class="btn" type="submit">Save Homepage Content</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="settings-panel" id="settings-contact">
+          <form id="contactForm">
+            <div class="form-grid">
+              <div class="field">
+                <label>Support Email</label>
+                <input id="settingSupportEmail" type="email" value="support@watcht.com">
+              </div>
+              <div class="field">
+                <label>Support Phone</label>
+                <input id="settingSupportPhone" value="+91 99999 99999">
+              </div>
+              <div class="field">
+                <label>WhatsApp Number</label>
+                <input id="settingWhatsapp" value="+91 99999 99999">
+              </div>
+              <div class="field">
+                <label>Support Hours</label>
+                <input id="settingHours" value="Monday to Saturday, 10:00 AM – 6:00 PM">
+              </div>
+              <div class="field">
+                <label>Instagram URL</label>
+                <input id="settingInstagram" type="url">
+              </div>
+              <div class="field">
+                <label>Facebook URL</label>
+                <input id="settingFacebook" type="url">
+              </div>
+              <div class="field full">
+                <label>Full Address (optional)</label>
+                <textarea id="settingAddress"></textarea>
+              </div>
+            </div>
+            <div style="margin-top:20px;">
+              <button class="btn" type="submit">Save Contact Info</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SALES -->
+    <section class="section" id="sales">
+      <div class="panel">
+        <div class="panel-heading"><h2>Sales Overview</h2></div>
+        <div class="stats" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="stat-card">
+            <div class="stat-label">Total Revenue</div>
+            <div class="stat-value" id="salesRevenue">₹0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Delivered Orders</div>
+            <div class="stat-value" id="salesDelivered">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg Order Value</div>
+            <div class="stat-value" id="salesAvg">₹0</div>
+          </div>
+        </div>
+        <p class="muted" style="margin-top:20px;">
+          Revenue includes only Delivered and Shipped orders. Cancelled orders are excluded.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- BILL MODAL -->
+<div class="bill-overlay" id="billOverlay">
+  <div class="bill-wrapper">
+    <div class="bill-actions">
+      <button class="btn secondary" id="closeBillBtn">✕ Close</button>
+      <button class="btn" id="printBillBtn">🖨 Print / Save PDF</button>
+    </div>
+    <div class="bill-paper">
+      <div class="bill-header">
+        <div class="bill-brand">
+          <h1>WATCH<span>.T</span></h1>
+          <p>Premium Watches & Timepieces</p>
+          <p>support@watcht.com · +91 99999 99999</p>
+        </div>
+        <div class="bill-title">
+          <h2>Invoice</h2>
+          <p><strong id="billNumber">INV-2026-00000</strong></p>
+          <p id="billDate">Date: —</p>
+          <p id="billOrderNum">Order #: —</p>
+        </div>
+      </div>
+      <div class="bill-info-grid">
+        <div class="bill-info-block">
+          <h3>Bill To</h3>
+          <p><strong id="billCustomerName">—</strong></p>
+          <p id="billCustomerPhone">—</p>
+          <p id="billCustomerEmail">—</p>
+        </div>
+        <div class="bill-info-block">
+          <h3>Ship To</h3>
+          <p id="billAddress">—</p>
+          <p id="billCityState">—</p>
+          <p id="billPincode">—</p>
+        </div>
+      </div>
+      <table class="bill-items">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="billItems">
+          <tr><td colspan="4" style="text-align:center; color:#999; padding:20px;">No items</td></tr>
+        </tbody>
+      </table>
+      <div class="bill-totals">
+        <div class="bill-totals-row">
+          <span>Subtotal</span>
+          <span id="billSubtotal">₹0</span>
+        </div>
+        <div class="bill-totals-row">
+          <span>Shipping</span>
+          <span id="billShipping">FREE</span>
+        </div>
+        <div class="bill-totals-row total">
+          <span>Total</span>
+          <span id="billTotal">₹0</span>
+        </div>
+        <div style="margin-top: 12px; text-align: right;">
+          <span class="bill-payment-badge" id="billPaymentBadge">COD · Pending</span>
+        </div>
+      </div>
+      <div class="bill-footer">
+        <p class="thanks">Thank you for shopping with WATCH.T</p>
+        <p>This is a computer-generated invoice. No signature required.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { supabase, supabaseConfigured, money, escapeHTML } from "./supabase.js";
+
+  /* ============ AUTH ============ */
+  const loginGate = document.getElementById("loginGate");
+  const adminLayout = document.getElementById("adminLayout");
+  const loginForm = document.getElementById("loginForm");
+  const loginMessage = document.getElementById("loginMessage");
+  const loginBtn = document.getElementById("loginBtn");
+  const adminEmailDisplay = document.getElementById("adminEmailDisplay");
+
+  const ADMIN_EMAILS = ["surajnews59@gmail.com"];
+
+  function showLoginError(msg) {
+    loginMessage.textContent = msg;
+    loginMessage.className = "login-gate-message error";
+  }
+  function hideLoginError() { loginMessage.className = "login-gate-message"; }
+
+  async function checkAuth() {
+    if (!supabaseConfigured) { showLoginError("Supabase not configured."); return; }
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      loginGate.style.display = "grid";
+      adminLayout.style.display = "none";
+      return;
+    }
+    if (ADMIN_EMAILS.length && !ADMIN_EMAILS.includes(user.email)) {
+      showLoginError("You do not have admin access.");
+      await supabase.auth.signOut();
+      return;
+    }
+    loginGate.style.display = "none";
+    adminLayout.style.display = "flex";
+    adminEmailDisplay.textContent = user.email || "";
+    loadDashboard();
+    loadCurrentSettings();
+    loadProducts();
+  }
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideLoginError();
+    if (!supabaseConfigured) { showLoginError("Supabase not configured."); return; }
+    const email = document.getElementById("adminEmail").value.trim();
+    const password = document.getElementById("adminPassword").value;
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Signing in...";
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      if (ADMIN_EMAILS.length && !ADMIN_EMAILS.includes(email)) {
+        await supabase.auth.signOut();
+        throw new Error("You do not have admin access.");
+      }
+      await checkAuth();
+    } catch (err) {
+      showLoginError(err.message || "Login failed.");
+    } finally {
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Sign In";
+    }
+  });
+
+  document.getElementById("signOutBtn").addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    location.reload();
+  });
+
+  /* ============ NAV ============ */
+  const pageTitles = {
+    dashboard: ["Dashboard", "WATCH.T store management"],
+    products: ["Products", "Add, edit, and manage your store catalog"],
+    orders: ["Orders", "Track and update customer orders"],
+    categories: ["Categories", "Manage product categories"],
+    messages: ["Messages", "Customer contact messages"],
+    settings: ["Site Settings", "Edit website content and configuration"],
+    sales: ["Sales", "Revenue and sales analytics"]
+  };
+
+  document.querySelectorAll(".nav-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const section = btn.dataset.section;
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.getElementById(section)?.classList.add("active");
+      const [title, subtitle] = pageTitles[section] || ["Admin", ""];
+      document.getElementById("pageTitle").textContent = title;
+      document.getElementById("pageSubtitle").textContent = subtitle;
+      if (section === "dashboard") loadDashboard();
+      if (section === "products") loadProducts();
+      if (section === "orders") loadOrders();
+      if (section === "categories") loadCategories();
+      if (section === "messages") loadMessages();
+      if (section === "sales") loadSales();
+      if (section === "settings") loadCurrentSettings();
+    });
+  });
+
+  document.querySelectorAll("[data-go]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelector(`.nav-btn[data-section="${btn.dataset.go}"]`)?.click();
+    });
+  });
+
+  /* ============ DASHBOARD ============ */
+  async function loadDashboard() {
+    try {
+      const [productsRes, ordersRes] = await Promise.all([
+        supabase.from("products").select("id", { count: "exact", head: true }),
+        supabase.from("orders").select("id,status,total,order_number,customer_name,created_at")
+      ]);
+      const productCount = productsRes.count || 0;
+      const orders = ordersRes.data || [];
+      const revenue = orders.filter(o => ["Delivered", "Shipped"].includes(o.status))
+        .reduce((s, o) => s + Number(o.total || 0), 0);
+      const pending = orders.filter(o => ["Pending", "Confirmed"].includes(o.status)).length;
+
+      document.getElementById("productCount").textContent = productCount;
+      document.getElementById("orderCount").textContent = orders.length;
+      document.getElementById("revenue").textContent = money(revenue);
+      document.getElementById("pendingCount").textContent = pending;
+
+      const recent = orders.slice(0, 5);
+      const recentEl = document.getElementById("recentOrders");
+      if (!recent.length) {
+        recentEl.className = "empty";
+        recentEl.textContent = "No orders yet.";
+      } else {
+        recentEl.className = "";
+        recentEl.innerHTML = `
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Order #</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead>
+              <tbody>
+                ${recent.map(o => `
+                  <tr>
+                    <td>#${escapeHTML(String(o.order_number || o.id))}</td>
+                    <td>${escapeHTML(o.customer_name || "—")}</td>
+                    <td>${money(o.total)}</td>
+                    <td><span class="status ${String(o.status || "pending").toLowerCase()}">${escapeHTML(o.status || "Pending")}</span></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+    } catch (err) { console.error(err); }
+  }
+
+  /* ============ PRODUCTS ============ */
+  let allProducts = [];
+  let editingProductId = null;
+  let selectedImageFiles = [];
+  let selectedVideoFile = null;
+
+  async function loadProducts() {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) { console.error(error); return; }
+    allProducts = data || [];
+    document.getElementById("productCountInline").textContent = allProducts.length;
+    renderProducts();
+  }
+
+  function renderProducts() {
+    const search = (document.getElementById("productSearch")?.value || "").toLowerCase();
+    const filtered = allProducts.filter(p =>
+      `${p.name} ${p.category}`.toLowerCase().includes(search)
+    );
+    const tbody = document.getElementById("productTable");
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="6" class="empty">No products found.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(p => `
+      <tr>
+        <td>
+          ${p.image_url ? `<img class="product-thumb" src="${escapeHTML(p.image_url)}" alt="">` : ""}
+          <strong>${escapeHTML(p.name)}</strong>
+          ${p.video_url ? '<span class="status new" style="margin-left:8px;">🎬</span>' : ""}
+          ${p.active === false ? '<span class="status cancelled" style="margin-left: 8px;">Inactive</span>' : ""}
+        </td>
+        <td>${escapeHTML(p.category || "—")}</td>
+        <td>${money(p.price)}</td>
+        <td>${Number(p.stock) || 0}</td>
+        <td>${p.tag ? `<span class="status new">${escapeHTML(p.tag)}</span>` : "—"}</td>
+        <td>
+          <div class="order-row-actions">
+            <button class="btn secondary small" data-edit-product="${p.id}">Edit</button>
+            ${p.active === false
+              ? `<button class="btn small" data-restore-product="${p.id}">↻ Restore</button>`
+              : `<button class="btn secondary small" data-hide-product="${p.id}">Hide</button>`}
+            <button class="btn danger small" data-delete-product="${p.id}">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  document.getElementById("productSearch")?.addEventListener("input", renderProducts);
+
+  document.getElementById("addProductBtn").addEventListener("click", () => {
+    editingProductId = null;
+    document.getElementById("productForm").hidden = false;
+    document.getElementById("productForm").reset();
+    document.getElementById("editingProductId").value = "";
+    document.getElementById("productImagePreview").innerHTML = "";
+    document.getElementById("productVideoPreview").innerHTML = "";
+    selectedImageFiles = [];
+    selectedVideoFile = null;
+    document.getElementById("saveProductBtn").textContent = "Save Product";
+  });
+
+  document.getElementById("cancelProductBtn").addEventListener("click", () => {
+    document.getElementById("productForm").hidden = true;
+  });
+
+  document.getElementById("productImageFile").addEventListener("change", (e) => {
+    const files = Array.from(e.target.files || []).slice(0, 6);
+    selectedImageFiles = files;
+    const preview = document.getElementById("productImagePreview");
+    preview.innerHTML = "";
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = document.createElement("img");
+        img.src = ev.target.result;
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+
+  document.getElementById("productVideoFile").addEventListener("change", (e) => {
+    const file = e.target.files?.[0];
+    selectedVideoFile = file || null;
+    const preview = document.getElementById("productVideoPreview");
+    preview.innerHTML = "";
+    if (!file) return;
+
+    const allowedTypes = ["video/mp4", "video/webm", "video/ogg", "video/quicktime"];
+    if (!allowedTypes.includes(file.type)) {
+      alert("Invalid video format. Use MP4, WebM, OGG, or MOV.");
+      selectedVideoFile = null;
+      e.target.value = "";
+      return;
+    }
+    if (file.size > 50 * 1024 * 1024) {
+      alert(`Video too large (${(file.size / 1024 / 1024).toFixed(2)} MB). Max 50 MB.`);
+      selectedVideoFile = null;
+      e.target.value = "";
+      return;
+    }
+
+    const info = document.createElement("div");
+    info.style.cssText = "font-size: 12px; color: #888; margin-bottom: 8px;";
+    info.textContent = `📹 ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+    preview.appendChild(info);
+
+    const video = document.createElement("video");
+    video.src = URL.createObjectURL(file);
+    video.controls = true;
+    video.style.cssText = "max-width: 300px; margin-top: 10px; border: 1px solid #2a2a2a; border-radius: 4px;";
+    preview.appendChild(video);
+  });
+
+  document.getElementById("productForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!supabaseConfigured) { alert("Supabase not configured."); return; }
+    const saveBtn = document.getElementById("saveProductBtn");
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Saving...";
+
+    try {
+      /* Image upload */
+      let imageUrls = [];
+      if (selectedImageFiles.length) {
+        for (const file of selectedImageFiles) {
+          const ext = file.name.split(".").pop().toLowerCase();
+          const filename = `products/images/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+          const { error: uploadError } = await supabase.storage
+            .from("product-images")
+            .upload(filename, file, { cacheControl: "3600", upsert: false, contentType: file.type });
+          if (uploadError) throw new Error("Image upload failed: " + uploadError.message);
+          const { data: { publicUrl } } = supabase.storage.from("product-images").getPublicUrl(filename);
+          imageUrls.push(publicUrl);
+        }
+      }
+      const urlInput = document.getElementById("productImage").value.trim();
+      if (urlInput && !imageUrls.length) imageUrls = [urlInput];
+
+      /* Video upload — CRITICAL FIX */
+      let videoUrl = null;
+
+      if (editingProductId && !selectedVideoFile) {
+        const existingProduct = allProducts.find(p => String(p.id) === String(editingProductId));
+        if (existingProduct && existingProduct.video_url) {
+          videoUrl = existingProduct.video_url;
+        }
+      }
+
+      if (selectedVideoFile) {
+        if (selectedVideoFile.size > 50 * 1024 * 1024) {
+          throw new Error(`Video too large (${(selectedVideoFile.size / 1024 / 1024).toFixed(2)} MB). Max 50 MB.`);
+        }
+        const allowedTypes = ["video/mp4", "video/webm", "video/ogg", "video/quicktime"];
+        if (!allowedTypes.includes(selectedVideoFile.type)) {
+          throw new Error(`Video type "${selectedVideoFile.type}" not supported.`);
+        }
+
+        const ext = selectedVideoFile.name.split(".").pop().toLowerCase();
+        const filename = `products/videos/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("product-images")
+          .upload(filename, selectedVideoFile, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: selectedVideoFile.type
+          });
+
+        if (uploadError) {
+          console.error("Video upload error:", uploadError);
+          if (uploadError.message.includes("mime type") || uploadError.message.includes("not supported")) {
+            throw new Error(
+              "Video format not allowed in storage.\n\n" +
+              "Run this SQL:\n\n" +
+              "update storage.buckets set allowed_mime_types = array['image/jpeg','image/png','image/webp','image/gif','video/mp4','video/webm','video/ogg','video/quicktime'] where id = 'product-images';"
+            );
+          }
+          if (uploadError.message.includes("too large") || uploadError.message.includes("size")) {
+            throw new Error(
+              "Video too large for bucket.\n\n" +
+              "Run this SQL:\n\n" +
+              "update storage.buckets set file_size_limit = 52428800 where id = 'product-images';"
+            );
+          }
+          throw new Error("Video upload failed: " + uploadError.message);
+        }
+
+        const { data: { publicUrl } } = supabase.storage
+          .from("product-images")
+          .getPublicUrl(filename);
+
+        videoUrl = publicUrl;
+        console.log("✅ Video URL:", videoUrl);
+      }
+
+      const payload = {
+        name: document.getElementById("productName").value.trim(),
+        category: document.getElementById("productCategory").value,
+        price: Number(document.getElementById("productPrice").value),
+        old_price: document.getElementById("productOldPrice").value ?
+          Number(document.getElementById("productOldPrice").value) : null,
+        stock: Number(document.getElementById("productStock").value) || 0,
+        tag: document.getElementById("productTag").value.trim() || null,
+        description: document.getElementById("productDescription").value.trim() || null,
+        image_url: imageUrls[0] || null,
+        image_urls: imageUrls.length ? imageUrls : null,
+        video_url: videoUrl,
+        active: true
+      };
+
+      if (editingProductId) {
+        const { error } = await supabase.from("products").update(payload).eq("id", editingProductId);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("products").insert([payload]);
+        if (error) throw error;
+      }
+
+      document.getElementById("productForm").hidden = true;
+      await loadProducts();
+      alert("✅ Product saved successfully!" + (videoUrl ? "\n\n🎬 Video attached." : ""));
+    } catch (err) {
+      console.error(err);
+      alert("❌ Save failed:\n\n" + err.message);
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Save Product";
+    }
+  });
+
+  /* ============ PRODUCT ACTIONS ============ */
+  document.getElementById("productTable").addEventListener("click", async (e) => {
+    const editBtn = e.target.closest("[data-edit-product]");
+    const deleteBtn = e.target.closest("[data-delete-product]");
+    const hideBtn = e.target.closest("[data-hide-product]");
+    const restoreBtn = e.target.closest("[data-restore-product]");
+
+    if (editBtn) {
+      const id = editBtn.dataset.editProduct;
+      const product = allProducts.find(p => String(p.id) === String(id));
+      if (!product) return;
+      editingProductId = id;
+      document.getElementById("productForm").hidden = false;
+      document.getElementById("editingProductId").value = id;
+      document.getElementById("productName").value = product.name || "";
+      document.getElementById("productCategory").value = product.category || "Men";
+      document.getElementById("productPrice").value = product.price || "";
+      document.getElementById("productOldPrice").value = product.old_price || "";
+      document.getElementById("productStock").value = product.stock || 0;
+      document.getElementById("productTag").value = product.tag || "";
+      document.getElementById("productDescription").value = product.description || "";
+      document.getElementById("productImage").value = product.image_url || "";
+      document.getElementById("saveProductBtn").textContent = "Update Product";
+
+      const videoPreview = document.getElementById("productVideoPreview");
+      videoPreview.innerHTML = "";
+      if (product.video_url) {
+        const info = document.createElement("div");
+        info.style.cssText = "font-size: 12px; color: #888; margin-bottom: 8px;";
+        info.textContent = "📹 Current video (upload new to replace)";
+        videoPreview.appendChild(info);
+        const video = document.createElement("video");
+        video.src = product.video_url;
+        video.controls = true;
+        video.style.cssText = "max-width: 300px; margin-top: 10px; border: 1px solid #2a2a2a; border-radius: 4px;";
+        videoPreview.appendChild(video);
+      }
+      selectedVideoFile = null;
+      selectedImageFiles = [];
+      document.getElementById("productForm").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    if (hideBtn) {
+      const id = hideBtn.dataset.hideProduct;
+      if (!confirm("Hide this product?")) return;
+      const { error } = await supabase.from("products").update({ active: false }).eq("id", id);
+      if (error) { alert("Hide failed: " + error.message); return; }
+      await loadProducts();
+      alert("Product hidden.");
+    }
+
+    if (restoreBtn) {
+      const id = restoreBtn.dataset.restoreProduct;
+      if (!confirm("Restore this product?")) return;
+      const { error } = await supabase.from("products").update({ active: true }).eq("id", id);
+      if (error) { alert("Restore failed: " + error.message); return; }
+      await loadProducts();
+      alert("Product restored.");
+    }
+
+    if (deleteBtn) {
+      const id = deleteBtn.dataset.deleteProduct;
+      const product = allProducts.find(p => String(p.id) === String(id));
+      if (!confirm(`DELETE PERMANENTLY?\n\n"${product?.name || "Product"}" will be removed forever.`)) return;
+      try {
+        const { data, error } = await supabase.from("products").delete().eq("id", id).select("id");
+        if (error) throw error;
+        if (!data || data.length === 0) {
+          alert("Delete blocked by RLS.\n\nRun:\n\ncreate policy \"products_admin_delete\" on products for delete to authenticated using (public.is_admin());");
+          return;
+        }
+        await loadProducts();
+        loadDashboard();
+        alert("✅ Product deleted.");
+      } catch (err) {
+        if (err.message?.toLowerCase().includes("foreign key")) {
+          alert("Cannot delete — product is in orders. Use Hide instead.");
+        } else {
+          alert("Delete failed: " + err.message);
+        }
+      }
+    }
+  });
+
+  /* ============ ORDERS ============ */
+  let allOrders = [];
+  let orderFilter = "all";
+
+  async function loadOrders() {
+    const { data, error } = await supabase.from("orders").select("*").order("created_at", { ascending: false });
+    if (error) { console.error(error); return; }
+    allOrders = data || [];
+    renderOrders();
+  }
+
+  function renderOrders() {
+    const filtered = orderFilter === "all" ? allOrders : allOrders.filter(o => o.status === orderFilter);
+    const tbody = document.getElementById("orderTable");
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="6" class="empty">No orders found.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(o => `
+      <tr>
+        <td><strong>#${escapeHTML(String(o.order_number || o.id))}</strong></td>
+        <td>${escapeHTML(o.customer_name || "—")}<br><span class="muted" style="font-size:11px;">${escapeHTML(o.phone || "")}</span></td>
+        <td>${money(o.total)}</td>
+        <td>${escapeHTML(o.payment_method || "COD")}</td>
+        <td>
+          <select class="status-select" data-order-id="${o.id}" style="padding:6px;background:#0d0d0d;color:#fff;border:1px solid #2a2a2a;">
+            ${["Pending","Confirmed","Shipped","Delivered","Cancelled"].map(s =>
+              `<option value="${s}" ${o.status === s ? "selected" : ""}>${s}</option>`
+            ).join("")}
+          </select>
+        </td>
+        <td>
+          <div class="order-row-actions">
+            <button class="btn secondary small" data-view-order="${o.id}">View</button>
+            <button class="btn small" data-bill-order="${o.id}">🖨 Bill</button>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  document.querySelectorAll("[data-order-filter]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("[data-order-filter]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      orderFilter = btn.dataset.orderFilter;
+      renderOrders();
+    });
+  });
+
+  document.getElementById("orderTable").addEventListener("change", async (e) => {
+    const select = e.target.closest(".status-select");
+    if (!select) return;
+    const id = select.dataset.orderId;
+    const newStatus = select.value;
+    const { error } = await supabase.from("orders").update({ status: newStatus, updated_at: new Date().toISOString() }).eq("id", id);
+    if (error) { alert("Update failed: " + error.message); return; }
+    alert("Order status updated to " + newStatus);
+  });
+
+  document.getElementById("orderTable").addEventListener("click", async (e) => {
+    const viewBtn = e.target.closest("[data-view-order]");
+    const billBtn = e.target.closest("[data-bill-order]");
+
+    if (viewBtn) {
+      const id = viewBtn.dataset.viewOrder;
+      const order = allOrders.find(o => String(o.id) === String(id));
+      if (!order) return;
+      const items = Array.isArray(order.items) ? order.items : [];
+      const itemList = items.map(i => `• ${i.name} × ${i.quantity} — ${money(i.price * i.quantity)}`).join("\n");
+      alert(`Order #${order.order_number || order.id}\nCustomer: ${order.customer_name || "—"}\nPhone: ${order.phone || "—"}\nTotal: ${money(order.total)}\n\nItems:\n${itemList}`);
+    }
+
+    if (billBtn) {
+      const id = billBtn.dataset.billOrder;
+      const order = allOrders.find(o => String(o.id) === String(id));
+      if (!order) return;
+      openBill(order);
+    }
+  });
+
+  /* ============ BILL ============ */
+  const billOverlay = document.getElementById("billOverlay");
+  const closeBillBtn = document.getElementById("closeBillBtn");
+  const printBillBtn = document.getElementById("printBillBtn");
+
+  function generateInvoiceNumber(order) {
+    const orderNum = String(order.order_number || order.id).replace(/\D/g, "").slice(-6);
+    const year = new Date(order.created_at || Date.now()).getFullYear();
+    return `INV-${year}-${orderNum.padStart(6, "0")}`;
+  }
+  function formatBillDate(dateStr) {
+    if (!dateStr) return "—";
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+  }
+
+  function openBill(order) {
+    document.getElementById("billNumber").textContent = generateInvoiceNumber(order);
+    document.getElementById("billDate").textContent = "Date: " + formatBillDate(order.created_at);
+    document.getElementById("billOrderNum").textContent = "Order #: " + (order.order_number || order.id);
+    document.getElementById("billCustomerName").textContent = order.customer_name || "—";
+    document.getElementById("billCustomerPhone").textContent = order.phone || "—";
+    document.getElementById("billCustomerEmail").textContent = order.email || "";
+    document.getElementById("billAddress").textContent = order.address || "—";
+    document.getElementById("billCityState").textContent = [order.city, order.state].filter(Boolean).join(", ") || "—";
+    document.getElementById("billPincode").textContent = "PIN: " + (order.pincode || "—");
+
+    const items = Array.isArray(order.items) ? order.items : [];
+    const itemsBody = document.getElementById("billItems");
+    if (!items.length) {
+      itemsBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#999; padding:20px;">No items</td></tr>`;
+    } else {
+      itemsBody.innerHTML = items.map(item => `
+        <tr>
+          <td>${escapeHTML(item.name || "Product")}</td>
+          <td>${Number(item.quantity) || 1}</td>
+          <td>${money(item.price)}</td>
+          <td>${money(Number(item.price) * Number(item.quantity))}</td>
+        </tr>
+      `).join("");
+    }
+
+    const subtotal = items.reduce((s, i) => s + Number(i.price) * Number(i.quantity), 0);
+    const total = Number(order.total) || subtotal;
+    document.getElementById("billSubtotal").textContent = money(subtotal);
+    document.getElementById("billShipping").textContent = "FREE";
+    document.getElementById("billTotal").textContent = money(total);
+
+    const badge = document.getElementById("billPaymentBadge");
+    const payStatus = order.payment_status || "Pending";
+    badge.textContent = `${order.payment_method || "COD"} · ${payStatus}`;
+    badge.className = "bill-payment-badge " + (payStatus.toLowerCase() === "paid" ? "paid" : "pending");
+
+    billOverlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeBill() {
+    billOverlay.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  closeBillBtn.addEventListener("click", closeBill);
+  printBillBtn.addEventListener("click", () => window.print());
+  billOverlay.addEventListener("click", (e) => { if (e.target === billOverlay) closeBill(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && billOverlay.classList.contains("active")) closeBill();
+  });
+
+  /* ============ CATEGORIES ============ */
+  const CATEGORIES = ["Men", "Women", "Smart Watch", "Luxury", "Wall Clock", "Accessories"];
+
+  async function loadCategories() {
+    try {
+      const { data } = await supabase.from("products").select("category, active");
+      const counts = {};
+      (data || []).forEach(p => {
+        if (p.active === false) return;
+        counts[p.category] = (counts[p.category] || 0) + 1;
+      });
+      const tbody = document.getElementById("categoryTable");
+      tbody.innerHTML = CATEGORIES.map(cat => `
+        <tr><td><strong>${escapeHTML(cat)}</strong></td><td>${counts[cat] || 0}</td></tr>
+      `).join("");
+    } catch (err) { console.error(err); }
+  }
+
+  /* ============ MESSAGES ============ */
+  async function loadMessages() {
+    const el = document.getElementById("messagesList");
+    el.innerHTML = `<p class="empty">Loading...</p>`;
+    try {
+      const { data, error } = await supabase.from("contact_messages").select("*").order("created_at", { ascending: false });
+      if (error) throw error;
+      if (!data?.length) { el.innerHTML = `<p class="empty">No messages yet.</p>`; return; }
+      el.innerHTML = data.map(m => `
+        <div class="message-card">
+          <div class="message-head">
+            <div>
+              <div class="message-subject">${escapeHTML(m.subject || "No subject")}</div>
+              <div class="muted" style="font-size:12px; margin-top:4px;">
+                ${escapeHTML(m.name || "Unknown")} · ${escapeHTML(m.email || "")}
+              </div>
+            </div>
+            <div class="muted" style="font-size:11px;">${new Date(m.created_at).toLocaleString("en-IN")}</div>
+          </div>
+          <div class="message-body">${escapeHTML(m.message || "")}</div>
+        </div>
+      `).join("");
+    } catch (err) {
+      el.innerHTML = `<p class="empty">Failed to load: ${escapeHTML(err.message)}</p>`;
+    }
+  }
+
+  document.getElementById("refreshMessagesBtn")?.addEventListener("click", loadMessages);
+
+  /* ============ SETTINGS ============ */
+  document.querySelectorAll(".settings-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".settings-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".settings-panel").forEach(p => p.classList.remove("active"));
+      tab.classList.add("active");
+      document.getElementById(`settings-${tab.dataset.settingsTab}`)?.classList.add("active");
+    });
+  });
+
+  document.getElementById("storeInfoForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = "Saving..."; }
+    await saveSettings("store", {
+      storeName: document.getElementById("settingStoreName").value,
+      tagline: document.getElementById("settingTagline").value,
+      description: document.getElementById("settingDescription").value,
+      freeShipping: document.getElementById("settingFreeShipping").value,
+      returnWindow: document.getElementById("settingReturnWindow").value
+    });
+    if (btn) { btn.disabled = false; btn.textContent = "Save Store Info"; }
+  });
+
+  document.getElementById("homepageForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = "Saving..."; }
+    await saveSettings("homepage", {
+      heroEyebrow: document.getElementById("settingHeroEyebrow").value,
+      heroLine1: document.getElementById("settingHeroLine1").value,
+      heroLine2: document.getElementById("settingHeroLine2").value,
+      heroText: document.getElementById("settingHeroText").value,
+      heroCta: document.getElementById("settingHeroCta").value,
+      heroImage: document.getElementById("settingHeroImage").value,
+      promoHeadline: document.getElementById("settingPromoHeadline").value,
+      promoText: document.getElementById("settingPromoText").value
+    });
+    if (btn) { btn.disabled = false; btn.textContent = "Save Homepage Content"; }
+  });
+
+  document.getElementById("contactForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = "Saving..."; }
+    await saveSettings("contact", {
+      supportEmail: document.getElementById("settingSupportEmail").value,
+      supportPhone: document.getElementById("settingSupportPhone").value,
+      whatsapp: document.getElementById("settingWhatsapp").value,
+      hours: document.getElementById("settingHours").value,
+      instagram: document.getElementById("settingInstagram").value,
+      facebook: document.getElementById("settingFacebook").value,
+      address: document.getElementById("settingAddress").value
+    });
+    if (btn) { btn.disabled = false; btn.textContent = "Save Contact Info"; }
+  });
+
+  async function saveSettings(section, data) {
+    try {
+      const updates = {};
+      if (section === "store") {
+        updates.store_name = data.storeName;
+        updates.tagline = data.tagline;
+        updates.description = data.description;
+        updates.free_shipping_threshold = Number(data.freeShipping) || 999;
+        updates.return_window_days = Number(data.returnWindow) || 7;
+      } else if (section === "homepage") {
+        updates.hero_eyebrow = data.heroEyebrow;
+        updates.hero_line1 = data.heroLine1;
+        updates.hero_line2 = data.heroLine2;
+        updates.hero_text = data.heroText;
+        updates.hero_cta = data.heroCta;
+        updates.hero_image = data.heroImage;
+        updates.promo_headline = data.promoHeadline;
+        updates.promo_text = data.promoText;
+      } else if (section === "contact") {
+        updates.support_email = data.supportEmail;
+        updates.support_phone = data.supportPhone;
+        updates.whatsapp = data.whatsapp;
+        updates.support_hours = data.hours;
+        updates.instagram_url = data.instagram;
+        updates.facebook_url = data.facebook;
+        updates.address = data.address;
+      }
+      updates.updated_at = new Date().toISOString();
+      const { error } = await supabase.from("site_settings").update(updates).eq("id", 1);
+      if (error) throw error;
+      alert("✅ Settings saved! Refresh website to see changes.");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Save failed: " + (err.message || "Unknown"));
+    }
+  }
+
+  async function loadCurrentSettings() {
+    try {
+      const { data, error } = await supabase.from("site_settings").select("*").eq("id", 1).maybeSingle();
+      if (error || !data) { console.warn("Could not load settings:", error?.message); return; }
+      const setVal = (id, val) => { const el = document.getElementById(id); if (el && val !== null && val !== undefined) el.value = val; };
+      setVal("settingStoreName", data.store_name || "WATCH.T");
+      setVal("settingTagline", data.tagline || "");
+      setVal("settingDescription", data.description || "");
+      setVal("settingFreeShipping", data.free_shipping_threshold || 999);
+      setVal("settingReturnWindow", data.return_window_days || 7);
+      setVal("settingHeroEyebrow", data.hero_eyebrow || "");
+      setVal("settingHeroLine1", data.hero_line1 || "");
+      setVal("settingHeroLine2", data.hero_line2 || "");
+      setVal("settingHeroText", data.hero_text || "");
+      setVal("settingHeroCta", data.hero_cta || "");
+      setVal("settingHeroImage", data.hero_image || "");
+      setVal("settingPromoHeadline", data.promo_headline || "");
+      setVal("settingPromoText", data.promo_text || "");
+      setVal("settingSupportEmail", data.support_email || "");
+      setVal("settingSupportPhone", data.support_phone || "");
+      setVal("settingWhatsapp", data.whatsapp || "");
+      setVal("settingHours", data.support_hours || "");
+      setVal("settingInstagram", data.instagram_url || "");
+      setVal("settingFacebook", data.facebook_url || "");
+      setVal("settingAddress", data.address || "");
+      console.log("✅ Settings loaded");
+    } catch (err) { console.warn("Could not load settings:", err); }
+  }
+
+  /* ============ SALES ============ */
+  async function loadSales() {
+    try {
+      const { data } = await supabase.from("orders").select("total,status,created_at");
+      const orders = data || [];
+      const validOrders = orders.filter(o => ["Shipped", "Delivered"].includes(o.status));
+      const revenue = validOrders.reduce((s, o) => s + Number(o.total || 0), 0);
+      const delivered = orders.filter(o => o.status === "Delivered").length;
+      const avg = validOrders.length ? revenue / validOrders.length : 0;
+      document.getElementById("salesRevenue").textContent = money(revenue);
+      document.getElementById("salesDelivered").textContent = delivered;
+      document.getElementById("salesAvg").textContent = money(avg);
+    } catch (err) { console.error(err); }
+  }
+
+  /* ============ INIT ============ */
+  checkAuth();
+  supabase.auth.onAuthStateChange((event) => {
+    if (event === "SIGNED_OUT") {
+      loginGate.style.display = "grid";
+      adminLayout.style.display = "none";
+    }
+  });
+</script>
+</body>
+</html>

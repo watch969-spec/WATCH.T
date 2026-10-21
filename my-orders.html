@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>My Orders | WATCH.T</title>
+  <meta name="description" content="View your WATCH.T order history.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ---------- MY ORDERS PAGE ---------- */
+    .orders-page {
+      min-height: 100vh;
+      background: var(--paper);
+      padding: 60px 48px 100px;
+    }
+    .orders-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Breadcrumb */
+    .orders-crumb {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .orders-crumb a { color: var(--muted); transition: color .3s var(--ease); }
+    .orders-crumb a:hover { color: var(--gold); }
+    .orders-crumb span:last-child { color: var(--ink); font-weight: 600; }
+
+    /* Header */
+    .orders-header {
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .orders-header h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 500;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+    .orders-header h1 span { color: var(--gold); font-style: italic; font-weight: 400; }
+    .orders-header p {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 300;
+      margin: 0;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    .user-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .user-badge strong {
+      color: var(--ink);
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      font-size: 12px;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Actions row */
+    .orders-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all .3s var(--ease);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: var(--gold);
+      border: 1px solid var(--gold);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all .3s var(--ease);
+    }
+    .btn-gold:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--gold);
+    }
+
+    /* Message / info */
+    #message {
+      margin-bottom: 24px;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 16px 20px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    #message.error {
+      background: #ffebee;
+      border-color: #ffcdd2;
+      color: #c62828;
+      border-left: 3px solid #c62828;
+    }
+    #message.success {
+      background: #e8f5e9;
+      border-color: #c8e6c9;
+      color: #2e7d32;
+      border-left: 3px solid #2e7d32;
+    }
+    #message.muted {
+      background: var(--white);
+      color: var(--muted);
+    }
+
+    /* Loading spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--line);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Order cards */
+    .order-item {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 32px;
+      margin-bottom: 20px;
+      transition: all .3s var(--ease);
+    }
+    .order-item:hover {
+      border-color: var(--gold-light);
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    }
+
+    .order-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .order-head strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -.01em;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 7px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 999px;
+    }
+    .status.pending { background: #fff3e0; color: #e65100; }
+    .status.confirmed { background: #e3f2fd; color: #1565c0; }
+    .status.shipped { background: #f3e5f5; color: #6a1b9a; }
+    .status.delivered { background: #e8f5e9; color: #2e7d32; }
+    .status.cancelled { background: #ffebee; color: #c62828; }
+
+    /* Order meta row */
+    .order-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .meta-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .meta-value {
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* Items list */
+    .order-items-list {
+      margin: 20px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .order-item-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .order-item-row:last-child { border-bottom: none; }
+    .order-item-thumb {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .order-item-name {
+      flex: 1;
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .order-item-qty {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* Order total */
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0 16px;
+      border-top: 1px solid var(--line);
+      margin-top: 16px;
+    }
+    .order-total-label {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .order-total-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -.01em;
+    }
+
+    /* Footer actions */
+    .order-item-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+    .btn-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: var(--ink);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all .3s var(--ease);
+    }
+    .btn-track:hover {
+      background: var(--gold);
+      color: var(--ink);
+    }
+    .btn-track.disabled {
+      opacity: .4;
+      pointer-events: none;
+    }
+
+    /* Tracking info */
+    .tracking-info {
+      margin-top: 16px;
+      padding: 14px 18px;
+      background: var(--paper);
+      border-left: 3px solid var(--gold);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .tracking-info strong { color: var(--ink); }
+
+    /* Empty state */
+    .empty-orders {
+      text-align: center;
+      padding: 80px 24px;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+    .empty-orders-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      opacity: .4;
+    }
+    .empty-orders h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+    .empty-orders p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 28px;
+      font-weight: 300;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    /* Login required */
+    .login-required {
+      text-align: center;
+      padding: 80px 24px;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+    .login-required-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      opacity: .4;
+    }
+    .login-required h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+    .login-required p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 28px;
+      font-weight: 300;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    .login-required-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Header override */
+    .header .logo,
+    .header a { color: #fff; }
+    .header a:hover { color: var(--gold); }
+    .orders-back-link {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .3s var(--ease);
+    }
+    .orders-back-link:hover { color: var(--gold); }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .orders-page { padding: 40px 24px 60px; }
+      .orders-header { margin-bottom: 28px; }
+      .order-item { padding: 24px 20px; }
+      .order-head strong { font-size: 19px; }
+      .order-meta { grid-template-columns: 1fr; gap: 12px; }
+      .order-total-value { font-size: 22px; }
+      .btn-track, .btn-outline, .btn-gold {
+        flex: 1 1 auto;
+        justify-content: center;
+        padding: 12px 16px;
+      }
+      .empty-orders, .login-required { padding: 60px 20px; }
+      .empty-orders h2, .login-required h2 { font-size: 26px; }
+    }
+
+    @media (max-width: 500px) {
+      .orders-page { padding: 24px 14px 50px; }
+      .orders-header h1 { font-size: 32px; }
+      .orders-header p { font-size: 13px; }
+      .order-item { padding: 20px 16px; margin-bottom: 16px; }
+      .order-head { padding-bottom: 14px; }
+      .order-head strong { font-size: 17px; }
+      .status { font-size: 9px; padding: 6px 10px; letter-spacing: 1px; }
+      .order-item-row { padding: 12px 0; gap: 10px; }
+      .order-item-thumb { width: 44px; height: 44px; }
+      .order-item-name { font-size: 13px; }
+      .order-item-qty { font-size: 11px; }
+      .order-total-value { font-size: 20px; }
+      .btn-track { font-size: 10px; padding: 11px 14px; }
+      .empty-orders, .login-required { padding: 48px 16px; }
+      .empty-orders-icon, .login-required-icon { font-size: 48px; margin-bottom: 18px; }
+      .empty-orders h2, .login-required h2 { font-size: 22px; }
+      .user-badge { padding: 8px 14px; font-size: 10px; }
+      .user-badge strong { max-width: 140px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">WATCH<span>.T</span></a>
+  <a class="orders-back-link" href="index.html">← Shop</a>
+</header>
+
+<main class="orders-page">
+  <div class="orders-wrap">
+
+    <!-- Breadcrumb -->
+    <div class="orders-crumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>My Orders</span>
+    </div>
+
+    <!-- Header -->
+    <div class="orders-header">
+      <div>
+        <h1>My <span>Orders</span></h1>
+        <p>View and track all your orders placed with this account. For guest orders, use the Track Order page.</p>
+      </div>
+      <div class="user-badge" id="userBadge" style="display:none;">
+        Signed in as <strong id="userEmail">—</strong>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="orders-actions">
+      <a class="btn-outline" href="order.html">🔍 Track Guest Order</a>
+      <a class="btn-gold" href="index.html#products">← Continue Shopping</a>
+      <button class="btn-outline" id="logoutBtn" style="display:none;">Logout</button>
+    </div>
+
+    <!-- Message -->
+    <div id="message" class="muted" aria-live="polite">
+      <span class="loading-spinner"></span> Loading your orders...
+    </div>
+
+    <!-- Orders list -->
+    <div id="ordersList"></div>
+
+  </div>
+</main>
+
+<script type="module">
+  import { supabase, supabaseConfigured, money, escapeHTML } from "./supabase.js";
+
+  const message = document.getElementById("message");
+  const list = document.getElementById("ordersList");
+  const userBadge = document.getElementById("userBadge");
+  const userEmail = document.getElementById("userEmail");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  function say(text, kind = "muted", showSpinner = false) {
+    message.className = kind;
+    if (showSpinner) {
+      message.innerHTML = `<span class="loading-spinner"></span> ${text}`;
+    } else {
+      message.textContent = text;
+    }
+  }
+
+  function fmtDate(v) {
+    if (!v) return "—";
+    const d = new Date(v);
+    return Number.isNaN(d.getTime()) ? "—" : d.toLocaleString("en-IN", {
+      day: "numeric", month: "short", year: "numeric",
+      hour: "2-digit", minute: "2-digit"
+    });
+  }
+
+  function statusClass(status) {
+    const s = String(status || "Pending").toLowerCase();
+    return "status " + s;
+  }
+
+  function itemNames(items) {
+    if (!Array.isArray(items) || !items.length) return "<p class='meta-value'>Order items</p>";
+    return `
+      <div class="order-items-list">
+        ${items.map(i => `
+          <div class="order-item-row">
+            ${i.image_url ? `<img class="order-item-thumb" src="${escapeHTML(i.image_url)}" alt="${escapeHTML(i.name || "Product")}">` : ""}
+            <span class="order-item-name">${escapeHTML(i.name || "Product")}</span>
+            <span class="order-item-qty">Qty: ${Number(i.quantity) || 1}</span>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  async function load() {
+    if (!supabaseConfigured) {
+      say("Supabase configuration is missing. Please check supabase.js.", "error");
+      return;
+    }
+
+    // Check auth
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      // Login required state
+      message.style.display = "none";
+      list.innerHTML = `
+        <div class="login-required">
+          <div class="login-required-icon">🔒</div>
+          <h2>Login Required</h2>
+          <p>Please sign in to view your orders. If you placed an order as a guest, use the Track Order page with your tracking number.</p>
+          <div class="login-required-actions">
+            <a class="btn-gold" href="login.html">Login / Sign Up</a>
+            <a class="btn-outline" href="order.html">Track Guest Order</a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    // Logged in - show user info
+    userBadge.style.display = "inline-flex";
+    userEmail.textContent = user.email || "User";
+    logoutBtn.style.display = "inline-flex";
+
+    // Fetch orders
+    const { data, error } = await supabase
+      .from("orders")
+      .select("id,order_number,items,total,payment_method,payment_status,status,created_at,tracking_number,courier_name,shipped_at,delivered_at")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      say("Unable to load orders: " + error.message, "error");
+      return;
+    }
+
+    if (!data?.length) {
+      message.style.display = "none";
+      list.innerHTML = `
+        <div class="empty-orders">
+          <div class="empty-orders-icon">📦</div>
+          <h2>No Orders Yet</h2>
+          <p>You haven't placed any orders yet. Explore our collection and find your perfect watch.</p>
+          <a class="btn-gold" href="index.html#products">Start Shopping →</a>
+        </div>
+      `;
+      return;
+    }
+
+    say(`${data.length} order${data.length === 1 ? "" : "s"} found.`, "success");
+
+    list.innerHTML = data.map(o => {
+      const orderNum = o.order_number ?? o.id;
+      const hasOrderNumber = o.order_number != null && o.order_number !== "";
+      const trackUrl = `order.html?id=${encodeURIComponent(o.order_number ?? "")}`;
+
+      return `
+        <article class="order-item">
+          <div class="order-head">
+            <strong>Order #${escapeHTML(String(orderNum))}</strong>
+            <span class="${statusClass(o.status)}">${escapeHTML(o.status || "Pending")}</span>
+          </div>
+
+          <div class="order-meta">
+            <div class="meta-item">
+              <span class="meta-label">Order Date</span>
+              <span class="meta-value">${escapeHTML(fmtDate(o.created_at))}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Payment</span>
+              <span class="meta-value">${escapeHTML(o.payment_method || "COD")} · ${escapeHTML(o.payment_status || "Pending")}</span>
+            </div>
+          </div>
+
+          ${itemNames(o.items)}
+
+          <div class="order-total">
+            <span class="order-total-label">Total</span>
+            <span class="order-total-value">${money(o.total)}</span>
+          </div>
+
+          ${o.tracking_number ? `
+            <div class="tracking-info">
+              <strong>Courier Tracking ID:</strong> ${escapeHTML(o.tracking_number)}
+              ${o.courier_name ? `<br><strong>Courier:</strong> ${escapeHTML(o.courier_name)}` : ""}
+            </div>
+          ` : ""}
+
+          <div class="order-item-actions">
+            <a class="btn-track ${!hasOrderNumber ? "disabled" : ""}" href="${hasOrderNumber ? trackUrl : "#"}">
+              🔍 Track Order
+            </a>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  logoutBtn?.addEventListener("click", async () => {
+    try {
+      await supabase.auth.signOut();
+      location.href = "login.html";
+    } catch (e) {
+      alert("Logout failed. Please try again.");
+    }
+  });
+
+  load().catch(e => {
+    console.error(e);
+    say("Unexpected error: " + (e.message || e), "error");
+  });
+</script>
+
+</body>
+</html>

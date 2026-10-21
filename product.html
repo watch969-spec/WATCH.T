@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>Product Details | WATCH.T</title>
+<meta name="description" content="View product details at WATCH.T.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  .product-page { max-width: 1320px; margin: 0 auto; padding: 48px 48px 100px; background: var(--paper); min-height: 100vh; }
+
+  .breadcrumb { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .breadcrumb a { color: var(--muted); transition: color .3s var(--ease); }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb #breadcrumbName { color: var(--ink); font-weight: 600; }
+
+  .detail-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; background: var(--white); border: 1px solid var(--line); padding: 48px; align-items: start; }
+
+  .product-gallery { min-width: 0; }
+  .gallery-wrap { position: relative; }
+  .main-image { display: block; width: 100%; height: 520px; object-fit: contain; background: var(--paper); border: 1px solid var(--line); transition: all .3s var(--ease); }
+  .wishlist-btn { position: absolute; top: 16px; right: 16px; width: 48px; height: 48px; border-radius: 50%; background: var(--white); border: 1px solid var(--line); display: grid; place-items: center; font-size: 20px; cursor: pointer; transition: all .3s var(--ease); z-index: 2; color: var(--muted); }
+  .wishlist-btn:hover { border-color: var(--gold); transform: scale(1.08); }
+  .wishlist-btn.active { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+  /* ============================================ */
+  /* PRODUCT VIDEO — YELLOW HIGHLIGHT             */
+  /* ============================================ */
+  .product-video-wrap {
+    margin-top: 24px;
+    background: #fef3c7;
+    border: 2px solid #facc15;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(250, 204, 21, 0.15);
+  }
+
+  .product-video-wrap h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #854d0e;
+    margin: 0 0 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .product-video-wrap h3::before {
+    content: '▶';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: #facc15;
+    color: #000;
+    border-radius: 50%;
+    font-size: 11px;
+    padding-left: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .product-video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 6px;
+    display: block;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .thumbnail-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+  .thumbnail-button { padding: 0; background: var(--paper); border: 1px solid var(--line); cursor: pointer; min-width: 0; overflow: hidden; transition: border-color .3s var(--ease); }
+  .thumbnail-button:hover { border-color: var(--gold-light); }
+  .product-thumbnail { display: block; width: 100%; height: 80px; object-fit: cover; }
+  .thumbnail-button.active { border: 2px solid var(--gold); }
+
+  .detail-category { color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-size: 11px; font-weight: 600; margin: 0 0 12px; }
+  .detail-info h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 500; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 20px; color: var(--ink); }
+
+  .detail-rating { color: var(--gold); font-size: 16px; margin: 16px 0 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .detail-rating #ratingStars { letter-spacing: 3px; }
+  .detail-rating #ratingText { color: var(--muted); font-size: 13px; font-weight: 400; }
+
+  .stock-status { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 999px; margin-bottom: 16px; }
+  .stock-status.in-stock { background: #e8f5e9; color: #2e7d32; }
+  .stock-status.low-stock { background: #fff3e0; color: #e65100; }
+  .stock-status.out-of-stock { background: #ffebee; color: #c62828; }
+  .stock-status::before { content: '●'; font-size: 8px; }
+
+  .detail-price { margin: 24px 0; font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .detail-price del { color: var(--muted); font-size: 20px; font-weight: 400; font-family: 'Inter', sans-serif; }
+
+  .detail-description { color: #555; line-height: 1.85; font-size: 15px; font-weight: 300; margin: 0 0 8px; }
+
+  .detail-label { display: block; margin: 28px 0 12px; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+  .quantity-control { display: inline-flex; align-items: center; border: 1px solid var(--line); background: var(--white); }
+  .quantity-control button { width: 44px; height: 44px; background: var(--white); border: none; font-size: 18px; color: var(--ink); cursor: pointer; transition: background .25s var(--ease); }
+  .quantity-control button:hover { background: var(--paper); }
+  .quantity-control button:disabled { opacity: .3; cursor: not-allowed; }
+  #quantity { min-width: 48px; text-align: center; font-weight: 600; font-size: 15px; border-left: 1px solid var(--line); border-right: 1px solid var(--line); padding: 12px 0; }
+
+  .detail-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+  .detail-buttons button, .detail-buttons a { display: flex; justify-content: center; align-items: center; text-align: center; min-height: 54px; padding: 14px 20px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; text-decoration: none; box-sizing: border-box; transition: all .4s var(--ease); position: relative; overflow: hidden; z-index: 1; border: none; }
+  .detail-buttons button:disabled { opacity: .5; cursor: not-allowed; }
+  .add-cart { background: var(--gold); border: 1px solid var(--gold); color: var(--ink); }
+  .add-cart::before { content: ''; position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: right; transition: transform .5s var(--ease); z-index: -1; }
+  .add-cart:hover::before { transform: scaleX(1); transform-origin: left; }
+  .add-cart:hover { color: var(--gold); }
+  .buy-now { background: var(--ink); border: 1px solid var(--ink); color: var(--white); }
+  .buy-now:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+  .share-row { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; background: var(--paper); border: 1px solid var(--line); font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink); cursor: pointer; transition: all .3s var(--ease); text-decoration: none; }
+  .share-btn:hover { border-color: var(--gold); background: var(--gold); }
+
+  .trust-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; padding: 20px; background: var(--paper); border: 1px solid var(--line); }
+  .trust-row > div { text-align: center; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .trust-row > div strong { display: block; color: var(--ink); font-size: 11px; letter-spacing: .5px; text-transform: none; margin-top: 4px; font-weight: 700; }
+
+  .detail-note { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 24px; padding: 16px; background: var(--paper); border-left: 3px solid var(--gold); font-style: italic; }
+
+  .product-extra { margin-top: 48px; }
+  .extra-card { background: var(--white); border: 1px solid var(--line); margin-bottom: 24px; padding: 40px; }
+  .extra-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; margin: 0 0 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 12px; }
+  .extra-card h2::before { content: ''; width: 3px; height: 24px; background: var(--gold); }
+  .extra-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; margin: 24px 0 10px; }
+  .extra-card p, .extra-card li { color: #555; font-size: 14px; line-height: 1.85; font-weight: 300; }
+  .extra-card ul { padding-left: 20px; margin: 0; }
+  .extra-card ul li { padding: 6px 0; }
+
+  .details-table { width: 100%; border-collapse: collapse; }
+  .details-table td { padding: 14px 12px; border-bottom: 1px solid var(--line); font-size: 14px; text-align: left; line-height: 1.7; vertical-align: top; word-break: break-word; }
+  .details-table tr:last-child td { border-bottom: none; }
+  .details-table td:first-child { width: 35%; color: var(--muted); font-weight: 500; letter-spacing: .3px; }
+  .details-table td:last-child { color: var(--ink); font-weight: 400; }
+
+  .pin-check-box { display: flex; gap: 10px; margin-top: 12px; max-width: 420px; }
+  .pin-check-box input { flex: 1; min-width: 0; padding: 14px 16px; border: 1px solid var(--line); background: var(--paper); font-family: inherit; font-size: 14px; outline: none; transition: all .3s var(--ease); }
+  .pin-check-box input:focus { border-color: var(--gold); background: var(--white); }
+  .pin-check-box button { padding: 14px 24px; background: var(--ink); color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all .3s var(--ease); }
+  .pin-check-box button:hover { background: var(--gold); color: var(--ink); }
+  .pin-check-box button:disabled { opacity: .6; cursor: not-allowed; }
+  #pinMessage { margin-top: 14px; font-size: 13px !important; overflow-wrap: anywhere; }
+
+  .review-note { color: var(--muted); font-size: 12px !important; font-style: italic; padding: 14px; background: var(--paper); border-left: 3px solid var(--gold); margin-top: 20px; }
+  .review-item { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .review-item:last-child { border-bottom: none; }
+  .review-stars { color: var(--gold) !important; font-size: 18px !important; letter-spacing: 3px; margin: 0 0 10px; }
+  .review-comment { white-space: pre-wrap; overflow-wrap: anywhere; color: #444 !important; font-size: 14px !important; line-height: 1.8; margin: 0 0 8px; }
+  .review-date { color: var(--muted); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  #reviewSummary { font-size: 14px !important; color: var(--muted) !important; padding: 16px; background: var(--paper); border-left: 3px solid var(--gold); margin-bottom: 20px; }
+  #reviewMessage { overflow-wrap: anywhere; font-size: 13px !important; margin-top: 14px; }
+
+  .review-form { margin-top: 20px; }
+  .review-form input, .review-form select, .review-form textarea { width: 100%; box-sizing: border-box; padding: 14px 16px; border: 1px solid var(--line); background: var(--paper); font-family: inherit; font-size: 14px; color: var(--ink); outline: none; transition: all .3s var(--ease); border-radius: var(--radius); }
+  .review-form input:focus, .review-form select:focus, .review-form textarea:focus { border-color: var(--gold); background: var(--white); }
+  .review-form textarea { resize: vertical; }
+  .review-form .detail-label { margin: 20px 0 10px; }
+  .review-submit { margin-top: 20px; padding: 16px 32px; background: var(--gold); color: var(--ink); border: 1px solid var(--gold); cursor: pointer; font-weight: 700; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: all .4s var(--ease); }
+  .review-submit:hover { background: var(--ink); color: var(--gold); border-color: var(--ink); }
+  .review-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+  .related-section { margin-top: 48px; padding: 48px; background: var(--white); border: 1px solid var(--line); }
+  .related-heading { text-align: center; margin-bottom: 40px; }
+  .related-heading p { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin: 0 0 12px; }
+  .related-heading h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 500; margin: 0; }
+  .related-heading h2 span { color: var(--gold); font-style: italic; font-weight: 400; }
+  .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .related-card { background: var(--paper); border: 1px solid var(--line); overflow: hidden; transition: all .4s var(--ease); text-decoration: none; color: inherit; display: block; }
+  .related-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.1); border-color: var(--gold-light); }
+  .related-image { aspect-ratio: 1/1; overflow: hidden; background: var(--line); }
+  .related-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+  .related-card:hover .related-image img { transform: scale(1.05); }
+  .related-info { padding: 14px 16px; text-align: center; }
+  .related-cat { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .related-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; margin: 0 0 6px; color: var(--ink); line-height: 1.3; }
+  .related-price { font-weight: 700; font-size: 13px; color: var(--ink); }
+  .related-price del { color: var(--muted); font-weight: 400; font-size: 11px; margin-left: 6px; }
+
+  .recent-section { margin-top: 48px; padding: 48px; background: var(--white); border: 1px solid var(--line); }
+  .recent-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+  .recent-heading h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 12px; }
+  .recent-heading h2::before { content: ''; width: 3px; height: 24px; background: var(--gold); }
+  .recent-clear { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; padding: 8px 12px; text-decoration: underline; transition: color .3s var(--ease); }
+  .recent-clear:hover { color: var(--gold); }
+  .recent-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+  .recent-card { background: var(--paper); border: 1px solid var(--line); overflow: hidden; text-decoration: none; color: inherit; display: block; transition: all .4s var(--ease); }
+  .recent-card:hover { transform: translateY(-4px); border-color: var(--gold-light); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+  .recent-image { aspect-ratio: 1/1; overflow: hidden; background: var(--line); }
+  .recent-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+  .recent-card:hover .recent-image img { transform: scale(1.05); }
+  .recent-info { padding: 12px 14px; text-align: center; }
+  .recent-name { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 600; margin: 0 0 4px; color: var(--ink); line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .recent-price { font-weight: 700; font-size: 12px; color: var(--ink); }
+
+  .toast { position: fixed; bottom: 32px; left: 50%; transform: translate(-50%, 80px); background: var(--ink); color: var(--white); padding: 16px 32px; border-radius: 999px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; opacity: 0; transition: all .45s var(--ease); z-index: 500; box-shadow: var(--shadow-lg); border: 1px solid rgba(201,162,74,.2); }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .header .logo, .header a { color: #fff; }
+  .header a:hover { color: var(--gold); }
+  .product-back-link { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.75); display: inline-flex; align-items: center; gap: 6px; transition: color .3s var(--ease); }
+  .product-back-link:hover { color: var(--gold); }
+
+  @media (max-width: 1000px) {
+    .product-page { padding: 32px 24px 60px; }
+    .detail-layout { gap: 32px; padding: 32px; }
+    .main-image { height: 420px; }
+    .related-grid { grid-template-columns: repeat(2, 1fr); }
+    .related-section, .recent-section { padding: 32px 24px; }
+  }
+
+  @media (max-width: 800px) {
+    .product-page { padding: 20px 14px 60px; }
+    .breadcrumb { font-size: 11px; margin-bottom: 20px; }
+    .detail-layout { grid-template-columns: 1fr; gap: 24px; padding: 20px; }
+    .main-image { height: 320px; }
+    .wishlist-btn { width: 40px; height: 40px; top: 10px; right: 10px; font-size: 17px; }
+    
+    .product-video-wrap {
+      padding: 16px;
+      margin-top: 16px;
+    }
+    .product-video-wrap h3 {
+      font-size: 11px;
+      margin-bottom: 12px;
+    }
+
+    .thumbnail-grid { grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 10px; }
+    .product-thumbnail { height: 56px; }
+    .detail-category { font-size: 10px; letter-spacing: 2.5px; }
+    .detail-info h1 { font-size: 26px; line-height: 1.25; margin-bottom: 14px; }
+    .stock-status { font-size: 10px; padding: 6px 12px; margin-bottom: 12px; }
+    .detail-rating { font-size: 14px; margin: 10px 0 16px; gap: 8px; }
+    .detail-rating #ratingText { font-size: 12px; }
+    .detail-price { font-size: 30px; margin: 18px 0; gap: 8px; }
+    .detail-price del { font-size: 16px; }
+    .detail-description { font-size: 14px; line-height: 1.7; }
+    .detail-label { font-size: 9px; letter-spacing: 1.5px; margin: 20px 0 10px; }
+    .quantity-control button { width: 40px; height: 40px; font-size: 16px; }
+    #quantity { min-width: 44px; padding: 10px 0; font-size: 14px; }
+    .detail-buttons { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+    .detail-buttons button, .detail-buttons a { min-height: 48px; padding: 14px 16px; font-size: 11px; letter-spacing: 1.5px; }
+    .share-row { gap: 6px; margin-top: 16px; }
+    .share-btn { flex: 1 1 calc(50% - 3px); justify-content: center; font-size: 10px; padding: 10px; letter-spacing: .5px; }
+    .trust-row { grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 14px 10px; margin-top: 16px; }
+    .trust-row > div { font-size: 9px; letter-spacing: .5px; }
+    .trust-row > div strong { font-size: 10px; margin-top: 3px; }
+    .detail-note { font-size: 11px; padding: 14px; margin-top: 18px; }
+    .product-extra { margin-top: 28px; }
+    .extra-card { padding: 24px 18px; margin-bottom: 16px; }
+    .extra-card h2 { font-size: 20px; margin-bottom: 18px; padding-bottom: 12px; }
+    .extra-card h2::before { width: 3px; height: 18px; }
+    .extra-card h3 { font-size: 17px; margin: 18px 0 8px; }
+    .extra-card p, .extra-card li { font-size: 13px; line-height: 1.75; }
+    .details-table td { padding: 12px 8px; font-size: 13px; }
+    .details-table td:first-child { width: 40%; font-size: 12px; }
+    .pin-check-box { flex-direction: column; gap: 8px; max-width: 100%; }
+    .pin-check-box input, .pin-check-box button { padding: 12px 14px; font-size: 13px; width: 100%; }
+    .review-stars { font-size: 16px !important; }
+    .review-comment { font-size: 13px !important; }
+    #reviewSummary { font-size: 12px !important; padding: 12px; }
+    .review-form input, .review-form select, .review-form textarea { padding: 12px 14px; font-size: 13px; }
+    .review-submit { padding: 14px 24px; font-size: 10px; width: 100%; }
+    .related-section { padding: 24px 16px; margin-top: 28px; }
+    .related-heading { margin-bottom: 24px; }
+    .related-heading h2 { font-size: 24px; }
+    .related-heading p { font-size: 9px; letter-spacing: 3px; }
+    .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .related-info { padding: 10px 8px; }
+    .related-name { font-size: 13px; }
+    .related-price { font-size: 12px; }
+    .related-cat { font-size: 8px; letter-spacing: 1.5px; }
+    .recent-section { padding: 24px 16px; margin-top: 28px; }
+    .recent-heading h2 { font-size: 20px; }
+    .recent-heading h2::before { width: 3px; height: 18px; }
+    .recent-clear { font-size: 10px; padding: 6px 8px; }
+    .recent-strip { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .recent-info { padding: 10px 8px; }
+    .recent-name { font-size: 12px; }
+    .recent-price { font-size: 11px; }
+    .toast { left: 14px; right: 14px; transform: translateY(80px); bottom: 20px; padding: 14px 20px; font-size: 11px; text-align: center; }
+    .toast.show { transform: translateY(0); }
+  }
+
+  @media (max-width: 400px) {
+    .product-page { padding: 16px 10px 50px; }
+    .detail-layout { padding: 14px; gap: 20px; }
+    .main-image { height: 260px; }
+    .thumbnail-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    .product-thumbnail { height: 48px; }
+    .detail-info h1 { font-size: 22px; }
+    .detail-price { font-size: 26px; }
+    .detail-price del { font-size: 14px; }
+    .detail-buttons button, .detail-buttons a { font-size: 10px; letter-spacing: 1px; }
+    .share-btn { font-size: 9px; padding: 8px 6px; }
+    .trust-row { padding: 12px 8px; }
+    .trust-row > div { font-size: 8px; }
+    .trust-row > div strong { font-size: 9px; }
+    .related-grid, .recent-strip { grid-template-columns: repeat(2, 1fr); }
+    .extra-card { padding: 20px 14px; }
+    .extra-card h2 { font-size: 18px; }
+    .details-table td { font-size: 12px; padding: 10px 6px; }
+    .details-table td:first-child { width: 45%; font-size: 11px; }
+  }
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">WATCH<span>.T</span></a>
+  <a class="product-back-link" href="index.html#products">← Back to Shop</a>
+</header>
+
+<main class="product-page">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <a href="index.html#products">Shop</a>
+    <span>/</span>
+    <span id="breadcrumbName">Product</span>
+  </div>
+
+  <section class="detail-layout">
+    <div class="product-gallery">
+      <div class="gallery-wrap">
+        <img id="productImage" class="main-image" src="" alt="Product image">
+        <button class="wishlist-btn" id="wishlistBtn" aria-label="Add to wishlist" title="Add to wishlist">♡</button>
+      </div>
+
+      <!-- VIDEO SECTION -->
+      <div class="product-video-wrap" id="productVideoWrap" style="display:none;">
+        <h3>Product Video</h3>
+        <video id="productVideo" class="product-video" controls playsinline preload="metadata"></video>
+      </div>
+
+      <div id="productThumbnails" class="thumbnail-grid" aria-label="Product images"></div>
+    </div>
+
+    <div class="detail-info">
+      <p class="detail-category" id="productCategory"></p>
+      <h1 id="productName">Loading product...</h1>
+
+      <div id="stockStatus"></div>
+
+      <div class="detail-rating" aria-live="polite">
+        <span id="ratingStars">☆☆☆☆☆</span>
+        <span id="ratingText">Ratings and reviews are loading...</span>
+      </div>
+
+      <div class="detail-price">
+        <span id="productPrice"></span>
+        <del id="oldPrice"></del>
+      </div>
+
+      <p class="detail-description" id="productDescription"></p>
+
+      <label class="detail-label" for="quantity">Quantity</label>
+      <div class="quantity-control">
+        <button id="minusQty" type="button" aria-label="Decrease quantity">−</button>
+        <span id="quantity">1</span>
+        <button id="plusQty" type="button" aria-label="Increase quantity">+</button>
+      </div>
+
+      <div class="detail-buttons">
+        <button class="add-cart" id="addToCart" type="button">ADD TO CART +</button>
+        <a class="buy-now" href="checkout.html" id="buyNow">BUY NOW →</a>
+      </div>
+
+      <div class="share-row">
+        <button class="share-btn" id="shareWhatsapp" type="button">📱 WhatsApp</button>
+        <button class="share-btn" id="shareCopy" type="button">🔗 Copy Link</button>
+        <button class="share-btn" id="shareNative" type="button">📤 Share</button>
+      </div>
+
+      <div class="trust-row">
+        <div>✓ 100%<strong>Original</strong></div>
+        <div>↺ 7-Day<strong>Returns</strong></div>
+        <div>🛡 1-Year<strong>Warranty</strong></div>
+      </div>
+
+      <p class="detail-note">
+        Please verify product details, delivery availability and warranty terms before placing an order.
+      </p>
+    </div>
+  </section>
+
+  <section class="product-extra">
+
+    <div class="extra-card">
+      <h2>Delivery Details</h2>
+      <p>🚚 Delivery availability depends on your location.</p>
+      <p>📦 Order tracking details can be checked after the order has been confirmed.</p>
+      <p>↩️ Please check the store's return and replacement policy before ordering.</p>
+
+      <label class="detail-label" for="deliveryPin">Check Delivery PIN Code</label>
+      <div class="pin-check-box">
+        <input id="deliveryPin" type="text" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit PIN">
+        <button id="checkPin" type="button">Check</button>
+      </div>
+      <p id="pinMessage" aria-live="polite"></p>
+    </div>
+
+    <div class="extra-card">
+      <h2>Product Highlights</h2>
+      <ul>
+        <li id="highlightCategory">Category: Loading...</li>
+        <li id="highlightPrice">Selling price: Loading...</li>
+        <li id="highlightDiscount">Discount: Checking price...</li>
+        <li id="highlightDescription">Description: Loading...</li>
+        <li id="highlightImages">Product images: Loading...</li>
+      </ul>
+    </div>
+
+    <div class="extra-card">
+      <h2>All Details</h2>
+      <table class="details-table">
+        <tbody>
+          <tr><td>Product Name</td><td id="extraProductName">-</td></tr>
+          <tr><td>Category</td><td id="extraProductCategory">-</td></tr>
+          <tr><td>Price</td><td id="extraProductPrice">-</td></tr>
+          <tr><td>Original Price</td><td id="extraOriginalPrice">-</td></tr>
+          <tr><td>Product ID</td><td id="extraProductId">-</td></tr>
+          <tr><td>Description</td><td id="extraProductDescription">-</td></tr>
+          <tr><td>Product Images</td><td id="extraProductImageCount">-</td></tr>
+          <tr><td>Stock</td><td id="extraProductStock">-</td></tr>
+          <tr><td>Warranty</td><td>1 Year Domestic Warranty</td></tr>
+          <tr><td>Availability</td><td id="extraProductAvailability">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="extra-card">
+      <h2>Warranty Information</h2>
+      <h3>1 Year Domestic Warranty</h3>
+      <p>Warranty coverage must be confirmed from the actual product manufacturer or seller.</p>
+    </div>
+
+    <div class="extra-card" id="ratingsReviews">
+      <h2>Ratings and Reviews</h2>
+      <p id="reviewSummary">Customer ratings are not available yet.</p>
+      <div id="reviewsList" aria-live="polite"><p>Loading reviews...</p></div>
+      <p class="review-note">Reviews are displayed after approval.</p>
+
+      <h3>Write a Review</h3>
+      <form id="reviewForm" class="review-form">
+        <label class="detail-label" for="reviewName">Your Name</label>
+        <input id="reviewName" type="text" maxlength="80" placeholder="Enter your name" autocomplete="name" required>
+
+        <label class="detail-label" for="reviewRating">Your Rating</label>
+        <select id="reviewRating" required>
+          <option value="">Select rating</option>
+          <option value="5">★★★★★ - Excellent</option>
+          <option value="4">★★★★ - Very Good</option>
+          <option value="3">★★★ - Good</option>
+          <option value="2">★★ - Fair</option>
+          <option value="1">★ - Poor</option>
+        </select>
+
+        <label class="detail-label" for="reviewComment">Your Comment</label>
+        <textarea id="reviewComment" rows="4" maxlength="1000" placeholder="Share your experience..." required></textarea>
+
+        <button type="submit" class="review-submit" id="submitReview">SUBMIT REVIEW</button>
+        <p id="reviewMessage" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="related-section" id="relatedSection" style="display:none;">
+      <div class="related-heading">
+        <p>Complete Your Collection</p>
+        <h2>You may also <span>like</span></h2>
+      </div>
+      <div class="related-grid" id="relatedGrid"></div>
+    </div>
+
+    <div class="recent-section" id="recentSection" style="display:none;">
+      <div class="recent-heading">
+        <h2>Recently Viewed</h2>
+        <button class="recent-clear" id="clearRecent" type="button">Clear History</button>
+      </div>
+      <div class="recent-strip" id="recentStrip"></div>
+    </div>
+
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+import { supabase, supabaseConfigured, money } from "./supabase.js";
+
+const params = new URLSearchParams(location.search);
+const productId = params.get("id");
+let product = null;
+let quantity = 1;
+
+const toast = document.getElementById("toast");
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2500);
+}
+
+function productImageUrls(p) {
+  const raw = Array.isArray(p.image_urls) ? p.image_urls :
+    Array.isArray(p.images) ? p.images : [];
+  return [...new Set([...raw, p.image_url, p.image]
+    .filter(url => typeof url === "string" && url.trim()))].slice(0, 6);
+}
+
+/* ============ VIDEO RENDER ============ */
+function renderProductVideo(p) {
+  const wrap = document.getElementById("productVideoWrap");
+  const video = document.getElementById("productVideo");
+  if (!wrap || !video) return;
+
+  const rawVideos = Array.isArray(p.video_urls) ? p.video_urls :
+    Array.isArray(p.videos) ? p.videos : [];
+  const videoUrls = [...new Set([...rawVideos, p.video_url]
+    .filter(url => typeof url === "string" && url.trim()))].slice(0, 1);
+
+  console.log("🎬 Video URLs found:", videoUrls);
+
+  if (!videoUrls.length) {
+    wrap.style.display = "none";
+    return;
+  }
+
+  wrap.style.display = "block";
+  video.src = videoUrls[0];
+  video.poster = p.image_url || (Array.isArray(p.image_urls) ? p.image_urls[0] : "") || "";
+  video.load();
+
+  video.addEventListener("error", (e) => {
+    console.error("Video load error:", e);
+    wrap.style.display = "none";
+  });
+
+  video.addEventListener("loadedmetadata", () => {
+    console.log("✅ Video loaded successfully");
+  });
+}
+
+function getStockInfo(p) {
+  const stock = Number(p.stock);
+  if (!Number.isFinite(stock)) return { label: "In Stock", cls: "in-stock", available: true };
+  if (stock <= 0) return { label: "Sold Out", cls: "out-of-stock", available: false };
+  if (stock <= 5) return { label: `Only ${stock} left`, cls: "low-stock", available: true };
+  return { label: "In Stock", cls: "in-stock", available: true };
+}
+
+function renderStock(p) {
+  const el = document.getElementById("stockStatus");
+  if (!el) return;
+  const info = getStockInfo(p);
+  el.innerHTML = `<span class="stock-status ${info.cls}">${info.label}</span>`;
+
+  const extraStock = document.getElementById("extraProductStock");
+  if (extraStock) {
+    const s = Number(p.stock);
+    extraStock.textContent = Number.isFinite(s) ? `${s} units` : "Not specified";
+  }
+
+  const addBtn = document.getElementById("addToCart");
+  const buyBtn = document.getElementById("buyNow");
+  if (!info.available) {
+    if (addBtn) { addBtn.disabled = true; addBtn.textContent = "SOLD OUT"; }
+    if (buyBtn) {
+      buyBtn.style.pointerEvents = "none";
+      buyBtn.style.opacity = ".5";
+      buyBtn.textContent = "SOLD OUT";
+    }
+  }
+}
+
+function readWishlist() {
+  try {
+    const v = JSON.parse(localStorage.getItem("watchWishlist") || "[]");
+    return Array.isArray(v) ? v : [];
+  } catch { return []; }
+}
+function saveWishlist(list) { localStorage.setItem("watchWishlist", JSON.stringify(list)); }
+function isInWishlist(id) { return readWishlist().some(item => String(item.id) === String(id)); }
+function updateWishlistBtn() {
+  const btn = document.getElementById("wishlistBtn");
+  if (!btn || !product) return;
+  const active = isInWishlist(product.id);
+  btn.classList.toggle("active", active);
+  btn.textContent = active ? "♥" : "♡";
+  btn.title = active ? "Remove from wishlist" : "Add to wishlist";
+}
+document.getElementById("wishlistBtn")?.addEventListener("click", () => {
+  if (!product) return;
+  let list = readWishlist();
+  const exists = list.some(item => String(item.id) === String(product.id));
+  if (exists) {
+    list = list.filter(item => String(item.id) !== String(product.id));
+    saveWishlist(list);
+    showToast("Removed from wishlist");
+  } else {
+    list.push({
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      price: Number(product.price),
+      image: product.image_url || product.image || ""
+    });
+    saveWishlist(list);
+    showToast("Added to wishlist ♥");
+  }
+  updateWishlistBtn();
+});
+
+document.getElementById("shareWhatsapp")?.addEventListener("click", () => {
+  if (!product) return;
+  const text = `Check out ${product.name} at WATCH.T — ${location.href}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+});
+document.getElementById("shareCopy")?.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(location.href);
+    showToast("Link copied!");
+  } catch { showToast("Could not copy link"); }
+});
+document.getElementById("shareNative")?.addEventListener("click", async () => {
+  if (!product) return;
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: product.name + " | WATCH.T",
+        text: `Check out ${product.name} at WATCH.T`,
+        url: location.href
+      });
+    } catch {}
+  } else {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      showToast("Link copied!");
+    } catch { showToast("Share not supported"); }
+  }
+});
+
+function readRecent() {
+  try {
+    const v = JSON.parse(localStorage.getItem("watchRecentViewed") || "[]");
+    return Array.isArray(v) ? v : [];
+  } catch { return []; }
+}
+function saveRecent(list) { localStorage.setItem("watchRecentViewed", JSON.stringify(list.slice(0, 12))); }
+function addToRecent(p) {
+  let list = readRecent();
+  list = list.filter(item => String(item.id) !== String(p.id));
+  list.unshift({
+    id: p.id,
+    name: p.name,
+    price: Number(p.price),
+    image: p.image_url || p.image || ""
+  });
+  saveRecent(list);
+}
+function renderRecent() {
+  const section = document.getElementById("recentSection");
+  const strip = document.getElementById("recentStrip");
+  if (!section || !strip) return;
+  const list = readRecent().filter(item => String(item.id) !== String(productId));
+  if (!list.length) { section.style.display = "none"; return; }
+  section.style.display = "block";
+  strip.innerHTML = list.slice(0, 6).map(item => `
+    <a class="recent-card" href="product.html?id=${encodeURIComponent(item.id)}">
+      <div class="recent-image">
+        <img src="${item.image}" alt="${item.name}" loading="lazy">
+      </div>
+      <div class="recent-info">
+        <p class="recent-name">${item.name}</p>
+        <p class="recent-price">${money(item.price)}</p>
+      </div>
+    </a>
+  `).join("");
+}
+document.getElementById("clearRecent")?.addEventListener("click", () => {
+  localStorage.removeItem("watchRecentViewed");
+  renderRecent();
+  showToast("History cleared");
+});
+
+async function renderRelated(currentProduct) {
+  const section = document.getElementById("relatedSection");
+  const grid = document.getElementById("relatedGrid");
+  if (!section || !grid) return;
+  if (!supabaseConfigured || !currentProduct.category) {
+    section.style.display = "none";
+    return;
+  }
+  let pool = [];
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .select("id,name,category,price,old_price,image_url")
+      .eq("active", true)
+      .eq("category", currentProduct.category)
+      .neq("id", currentProduct.id)
+      .limit(4);
+    if (!error && Array.isArray(data)) pool = data;
+  } catch (err) { console.error("Related error:", err); }
+
+  if (!pool.length) { section.style.display = "none"; return; }
+  section.style.display = "block";
+  grid.innerHTML = pool.map(p => {
+    const oldPrice = Number(p.old_price ?? 0);
+    const price = Number(p.price) || 0;
+    return `
+    <a class="related-card" href="product.html?id=${encodeURIComponent(p.id)}">
+      <div class="related-image">
+        <img src="${p.image_url || p.image || ""}" alt="${p.name}" loading="lazy">
+      </div>
+      <div class="related-info">
+        <div class="related-cat">${p.category}</div>
+        <p class="related-name">${p.name}</p>
+        <p class="related-price">${money(price)}${oldPrice > price ? `<del>${money(oldPrice)}</del>` : ""}</p>
+      </div>
+    </a>`;
+  }).join("");
+}
+
+function renderGallery(p) {
+  const main = document.getElementById("productImage");
+  const thumbs = document.getElementById("productThumbnails");
+  const urls = productImageUrls(p);
+  thumbs.replaceChildren();
+  if (!urls.length) {
+    main.removeAttribute("src");
+    main.alt = "No product image available";
+    return;
+  }
+  main.src = urls[0];
+  main.alt = (p.name || "Product") + " image";
+  urls.forEach((url, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "thumbnail-button" + (index === 0 ? " active" : "");
+    button.setAttribute("aria-label", "Show image " + (index + 1));
+    const img = document.createElement("img");
+    img.className = "product-thumbnail";
+    img.src = url;
+    img.alt = (p.name || "Product") + " image " + (index + 1);
+    button.appendChild(img);
+    button.addEventListener("click", () => {
+      main.src = url;
+      thumbs.querySelectorAll(".thumbnail-button").forEach(item => {
+        item.classList.toggle("active", item === button);
+      });
+    });
+    thumbs.appendChild(button);
+  });
+}
+
+function updateExtraDetails() {
+  if (!product) return;
+  const price = Number(product.price || 0);
+  const oldPrice = Number(product.old_price ?? product.oldPrice ?? 0);
+  const discount = oldPrice > price && oldPrice > 0
+    ? Math.round((1 - price / oldPrice) * 100) : 0;
+  const imageCount = productImageUrls(product).length;
+  const description = product.description || "No description has been added for this product yet.";
+
+  document.getElementById("extraProductName").textContent = product.name || "-";
+  document.getElementById("extraProductCategory").textContent = product.category || "-";
+  document.getElementById("extraProductPrice").textContent = money(price);
+  document.getElementById("extraOriginalPrice").textContent =
+    oldPrice > price ? money(oldPrice) : "Not provided";
+  document.getElementById("extraProductId").textContent = String(product.id ?? "-");
+  document.getElementById("extraProductDescription").textContent = description;
+  document.getElementById("extraProductImageCount").textContent =
+    imageCount ? `${imageCount} image(s)` : "No image uploaded";
+  document.getElementById("extraProductAvailability").textContent =
+    product.active === false ? "Currently unavailable" : "Listed in store";
+
+  document.getElementById("highlightCategory").textContent =
+    "Category: " + (product.category || "Not specified");
+  document.getElementById("highlightPrice").textContent = "Selling price: " + money(price);
+  document.getElementById("highlightDiscount").textContent =
+    discount ? `Discount: ${discount}% off` : "Discount: No discount";
+  document.getElementById("highlightDescription").textContent = "Description: " + description;
+  document.getElementById("highlightImages").textContent = "Product images: " + imageCount;
+}
+
+async function loadProductReviews(productIdValue) {
+  const summary = document.getElementById("reviewSummary");
+  const stars = document.getElementById("ratingStars");
+  const ratingText = document.getElementById("ratingText");
+
+  if (!supabaseConfigured) {
+    summary.textContent = "Customer ratings unavailable.";
+    stars.textContent = "☆☆☆☆☆";
+    ratingText.textContent = "No verified ratings yet";
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("product_reviews")
+      .select("rating, review, created_at")
+      .eq("product_id", productIdValue)
+      .eq("approved", true);
+
+    if (error || !Array.isArray(data) || data.length === 0) {
+      summary.textContent = "No approved reviews yet.";
+      stars.textContent = "☆☆☆☆☆";
+      ratingText.textContent = "No verified ratings yet";
+      return;
+    }
+
+    const ratings = data.map(item => Number(item.rating))
+      .filter(value => Number.isFinite(value) && value >= 1 && value <= 5);
+
+    if (!ratings.length) {
+      summary.textContent = "No valid ratings yet.";
+      stars.textContent = "☆☆☆☆☆";
+      ratingText.textContent = "Ratings unavailable";
+      return;
+    }
+
+    const average = ratings.reduce((sum, value) => sum + value, 0) / ratings.length;
+    stars.textContent = "★".repeat(Math.round(average)) + "☆".repeat(5 - Math.round(average));
+    ratingText.textContent = `${average.toFixed(1)} / 5 (${ratings.length} rating${ratings.length === 1 ? "" : "s"})`;
+    summary.textContent = `${ratings.length} approved rating${ratings.length === 1 ? "" : "s"} · Average ${average.toFixed(1)} out of 5.`;
+  } catch (error) {
+    console.error("Rating error:", error);
+    summary.textContent = "Customer reviews not connected.";
+    stars.textContent = "☆☆☆☆☆";
+    ratingText.textContent = "No verified ratings yet";
+  }
+}
+
+async function displayProductReviews() {
+  const list = document.getElementById("reviewsList");
+  if (!supabaseConfigured || !product) {
+    list.textContent = "Reviews require Supabase connection.";
+    return;
+  }
+  try {
+    const { data, error } = await supabase
+      .from("product_reviews")
+      .select("rating, review, created_at")
+      .eq("product_id", product.id)
+      .eq("approved", true)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    list.replaceChildren();
+
+    if (!data || data.length === 0) {
+      list.textContent = "No approved reviews yet. Be the first to review!";
+      return;
+    }
+
+    data.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "review-item";
+
+      const stars = document.createElement("p");
+      stars.className = "review-stars";
+      const rating = Math.max(1, Math.min(5, Math.round(Number(item.rating) || 0)));
+      stars.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+      const comment = document.createElement("p");
+      comment.className = "review-comment";
+      comment.textContent = item.review || "";
+
+      const date = document.createElement("small");
+      date.className = "review-date";
+      date.textContent = item.created_at ? new Date(item.created_at).toLocaleDateString() : "";
+
+      card.append(stars, comment, date);
+      list.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Review error:", error);
+    list.textContent = "Unable to load reviews.";
+  }
+}
+
+async function loadProduct() {
+  if (!productId) {
+    showProductNotFound("No product ID specified in the URL.");
+    return;
+  }
+  if (!supabaseConfigured) {
+    showProductNotFound("Product details unavailable — Supabase not configured.");
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("id", productId)
+      .eq("active", true)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Product loading error:", error);
+      showProductNotFound("Could not load product details.");
+      return;
+    }
+    if (!data) {
+      showProductNotFound("This product could not be found or is no longer available.");
+      return;
+    }
+    product = data;
+  } catch (err) {
+    console.error("Product fetch error:", err);
+    showProductNotFound("Could not load product details.");
+    return;
+  }
+
+  document.title = product.name + " | WATCH.T";
+  document.getElementById("breadcrumbName").textContent = product.name;
+  document.getElementById("productCategory").textContent = product.category || "";
+  document.getElementById("productName").textContent = product.name;
+  document.getElementById("productPrice").textContent = money(product.price);
+
+  const oldPrice = product.old_price ?? product.oldPrice;
+  document.getElementById("oldPrice").textContent =
+    oldPrice != null && Number(oldPrice) > Number(product.price) ? money(oldPrice) : "";
+
+  document.getElementById("productDescription").textContent =
+    product.description || "Discover this WATCH.T design.";
+
+  renderGallery(product);
+  renderProductVideo(product);
+  renderStock(product);
+  updateExtraDetails();
+  updateWishlistBtn();
+  addToRecent(product);
+  renderRecent();
+
+  await loadProductReviews(product.id);
+  await displayProductReviews();
+  await renderRelated(product);
+
+  console.log("✅ Product loaded:", product.name, "| Video:", product.video_url || "none");
+}
+
+function showProductNotFound(message) {
+  document.getElementById("productName").textContent = "Product not found";
+  document.getElementById("productDescription").textContent = message;
+  document.getElementById("addToCart").disabled = true;
+  document.getElementById("buyNow").hidden = true;
+  document.getElementById("wishlistBtn").style.display = "none";
+  document.getElementById("reviewsList").textContent = "Reviews unavailable.";
+  document.querySelector(".product-extra").innerHTML = `
+    <div class="extra-card" style="text-align: center; padding: 80px 40px;">
+      <div style="font-size: 56px; opacity: .3; margin-bottom: 20px;">📦</div>
+      <h2 style="border: none; padding: 0; justify-content: center; font-size: 28px;">Product Not Found</h2>
+      <p style="color: #888; margin-top: 12px;">${message}</p>
+      <a href="index.html#products" class="gold-btn" style="display: inline-block; margin-top: 24px; padding: 16px 32px; text-decoration: none; background: var(--gold); color: var(--ink); font-weight: 700;">
+        ← Back to Shop
+      </a>
+    </div>
+  `;
+}
+
+function updateQuantity() {
+  document.getElementById("quantity").textContent = quantity;
+}
+document.getElementById("minusQty").addEventListener("click", () => {
+  if (quantity > 1) { quantity--; updateQuantity(); }
+});
+document.getElementById("plusQty").addEventListener("click", () => {
+  if (quantity < 10) { quantity++; updateQuantity(); }
+});
+
+function addProductToCart() {
+  if (!product) return;
+  const stockInfo = getStockInfo(product);
+  if (!stockInfo.available) { showToast("This product is sold out"); return; }
+
+  let cart = [];
+  try {
+    cart = JSON.parse(localStorage.getItem("allWatchCart") || "[]");
+    if (!Array.isArray(cart)) cart = [];
+  } catch { cart = []; }
+
+  const existing = cart.find(item => String(item.id) === String(product.id));
+  if (existing) {
+    existing.quantity = Math.min(99, Number(existing.quantity || 0) + quantity);
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      price: Number(product.price),
+      image: product.image_url || product.image || (Array.isArray(product.images) ? product.images[0] : ""),
+      quantity
+    });
+  }
+
+  localStorage.setItem("allWatchCart", JSON.stringify(cart));
+  showToast("Added to cart!");
+}
+
+document.getElementById("addToCart").addEventListener("click", addProductToCart);
+
+document.getElementById("buyNow").addEventListener("click", event => {
+  if (!product) { event.preventDefault(); return; }
+  const stockInfo = getStockInfo(product);
+  if (!stockInfo.available) {
+    event.preventDefault();
+    showToast("This product is sold out");
+    return;
+  }
+  addProductToCart();
+});
+
+document.getElementById("checkPin").addEventListener("click", async () => {
+  const pin = document.getElementById("deliveryPin").value.trim();
+  const message = document.getElementById("pinMessage");
+  const button = document.getElementById("checkPin");
+
+  if (!/^[0-9]{6}$/.test(pin)) {
+    message.textContent = "Please enter a valid 6-digit PIN code.";
+    return;
+  }
+  if (!supabaseConfigured) {
+    message.textContent = "Delivery checking not configured.";
+    return;
+  }
+  button.disabled = true;
+  message.textContent = "Checking...";
+  try {
+    const { data, error } = await supabase
+      .from("delivery_pincodes")
+      .select("available")
+      .eq("pincode", pin)
+      .maybeSingle();
+    if (error) throw error;
+    message.textContent = data?.available === true
+      ? "Delivery is available for this PIN code!"
+      : "Sorry, delivery is not available for this PIN code.";
+  } catch (error) {
+    console.error("PIN check failed:", error);
+    message.textContent = "Unable to check PIN code.";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+document.getElementById("reviewForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const form = document.getElementById("reviewForm");
+  const message = document.getElementById("reviewMessage");
+  const submitButton = document.getElementById("submitReview");
+
+  if (!product || !supabaseConfigured) {
+    message.textContent = "Review submission not configured.";
+    return;
+  }
+
+  const name = document.getElementById("reviewName").value.trim();
+  const rating = Number(document.getElementById("reviewRating").value);
+  const comment = document.getElementById("reviewComment").value.trim();
+
+  if (!name || name.length > 80 || !comment || comment.length > 1000 ||
+      !Number.isInteger(rating) || rating < 1 || rating > 5) {
+    message.textContent = "Please enter a valid name, rating, and comment.";
+    return;
+  }
+
+  submitButton.disabled = true;
+  message.textContent = "Submitting...";
+
+  try {
+    const { error } = await supabase
+      .from("product_reviews")
+      .insert([{
+        product_id: product.id,
+        reviewer_name: name,
+        rating: rating,
+        review: comment,
+        approved: true
+      }]);
+    if (error) throw error;
+
+    message.textContent = "Thank you! Your review was submitted.";
+    form.reset();
+    await displayProductReviews();
+    await loadProductReviews(product.id);
+  } catch (error) {
+    console.error("Review submission failed:", error);
+    message.textContent = "Review failed: " + (error.message || "Unknown error");
+  } finally {
+    submitButton.disabled = false;
+  }
+});
+
+loadProduct();
+</script>
+
+</body>
+</html>

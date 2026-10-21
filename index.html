@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>WATCH.T | Premium Watches</title>
+  <meta name="description" content="Explore watches for men, women and smart watch lovers at WATCH.T.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span>100% Original Watches</span>
+  <span>Free Shipping ₹999+</span>
+  <span>7-Day Easy Returns</span>
+  <span>1-Year Warranty</span>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <a class="logo" href="index.html">WATCH<span>.T</span></a>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+  <nav id="nav">
+    <a href="index.html#home">Home</a>
+    <a href="index.html#categories">Categories</a>
+    <a href="index.html#products">Shop</a>
+    <a href="index.html#about">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html">Login</a>
+  </nav>
+  <div class="header-actions">
+    <button id="searchBtn" aria-label="Search">⌕</button>
+    <button id="cartBtn" aria-label="Open cart">🛒 <span id="cartCount">0</span></button>
+  </div>
+</header>
+
+<!-- SEARCH BOX -->
+<div class="search-box" id="searchBox">
+  <input id="searchInput" type="search" placeholder="Search our collection...">
+  <button id="closeSearch" aria-label="Close search">✕</button>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="eyebrow" id="heroEyebrow">Timeless Style · Premium Collection</p>
+      <h1 id="heroHeading">Time for a<br><span>better you.</span></h1>
+      <p class="hero-text" id="heroText">
+        Discover watches that match your style.<br>Every second tells your story.
+      </p>
+      <a class="gold-btn" id="heroCta" href="#products">Explore Collection →</a>
+    </div>
+    <div class="hero-image">
+      <img id="heroImage"
+        src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1000&q=85"
+        alt="Premium wristwatch">
+    </div>
+  </section>
+
+  <!-- CATEGORIES (DYNAMIC) -->
+  <section class="section categories-section" id="categories">
+    <div class="section-heading">
+      <p class="eyebrow">Find Your Style</p>
+      <h2>Shop by <span>Category</span></h2>
+    </div>
+
+    <div class="category-grid" id="categoryGrid">
+      <!-- Loaded dynamically from Supabase -->
+    </div>
+  </section>
+
+  <!-- SHOP BY PRICE -->
+  <section class="section" id="shop-by-price" style="padding-top: 0;">
+    <div class="section-heading">
+      <p class="eyebrow">Find Your Budget</p>
+      <h2>Shop by <span>Price</span></h2>
+    </div>
+
+    <div class="price-links">
+      <a class="price-link" href="#products" data-price-filter="under-999">
+        <span class="price-tag">Under ₹999</span>
+        <span class="price-label">Budget Picks</span>
+      </a>
+      <a class="price-link" href="#products" data-price-filter="1000-1999">
+        <span class="price-tag">₹1,000–₹1,999</span>
+        <span class="price-label">Everyday Styles</span>
+      </a>
+      <a class="price-link" href="#products" data-price-filter="2000-2999">
+        <span class="price-tag">₹2,000–₹2,999</span>
+        <span class="price-label">Premium Range</span>
+      </a>
+      <a class="price-link" href="#products" data-price-filter="3000-plus">
+        <span class="price-tag">₹3,000+</span>
+        <span class="price-label">Luxury Collection</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ALL PRODUCTS -->
+  <section class="section products-section" id="products">
+    <div class="section-heading">
+      <p class="eyebrow">Our Selection</p>
+      <h2>Featured <span>Products</span></h2>
+      <p>Find the right timepiece for every occasion.</p>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-category="All">All</button>
+      <button class="filter-btn" data-category="Men">Men</button>
+      <button class="filter-btn" data-category="Women">Women</button>
+      <button class="filter-btn" data-category="Smart Watch">Smart Watch</button>
+      <button class="filter-btn" data-category="Luxury">Luxury</button>
+      <button class="filter-btn" data-category="Wall Clock">Wall Clock</button>
+      <button class="filter-btn" data-category="Accessories">Accessories</button>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+    <p class="empty-message" id="emptyMessage" hidden>No products found.</p>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="benefits">
+    <div><span>✦</span><h3>Quality Products</h3><p>Carefully selected styles</p></div>
+    <div><span>🚚</span><h3>Shipping</h3><p>Details at checkout</p></div>
+    <div><span>🔒</span><h3>Secure Shopping</h3><p>Protected checkout planned</p></div>
+    <div><span>↺</span><h3>Customer Support</h3><p>We are here to help</p></div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials-section" id="testimonials">
+    <div class="section-heading">
+      <p class="eyebrow">Trusted by Thousands</p>
+      <h2>What Our <span>Customers Say</span></h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">Quality bahut acchi hai, packaging bhi premium thi. Delivery 3 din me aa gayi. Highly recommended!</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">R</div>
+          <div>
+            <div class="testimonial-name">Rahul Sharma</div>
+            <div class="testimonial-loc">Delhi</div>
+          </div>
+          <span class="testimonial-verified">✓ Verified</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">Gifted this watch to my husband on our anniversary — he absolutely loved it. Looks exactly like the pictures.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">P</div>
+          <div>
+            <div class="testimonial-name">Priya Mehta</div>
+            <div class="testimonial-loc">Mumbai</div>
+          </div>
+          <span class="testimonial-verified">✓ Verified</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">Third order from WATCH.T — never disappointed. Support team bhi helpful hai. Value for money.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-name">Amit Kumar</div>
+            <div class="testimonial-loc">Bangalore</div>
+          </div>
+          <span class="testimonial-verified">✓ Verified</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO -->
+  <section class="promo" id="about">
+    <div>
+      <p class="eyebrow" id="promoEyebrow">The Luxury Edit</p>
+      <h2 id="promoHeading">Make every<br>second <span>count.</span></h2>
+      <p id="promoText">Discover a style that feels like you.</p>
+      <a class="gold-btn" href="#products">Shop Now →</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=900&q=85" alt="Elegant watch collection">
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq-section" id="faq">
+    <div class="section-heading">
+      <p class="eyebrow">Need Help?</p>
+      <h2>Frequently Asked <span>Questions</span></h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question">How do I track my order?</button>
+        <div class="faq-answer">
+          Once your order ships, you'll receive a tracking link via email and SMS. You can also visit the "Track My Order" page and enter your Order ID to see live status.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What is your return policy?</button>
+        <div class="faq-answer">
+          We offer a 7-day easy return policy. If you're not satisfied with your purchase, you can return the watch in its original packaging for a full refund or exchange.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Do you offer Cash on Delivery?</button>
+        <div class="faq-answer">
+          Yes, Cash on Delivery is available for most pin codes across India. You can select COD at checkout. A small handling fee may apply.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Are the watches genuine and under warranty?</button>
+        <div class="faq-answer">
+          All our watches are 100% original and come with a 1-year manufacturer warranty against any defects. Every product is inspected before dispatch.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <h2>Get <span>10% Off</span> Your First Order</h2>
+    <p>Subscribe for early access to new drops, exclusive offers, and styling tips.</p>
+    <form class="newsletter-form" id="newsletterForm">
+      <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <a class="logo" href="index.html">WATCH<span>.T</span></a>
+      <p id="footerDescription">Timepieces for every style and every moment. Crafted for those who understand that elegance lives in the details.</p>
+    </div>
+    <div>
+      <h3>Quick Links</h3>
+      <a href="#home">Home</a>
+      <a href="#products">Shop</a>
+      <a href="#categories">Categories</a>
+      <a href="#testimonials">Reviews</a>
+    </div>
+    <div>
+      <h3>Customer Care</h3>
+      <a href="contact.html">Contact Us</a>
+      <a href="shipping.html">Shipping Policy</a>
+      <a href="return-policy.html">Return Policy</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+  <div class="copyright">© <span id="year"></span> WATCH.T. All rights reserved.</div>
+</footer>
+
+<!-- CART -->
+<div class="overlay" id="overlay"></div>
+<aside class="cart-panel" id="cartPanel" aria-label="Shopping cart">
+  <div class="cart-heading">
+    <h2>Your Cart</h2>
+    <button id="closeCart" aria-label="Close cart">✕</button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="cart-bottom">
+    <p>Total <strong id="cartTotal">₹0</strong></p>
+    <button class="gold-btn checkout-btn" id="checkoutBtn">Continue to Checkout</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<!-- MAIN APP LOGIC (updated with video support) -->
+<script type="module" src="app.js"></script>
+
+<!-- ADMIN SETTINGS + DYNAMIC CONTENT + NEWSLETTER + FAQ -->
+<script type="module">
+  import { supabase, supabaseConfigured, escapeHTML } from "./supabase.js";
+
+  /* ================================================
+     LOAD SITE SETTINGS
+     ================================================ */
+  async function loadSiteSettings() {
+    if (!supabaseConfigured) {
+      console.warn("⚠ Supabase not configured — skipping site settings");
+      return;
+    }
+
+    console.log("🔄 Loading site settings...");
+
+    try {
+      const { data, error } = await supabase
+        .from("site_settings")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle();
+
+      if (error) { console.error("❌ Supabase error:", error.message); return; }
+      if (!data) { console.warn("⚠ No site_settings row (id=1)."); return; }
+
+      console.log("✅ Settings loaded:", data);
+
+      if (data.hero_eyebrow) {
+        const el = document.getElementById("heroEyebrow");
+        if (el) el.textContent = data.hero_eyebrow;
+      }
+      if (data.hero_line1 || data.hero_line2) {
+        const el = document.getElementById("heroHeading");
+        if (el) el.innerHTML = `${data.hero_line1 || ""}<br><span>${data.hero_line2 || ""}</span>`;
+      }
+      if (data.hero_text) {
+        const el = document.getElementById("heroText");
+        if (el) el.textContent = data.hero_text;
+      }
+      if (data.hero_cta) {
+        const el = document.getElementById("heroCta");
+        if (el) el.textContent = data.hero_cta;
+      }
+      if (data.hero_image) {
+        const el = document.getElementById("heroImage");
+        if (el) el.src = data.hero_image;
+      }
+      if (data.promo_headline) {
+        const el = document.getElementById("promoHeading");
+        if (el) {
+          const words = data.promo_headline.trim().split(/\s+/);
+          if (words.length >= 3) {
+            const last = words.pop();
+            const mid = words.pop();
+            const first = words.join(" ");
+            el.innerHTML = `${first}<br>${mid} <span>${last}</span>`;
+          } else {
+            el.textContent = data.promo_headline;
+          }
+        }
+      }
+      if (data.promo_text) {
+        const el = document.getElementById("promoText");
+        if (el) el.textContent = data.promo_text;
+      }
+      if (data.description) {
+        const el = document.getElementById("footerDescription");
+        if (el) el.textContent = data.description;
+      }
+      if (data.support_email) {
+        document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+          a.href = "mailto:" + data.support_email;
+          a.textContent = data.support_email;
+        });
+      }
+      if (data.support_phone) {
+        document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+          a.href = "tel:" + data.support_phone.replace(/\s/g, "");
+          a.textContent = data.support_phone;
+        });
+      }
+      if (data.whatsapp) {
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+          a.href = "https://wa.me/" + data.whatsapp.replace(/\D/g, "");
+        });
+      }
+      if (data.instagram_url) {
+        document.querySelectorAll('a[href*="instagram.com"]').forEach(a => a.href = data.instagram_url);
+      }
+      if (data.facebook_url) {
+        document.querySelectorAll('a[href*="facebook.com"]').forEach(a => a.href = data.facebook_url);
+      }
+      if (data.free_shipping_threshold) {
+        document.querySelectorAll("[data-free-shipping]").forEach(el => {
+          el.textContent = "Free Shipping ₹" + data.free_shipping_threshold + "+";
+        });
+      }
+
+      console.log("🎉 Site settings applied");
+    } catch (err) {
+      console.error("❌ Could not load site settings:", err);
+    }
+  }
+
+  /* ================================================
+     LOAD CATEGORIES WITH COUNTS
+     ================================================ */
+  const CATEGORY_DATA = [
+    { name: "Men", label: "Men", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
+    { name: "Women", label: "Women", image: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=500&q=80" },
+    { name: "Smart Watch", label: "Smart", image: "https://images.unsplash.com/photo-1544117519-31a4b719223d?auto=format&fit=crop&w=500&q=80" },
+    { name: "Luxury", label: "Luxury", image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=500&q=80" },
+    { name: "Wall Clock", label: "Wall Clock", image: "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?auto=format&fit=crop&w=500&q=80" },
+    { name: "Accessories", label: "Accessories", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=500&q=80" }
+  ];
+
+  async function loadCategories() {
+    const grid = document.getElementById("categoryGrid");
+    if (!grid) return;
+
+    let counts = {};
+    if (supabaseConfigured) {
+      try {
+        const { data } = await supabase
+          .from("products")
+          .select("category")
+          .eq("active", true);
+        (data || []).forEach(p => {
+          if (p.category) counts[p.category] = (counts[p.category] || 0) + 1;
+        });
+      } catch (err) { console.warn("Category counts unavailable:", err); }
+    }
+
+    grid.innerHTML = CATEGORY_DATA.map(cat => `
+      <button class="category-card" data-category="${escapeHTML(cat.name)}">
+        <img src="${escapeHTML(cat.image)}" alt="${escapeHTML(cat.label)} watch">
+        <span>${escapeHTML(cat.label)}${counts[cat.name] ? ` <small style="opacity:.7">(${counts[cat.name]})</small>` : ""}</span>
+      </button>
+    `).join("");
+
+    console.log("✅ Categories loaded");
+  }
+
+  /* ================================================
+     INIT
+     ================================================ */
+  async function initDynamicContent() {
+    await loadSiteSettings();
+    await loadCategories();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initDynamicContent);
+  } else {
+    initDynamicContent();
+  }
+
+  /* ================================================
+     FAQ ACCORDION
+     ================================================ */
+  document.querySelectorAll('.faq-question').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.closest('.faq-item');
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function (i) { i.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  /* ================================================
+     NEWSLETTER
+     ================================================ */
+  var newsletterForm = document.getElementById('newsletterForm');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var emailInput = document.getElementById('newsletterEmail');
+      var email = emailInput.value.trim();
+      if (!email) return;
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast('Please enter a valid email address.');
+        return;
+      }
+
+      var submitBtn = newsletterForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Subscribing...'; }
+
+      try {
+        if (supabaseConfigured) {
+          const { error } = await supabase
+            .from("newsletter_subscribers")
+            .insert([{ email: email.toLowerCase() }]);
+
+          if (error && !error.message.toLowerCase().includes("duplicate")) throw error;
+
+          showToast(
+            error && error.message.toLowerCase().includes("duplicate")
+              ? 'You are already subscribed! 🎉'
+              : 'Subscribed! Check your inbox for 10% off code.'
+          );
+        } else {
+          const subs = JSON.parse(localStorage.getItem("newsletter_subscribers") || "[]");
+          if (!subs.includes(email.toLowerCase())) {
+            subs.push(email.toLowerCase());
+            localStorage.setItem("newsletter_subscribers", JSON.stringify(subs));
+          }
+          showToast('Subscribed! Check your inbox for 10% off code.');
+        }
+        newsletterForm.reset();
+      } catch (err) {
+        console.error("Newsletter error:", err);
+        showToast('Subscription failed. Please try again.');
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Subscribe'; }
+      }
+    });
+  }
+
+  /* ================================================
+     TOAST HELPER
+     ================================================ */
+  function showToast(message) {
+    var toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(function () { toast.classList.remove('show'); }, 3500);
+  }
+
+  /* ================================================
+     SMOOTH SCROLL
+     ================================================ */
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

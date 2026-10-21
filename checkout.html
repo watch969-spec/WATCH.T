@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Checkout | WATCH.T</title>
+  <meta name="description" content="Secure checkout at WATCH.T.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ---------- CHECKOUT LAYOUT ---------- */
+    .checkout-page {
+      min-height: 100vh;
+      background: var(--paper);
+      padding: 60px 48px 100px;
+    }
+    .checkout-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Breadcrumb */
+    .checkout-crumb {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .checkout-crumb a { color: var(--muted); transition: color .3s var(--ease); }
+    .checkout-crumb a:hover { color: var(--gold); }
+    .checkout-crumb span:last-child { color: var(--ink); font-weight: 600; }
+
+    /* Header */
+    .checkout-header {
+      margin-bottom: 40px;
+    }
+    .checkout-header h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .checkout-header h1 span { color: var(--gold); font-style: italic; font-weight: 400; }
+    .checkout-header p {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    /* Boxes */
+    .checkout-box {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    .checkout-box h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .checkout-box h2::before {
+      content: '';
+      width: 3px; height: 20px;
+      background: var(--gold);
+    }
+
+    /* Order summary (top) */
+    .order-items {
+      max-height: 340px;
+      overflow-y: auto;
+      margin-bottom: 8px;
+    }
+    .order-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+    .order-item img {
+      width: 64px; height: 64px;
+      object-fit: cover;
+      background: var(--paper);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .order-item-info { flex: 1; min-width: 0; }
+    .order-item-info h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 600;
+      margin: 0 0 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .order-item-info p {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0;
+      letter-spacing: .5px;
+    }
+    .order-item-price {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    /* Summary rows */
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .summary-row.total {
+      border-top: 1px solid var(--line);
+      margin-top: 8px;
+      padding-top: 20px;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: .5px;
+    }
+    .summary-row.total strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+    .summary-row.free { color: var(--gold); font-weight: 600; }
+
+    /* Form */
+    .checkout-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .checkout-form input,
+    .checkout-form textarea,
+    .checkout-form select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+      transition: all .3s var(--ease);
+      border-radius: var(--radius);
+    }
+    .checkout-form input:focus,
+    .checkout-form textarea:focus,
+    .checkout-form select:focus {
+      border-color: var(--gold);
+      background: var(--white);
+    }
+    .checkout-form input::placeholder,
+    .checkout-form textarea::placeholder {
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .checkout-form textarea {
+      min-height: 100px;
+      resize: vertical;
+      grid-column: 1 / -1;
+    }
+    .checkout-form .full { grid-column: 1 / -1; }
+
+    .form-label {
+      grid-column: 1 / -1;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-top: 8px;
+      margin-bottom: -6px;
+    }
+
+    .checkout-submit {
+      width: 100%;
+      padding: 18px;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    .checkout-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    /* Empty state */
+    .empty-cart {
+      text-align: center;
+      padding: 40px 0;
+    }
+    .empty-cart p {
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    /* Trust note */
+    .checkout-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 20px;
+      padding: 16px;
+      background: var(--paper);
+      border-left: 3px solid var(--gold);
+      font-style: italic;
+    }
+
+    /* Trust bar (bottom) */
+    .checkout-trust {
+      padding: 20px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .checkout-trust > div {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .checkout-trust strong {
+      display: block;
+      color: var(--ink);
+      margin-top: 4px;
+      font-size: 12px;
+      letter-spacing: .5px;
+      text-transform: none;
+    }
+
+    /* Header override */
+    .header .logo,
+    .header a { color: #fff; }
+    .header a:hover { color: var(--gold); }
+    .checkout-back-link {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .3s var(--ease);
+    }
+    .checkout-back-link:hover { color: var(--gold); }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .checkout-page { padding: 40px 24px 60px; }
+      .checkout-header { margin-bottom: 32px; }
+      .checkout-form { grid-template-columns: 1fr; }
+      .checkout-form textarea,
+      .checkout-form .full,
+      .form-label { grid-column: 1 / -1; }
+      .checkout-box { padding: 24px 20px; }
+      .checkout-trust { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">WATCH<span>.T</span></a>
+  <a class="checkout-back-link" href="index.html">← Continue Shopping</a>
+</header>
+
+<main class="checkout-page">
+  <div class="checkout-wrap">
+
+    <!-- Breadcrumb -->
+    <div class="checkout-crumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="index.html#products">Shop</a>
+      <span>/</span>
+      <span>Checkout</span>
+    </div>
+
+    <!-- Header -->
+    <div class="checkout-header">
+      <h1>Secure <span>Checkout</span></h1>
+      <p>Review your order and complete your delivery details.</p>
+    </div>
+
+    <!-- 1. ORDER SUMMARY (UPAR) -->
+    <section class="checkout-box">
+      <h2>Order Summary</h2>
+
+      <div class="order-items" id="orderItems"></div>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="orderSubtotal">₹0</span>
+      </div>
+      <div class="summary-row free">
+        <span>Shipping</span>
+        <span>FREE</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <strong id="orderTotal">₹0</strong>
+      </div>
+
+      <div class="empty-cart" id="emptyCartMsg" hidden>
+        <p>Your cart is empty.</p>
+        <a class="gold-btn" href="index.html#products">Shop Now →</a>
+      </div>
+    </section>
+
+    <!-- 2. DELIVERY FORM (NEECHE) -->
+    <section class="checkout-box">
+      <h2>Delivery Details</h2>
+      <form id="checkoutForm" class="checkout-form">
+        <input name="name" placeholder="Full Name" required autocomplete="name">
+        <input name="phone" type="tel" placeholder="Mobile Number (10 digits)" pattern="[0-9]{10}" maxlength="10" required autocomplete="tel">
+        <input name="email" type="email" placeholder="Email (optional)" autocomplete="email">
+        <input name="pincode" inputmode="numeric" placeholder="PIN Code (6 digits)" pattern="[0-9]{6}" maxlength="6" required autocomplete="postal-code">
+        <input name="city" placeholder="City" required autocomplete="address-level2">
+        <input name="state" placeholder="State" required autocomplete="address-level1">
+        <textarea name="address" placeholder="Full delivery address (house no, street, area)" required autocomplete="street-address"></textarea>
+
+        <p class="form-label">Payment Method</p>
+        <select name="payment" class="full" required>
+          <option value="">Choose payment method</option>
+          <option value="COD">Cash on Delivery (COD)</option>
+          <option value="ONLINE">Online Payment (coming soon)</option>
+        </select>
+
+        <button class="gold-btn checkout-submit full" type="submit">
+          PLACE ORDER
+        </button>
+      </form>
+
+      <p class="checkout-note">
+        Online payment is not enabled yet. COD orders are saved securely. You will receive a confirmation once your order is placed.
+      </p>
+    </section>
+
+    <!-- 3. TRUST BAR -->
+    <div class="checkout-trust">
+      <div>🔒 Secure<strong>SSL Encrypted</strong></div>
+      <div>↺ Returns<strong>7-Day Easy</strong></div>
+      <div>✦ Warranty<strong>1-Year Included</strong></div>
+    </div>
+
+  </div>
+</main>
+
+<script type="module">
+  import { supabase, supabaseConfigured, money, escapeHTML } from "./supabase.js";
+
+  function readCart() {
+    try {
+      const c = JSON.parse(localStorage.getItem("allWatchCart") || "[]");
+      return Array.isArray(c) ? c : [];
+    } catch { return []; }
+  }
+
+  let cart = readCart();
+  const itemsEl = document.getElementById("orderItems");
+  const emptyCartMsg = document.getElementById("emptyCartMsg");
+  const subtotalEl = document.getElementById("orderSubtotal");
+  const totalEl = document.getElementById("orderTotal");
+  const submitBtn = document.querySelector("#checkoutForm button[type=submit]");
+
+  function render() {
+    if (!cart.length) {
+      itemsEl.innerHTML = "";
+      emptyCartMsg.hidden = false;
+      if (submitBtn) submitBtn.disabled = true;
+      if (subtotalEl) subtotalEl.textContent = money(0);
+      if (totalEl) totalEl.textContent = money(0);
+      return;
+    }
+
+    emptyCartMsg.hidden = true;
+
+    itemsEl.innerHTML = cart.map(i => `
+      <div class="order-item">
+        <img src="${escapeHTML(i.image || "")}" alt="${escapeHTML(i.name)}">
+        <div class="order-item-info">
+          <h4>${escapeHTML(i.name)}</h4>
+          <p>Qty: ${Number(i.quantity)}</p>
+        </div>
+        <div class="order-item-price">${money(Number(i.price) * Number(i.quantity))}</div>
+      </div>
+    `).join("");
+
+    const total = cart.reduce((s, i) => s + Number(i.price) * Number(i.quantity), 0);
+    if (subtotalEl) subtotalEl.textContent = money(total);
+    if (totalEl) totalEl.textContent = money(total);
+  }
+
+  render();
+
+  document.getElementById("checkoutForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!cart.length) { alert("Your cart is empty."); return; }
+
+    if (!supabaseConfigured) {
+      alert("Supabase connected nahi hai. supabase.js mein Project URL aur anon key set karo.");
+      return;
+    }
+
+    const formData = new FormData(event.currentTarget);
+
+    if (formData.get("payment") === "ONLINE") {
+      alert("Online payment abhi connected nahi hai. Filhaal COD select karo.");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Placing order...";
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      const items = cart.map(i => ({
+        product_id: i.id,
+        name: String(i.name),
+        price: Number(i.price),
+        quantity: Number(i.quantity),
+        image_url: i.image || null
+      }));
+
+      const total = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+      const payload = {
+        user_id: user?.id || null,
+        customer_name: String(formData.get("name")).trim(),
+        phone: String(formData.get("phone")).trim(),
+        email: String(formData.get("email") || "").trim() || null,
+        pincode: String(formData.get("pincode")).trim(),
+        city: String(formData.get("city")).trim(),
+        state: String(formData.get("state")).trim(),
+        address: String(formData.get("address")).trim(),
+        items,
+        total,
+        payment_method: "COD",
+        payment_status: "Pending",
+        status: "Pending"
+      };
+
+      const { data, error } = await supabase
+        .from("orders")
+        .insert(payload)
+        .select("id,order_number")
+        .single();
+
+      if (error) throw error;
+
+      if (data.order_number == null) {
+        throw new Error("Order number generate nahi hua. Supabase order_number column/default check karo.");
+      }
+
+      localStorage.removeItem("allWatchCart");
+      location.href = "order.html?id=" + encodeURIComponent(data.order_number);
+
+    } catch (err) {
+      alert("Order place nahi hua: " + (err.message || "Unknown error") + ". Database schema/RLS policies check karo.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "PLACE ORDER";
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Contact Messages | WATCH.T Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a24a;
+      --gold-light: #e2c477;
+      --ink: #0a0a0a;
+      --panel: #141414;
+      --border: #2a2a2a;
+      --muted: #8a8a8a;
+      --white: #f5f5f5;
+      --success: #2e7d32;
+      --danger: #c62828;
+      --warning: #e65100;
+      --info: #1565c0;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: var(--white);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, textarea { font-family: inherit; font-size: inherit; }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* ============ HEADER ============ */
+    header {
+      background: #050505;
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .brand span { color: var(--white); font-style: italic; font-weight: 500; }
+    .brand-sub {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-left: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .header-actions a, .header-actions button {
+      padding: 10px 18px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .header-actions a:hover, .header-actions button:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .message-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(201,162,74,.1);
+      border: 1px solid rgba(201,162,74,.3);
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 20px;
+    }
+    .message-badge strong {
+      color: var(--white);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    /* ============ MAIN ============ */
+    main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    .panel-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-heading h1 {
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .panel-heading h1::before {
+      content: '';
+      width: 3px;
+      height: 28px;
+      background: var(--gold);
+    }
+
+    h2 { font-size: 22px; margin-bottom: 16px; }
+    .muted { color: var(--muted); font-size: 13px; }
+
+    /* ============ LOGIN FORM ============ */
+    #loginBox {
+      max-width: 420px;
+      margin: 20px 0;
+    }
+    label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 16px 0 8px;
+    }
+    input[type="email"],
+    input[type="password"],
+    input[type="search"] {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0d0d0d;
+      color: var(--white);
+      border: 1px solid var(--border);
+      outline: none;
+      transition: border-color .3s;
+      font-size: 14px;
+    }
+    input:focus { border-color: var(--gold); }
+
+    /* ============ BUTTONS ============ */
+    button, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      background: var(--gold);
+      color: var(--ink);
+      border: 1px solid var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+      text-decoration: none;
+    }
+    button:hover:not(:disabled), .btn:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+    }
+    button:disabled { opacity: .6; cursor: not-allowed; }
+
+    button.secondary {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+    }
+    button.secondary:hover:not(:disabled) {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: transparent;
+    }
+
+    button.danger {
+      background: rgba(198,40,40,.1);
+      color: #ff8a8a;
+      border: 1px solid rgba(198,40,40,.4);
+    }
+    button.danger:hover:not(:disabled) {
+      background: rgba(198,40,40,.2);
+      color: #ffb5b5;
+      border-color: rgba(198,40,40,.6);
+    }
+
+    button.small {
+      padding: 7px 12px;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* ============ TOOLBAR ============ */
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+    .toolbar input[type="search"] {
+      flex: 1;
+      min-width: 240px;
+      max-width: 420px;
+    }
+
+    /* ============ STATUS ============ */
+    #status {
+      margin-top: 16px;
+      font-size: 13px;
+      padding: 12px 16px;
+      border-left: 3px solid var(--gold);
+      background: rgba(201,162,74,.05);
+      overflow-wrap: anywhere;
+      display: none;
+    }
+    #status:not(:empty) { display: block; }
+    #status.error {
+      border-left-color: var(--danger);
+      background: rgba(198,40,40,.1);
+      color: #ff8a8a;
+    }
+    #status.success {
+      border-left-color: var(--success);
+      background: rgba(46,125,50,.1);
+      color: #81c784;
+    }
+
+    /* ============ FILTERS ============ */
+    .filters-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .filter-chip {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .filter-chip:hover { border-color: var(--gold); color: var(--gold); }
+    .filter-chip.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+
+    /* ============ TABLE ============ */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+    th, td {
+      text-align: left;
+      padding: 16px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 13px;
+    }
+    th {
+      background: rgba(255,255,255,.02);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    tbody tr:hover {
+      background: rgba(255,255,255,.02);
+    }
+    tbody tr.unread {
+      background: rgba(201,162,74,.04);
+    }
+    tbody tr.unread td:first-child::before {
+      content: '● ';
+      color: var(--gold);
+      font-size: 10px;
+      margin-right: 6px;
+    }
+    td.message {
+      white-space: pre-wrap;
+      min-width: 280px;
+      max-width: 440px;
+      overflow-wrap: anywhere;
+      line-height: 1.7;
+      color: #ccc;
+    }
+    td.message.collapsed {
+      max-height: 80px;
+      overflow: hidden;
+      position: relative;
+    }
+    td.message.collapsed::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(transparent, var(--panel));
+    }
+    .email { color: var(--gold); text-decoration: none; overflow-wrap: anywhere; }
+    .email:hover { text-decoration: underline; }
+    .subject-text { font-weight: 600; color: var(--white); }
+    .date-text { color: var(--muted); font-size: 11px; white-space: nowrap; }
+
+    /* ============ ROW ACTIONS ============ */
+    .row-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      min-width: 160px;
+    }
+
+    /* ============ EMPTY / HIDDEN ============ */
+    .empty {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: .4;
+    }
+    .hidden { display: none !important; }
+
+    /* ============ MESSAGE DETAIL MODAL ============ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      max-width: 640px;
+      width: 100%;
+      padding: 32px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-header h2 {
+      font-size: 24px;
+      margin: 0;
+      flex: 1;
+    }
+    .modal-close {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      font-size: 16px;
+      border-radius: 50%;
+    }
+    .modal-close:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .modal-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .modal-meta > div {
+      background: #0d0d0d;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+    .modal-meta strong {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .modal-meta p {
+      font-size: 14px;
+      color: var(--white);
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+    .modal-message {
+      padding: 20px;
+      background: #0d0d0d;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      font-size: 14px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: #ddd;
+      margin-bottom: 24px;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 700px) {
+      header { padding: 16px 20px; }
+      main { padding: 24px 16px 60px; }
+      .panel { padding: 20px 16px; }
+      .panel-heading h1 { font-size: 26px; }
+      .modal-meta { grid-template-columns: 1fr; }
+      .modal-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="index.html">WATCH<span>.T</span><span class="brand-sub">Admin</span></a>
+  <div class="header-actions">
+    <span class="message-badge" id="headerBadge" style="display:none;">
+      Messages <strong id="headerCount">0</strong>
+    </span>
+    <a href="index.html">← View Store</a>
+    <a href="admin.html">Dashboard</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- LOGIN / INFO PANEL -->
+  <section class="panel">
+    <div class="panel-heading">
+      <h1>Contact Messages</h1>
+    </div>
+    <p class="muted">Sign in with your WATCH.T admin account to view messages submitted through the contact form.</p>
+
+    <div id="loginBox">
+      <form id="loginForm">
+        <label for="email">Admin Email</label>
+        <input id="email" type="email" autocomplete="username" required placeholder="admin@example.com">
+
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required placeholder="Admin password">
+
+        <div class="toolbar">
+          <button id="loginButton" type="submit">Sign In</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="adminBox" class="hidden">
+      <div class="toolbar">
+        <span id="signedInAs" class="muted"></span>
+        <button id="refreshButton" type="button" class="secondary small">↻ Refresh</button>
+        <button id="exportButton" type="button" class="secondary small">⬇ Export CSV</button>
+        <button id="logoutButton" type="button" class="danger small">Logout</button>
+      </div>
+    </div>
+
+    <p id="status" class="muted" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- MESSAGES PANEL -->
+  <section id="messagesPanel" class="panel hidden">
+    <div class="panel-heading">
+      <h2>Inbox <span id="count" class="muted"></span></h2>
+    </div>
+
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search name, email, subject or message...">
+    </div>
+
+    <div class="filters-row" id="filtersRow">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="unread">Unread</button>
+      <button class="filter-chip" data-filter="read">Read</button>
+    </div>
+
+    <div id="messagesContainer">
+      <p class="empty">Loading messages…</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- MESSAGE DETAIL MODAL -->
+<div class="modal-overlay" id="messageModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 id="modalSubject">—</h2>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+
+    <div class="modal-meta">
+      <div>
+        <strong>From</strong>
+        <p id="modalName">—</p>
+      </div>
+      <div>
+        <strong>Email</strong>
+        <p><a id="modalEmail" href="#" class="email">—</a></p>
+      </div>
+      <div>
+        <strong>Date</strong>
+        <p id="modalDate">—</p>
+      </div>
+      <div>
+        <strong>Message ID</strong>
+        <p id="modalId" style="font-size: 11px; color: #666;">—</p>
+      </div>
+    </div>
+
+    <div class="modal-message" id="modalMessage">—</div>
+
+    <div class="modal-actions">
+      <a class="btn" id="modalReply" href="#">✉ Reply</a>
+      <button class="danger" id="modalDelete">🗑 Delete</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { supabase, supabaseConfigured, escapeHTML } from "./supabase.js";
+
+  const $ = id => document.getElementById(id);
+
+  let messages = [];
+  let currentFilter = "all";
+  let currentModalMessage = null;
+
+  /* ============================== */
+  /* UTILITIES                       */
+  /* ============================== */
+  function status(text, kind = "muted") {
+    $("status").textContent = text;
+    $("status").className = kind;
+    $("status").style.display = text ? "block" : "none";
+  }
+
+  function dateText(v) {
+    if (!v) return "—";
+    const d = new Date(v);
+    return Number.isNaN(d.getTime()) ? "—" : d.toLocaleString("en-IN");
+  }
+
+  function safe(v) {
+    return escapeHTML(String(v ?? ""));
+  }
+
+  /* ============================== */
+  /* ADMIN VERIFICATION — NO RECURSION */
+  /* Uses is_admin() RPC (SECURITY DEFINER) */
+  /* ============================== */
+  async function verifyAdmin(user) {
+    if (!user) throw new Error("Not signed in.");
+
+    const { data: isAdmin, error } = await supabase.rpc("is_admin");
+
+    if (error) {
+      console.error("is_admin() RPC failed:", error);
+      throw new Error(
+        "Admin check failed: " + error.message +
+        ". Make sure is_admin() function exists in Supabase."
+      );
+    }
+
+    if (!isAdmin) {
+      throw new Error(
+        "This account is not registered as an admin. " +
+        "Add your user_id to the admin_users table."
+      );
+    }
+
+    return "admin";
+  }
+
+  /* ============================== */
+  /* LOAD MESSAGES                   */
+  /* ============================== */
+  async function loadMessages() {
+    status("Loading contact messages…");
+    $("messagesContainer").innerHTML = '<p class="empty">Loading messages…</p>';
+
+    const { data, error } = await supabase
+      .from("contact_messages")
+      .select("id,name,email,subject,message,status,created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      $("messagesContainer").innerHTML = "";
+      status("Could not load messages: " + error.message + ". Check contact_messages table permissions/RLS.", "error");
+      return;
+    }
+
+    messages = data || [];
+    renderMessages();
+    status(`${messages.length} message(s) loaded.`, "success");
+
+    const unreadCount = messages.filter(m => !m.status || m.status === "new").length;
+    $("headerCount").textContent = unreadCount;
+    $("headerBadge").style.display = unreadCount > 0 ? "inline-flex" : "none";
+  }
+
+  /* ============================== */
+  /* RENDER MESSAGES                 */
+  /* ============================== */
+  function renderMessages() {
+    const q = $("search").value.trim().toLowerCase();
+
+    const filtered = messages.filter(m => {
+      const matchesSearch = [m.name, m.email, m.subject, m.message]
+        .some(v => String(v ?? "").toLowerCase().includes(q));
+
+      const isUnread = !m.status || m.status === "new";
+      const isRead = m.status === "read";
+
+      const matchesFilter =
+        currentFilter === "all" ||
+        (currentFilter === "unread" && isUnread) ||
+        (currentFilter === "read" && isRead);
+
+      return matchesSearch && matchesFilter;
+    });
+
+    $("count").textContent = `(${filtered.length})`;
+
+    if (!filtered.length) {
+      $("messagesContainer").innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">✉</div>
+          <div>No matching messages found.</div>
+        </div>
+      `;
+      return;
+    }
+
+    $("messagesContainer").innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name / Email</th>
+              <th>Subject</th>
+              <th>Message</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filtered.map(m => {
+              const isUnread = !m.status || m.status === "new";
+              return `
+                <tr class="${isUnread ? "unread" : ""}">
+                  <td><span class="date-text">${safe(dateText(m.created_at))}</span></td>
+                  <td>
+                    <strong>${safe(m.name)}</strong><br>
+                    <a class="email" href="mailto:${encodeURIComponent(String(m.email ?? ""))}">${safe(m.email)}</a>
+                  </td>
+                  <td><span class="subject-text">${safe(m.subject || "No subject")}</span></td>
+                  <td class="message collapsed">${safe(m.message)}</td>
+                  <td>
+                    <div class="row-actions">
+                      <button class="small" data-view="${m.id}">View</button>
+                      <button class="secondary small" data-reply="${m.id}">Reply</button>
+                      ${isUnread
+                        ? `<button class="secondary small" data-mark-read="${m.id}">Read</button>`
+                        : ""}
+                      <button class="danger small" data-delete="${m.id}">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  /* ============================== */
+  /* EVENT DELEGATION — TABLE        */
+  /* ============================== */
+  $("messagesContainer").addEventListener("click", async (e) => {
+    const viewBtn = e.target.closest("[data-view]");
+    const replyBtn = e.target.closest("[data-reply]");
+    const markReadBtn = e.target.closest("[data-mark-read]");
+    const deleteBtn = e.target.closest("[data-delete]");
+
+    if (viewBtn) {
+      const msg = messages.find(m => String(m.id) === String(viewBtn.dataset.view));
+      if (msg) openModal(msg);
+    }
+
+    if (replyBtn) {
+      const msg = messages.find(m => String(m.id) === String(replyBtn.dataset.reply));
+      if (msg) {
+        window.location.href = `mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject || "Your inquiry")}`;
+      }
+    }
+
+    if (markReadBtn) {
+      const id = markReadBtn.dataset.markRead;
+      await markAsRead(id);
+    }
+
+    if (deleteBtn) {
+      const id = deleteBtn.dataset.delete;
+      if (!confirm("Delete this message permanently?")) return;
+      await deleteMessage(id);
+    }
+  });
+
+  /* ============================== */
+  /* MARK AS READ                    */
+  /* ============================== */
+  async function markAsRead(id) {
+    const { error } = await supabase
+      .from("contact_messages")
+      .update({ status: "read" })
+      .eq("id", id);
+
+    if (error) {
+      status("Could not mark as read: " + error.message, "error");
+      return;
+    }
+
+    status("Message marked as read.", "success");
+    await loadMessages();
+  }
+
+  /* ============================== */
+  /* DELETE MESSAGE                  */
+  /* ============================== */
+  async function deleteMessage(id) {
+    const { error } = await supabase
+      .from("contact_messages")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      status("Could not delete message: " + error.message, "error");
+      return;
+    }
+
+    status("Message deleted.", "success");
+    await loadMessages();
+  }
+
+  /* ============================== */
+  /* MODAL                           */
+  /* ============================== */
+  function openModal(msg) {
+    currentModalMessage = msg;
+    $("modalSubject").textContent = msg.subject || "No subject";
+    $("modalName").textContent = msg.name || "—";
+    $("modalEmail").textContent = msg.email || "—";
+    $("modalEmail").href = "mailto:" + (msg.email || "");
+    $("modalDate").textContent = dateText(msg.created_at);
+    $("modalId").textContent = String(msg.id);
+    $("modalMessage").textContent = msg.message || "—";
+    $("modalReply").href = `mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject || "Your inquiry")}`;
+    $("messageModal").classList.add("active");
+    document.body.style.overflow = "hidden";
+
+    if (!msg.status || msg.status === "new") {
+      markAsRead(msg.id);
+    }
+  }
+
+  function closeModal() {
+    $("messageModal").classList.remove("active");
+    document.body.style.overflow = "";
+    currentModalMessage = null;
+  }
+
+  $("modalClose").addEventListener("click", closeModal);
+  $("messageModal").addEventListener("click", (e) => {
+    if (e.target === $("messageModal")) closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && $("messageModal").classList.contains("active")) {
+      closeModal();
+    }
+  });
+
+  $("modalDelete").addEventListener("click", async () => {
+    if (!currentModalMessage) return;
+    if (!confirm("Delete this message permanently?")) return;
+    await deleteMessage(currentModalMessage.id);
+    closeModal();
+  });
+
+  /* ============================== */
+  /* FILTERS                         */
+  /* ============================== */
+  document.querySelectorAll(".filter-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      currentFilter = chip.dataset.filter;
+      renderMessages();
+    });
+  });
+
+  /* ============================== */
+  /* SEARCH                          */
+  /* ============================== */
+  $("search").addEventListener("input", renderMessages);
+
+  /* ============================== */
+  /* EXPORT CSV                      */
+  /* ============================== */
+  $("exportButton")?.addEventListener("click", () => {
+    if (!messages.length) {
+      status("No messages to export.", "error");
+      return;
+    }
+
+    const headers = ["Date", "Name", "Email", "Subject", "Message", "Status"];
+    const rows = messages.map(m => [
+      dateText(m.created_at),
+      m.name || "",
+      m.email || "",
+      m.subject || "",
+      (m.message || "").replace(/"/g, '""'),
+      m.status || "new"
+    ]);
+
+    const csv = [
+      headers.join(","),
+      ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    ].join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `contact_messages_${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    status("Exported " + messages.length + " messages.", "success");
+  });
+
+  /* ============================== */
+  /* AUTH                            */
+  /* ============================== */
+  async function showAdmin(user) {
+    await verifyAdmin(user);
+    $("loginBox").classList.add("hidden");
+    $("adminBox").classList.remove("hidden");
+    $("messagesPanel").classList.remove("hidden");
+    $("signedInAs").textContent = "Signed in: " + user.email;
+    await loadMessages();
+  }
+
+  $("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!supabaseConfigured) {
+      status("Supabase is not configured. Check supabase.js project URL and public key.", "error");
+      return;
+    }
+
+    $("loginButton").disabled = true;
+    $("loginButton").textContent = "Signing in…";
+    status("Signing in…");
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: $("email").value.trim(),
+        password: $("password").value
+      });
+
+      if (error) throw error;
+
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) throw userError || new Error("Could not get signed-in user.");
+
+      await showAdmin(user);
+    } catch (err) {
+      console.error(err);
+      await supabase.auth.signOut();
+      status(err.message || "Sign in failed.", "error");
+    } finally {
+      $("loginButton").disabled = false;
+      $("loginButton").textContent = "Sign In";
+    }
+  });
+
+  $("refreshButton").addEventListener("click", () => loadMessages().catch(e => status(e.message, "error")));
+
+  $("logoutButton").addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    messages = [];
+    $("adminBox").classList.add("hidden");
+    $("messagesPanel").classList.add("hidden");
+    $("loginBox").classList.remove("hidden");
+    $("headerBadge").style.display = "none";
+    status("You have been signed out.");
+  });
+
+  /* ============================== */
+  /* INIT                            */
+  /* ============================== */
+  async function init() {
+    if (!supabaseConfigured) {
+      status("Supabase is not configured. Check supabase.js.", "error");
+      return;
+    }
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) await showAdmin(user);
+    } catch (err) {
+      console.error(err);
+      status(err.message || "Please sign in with an admin account.", "error");
+    }
+  }
+
+  init();
+</script>
+
+</body>
+</html>

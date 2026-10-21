@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Contact Us | WATCH.T</title>
+  <meta name="description" content="Contact WATCH.T for order inquiries, delivery questions, product information, and customer support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .contact-page {
+      min-height: 100vh;
+      background: var(--paper);
+      padding: 60px 48px 100px;
+    }
+    .contact-wrap { max-width: 1080px; margin: 0 auto; }
+
+    .contact-crumb {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .contact-crumb a { color: var(--muted); transition: color .3s var(--ease); }
+    .contact-crumb a:hover { color: var(--gold); }
+    .contact-crumb span:last-child { color: var(--ink); font-weight: 600; }
+
+    .contact-header {
+      margin-bottom: 48px;
+      text-align: center;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contact-header h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 500;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .contact-header h1 span { color: var(--gold); font-style: italic; font-weight: 400; }
+    .contact-header p {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .contact-info-col { display: flex; flex-direction: column; gap: 16px; }
+
+    .info-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 28px;
+      transition: all .3s var(--ease);
+    }
+    .info-card:hover { border-color: var(--gold-light); }
+
+    .info-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      font-size: 20px;
+      margin-bottom: 16px;
+      border-radius: 50%;
+    }
+
+    .info-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 8px;
+      line-height: 1.3;
+    }
+    .info-card p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0 0 6px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .info-card p:last-child { margin-bottom: 0; }
+    .info-card a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .3s var(--ease);
+      word-break: break-word;
+    }
+    .info-card a:hover { color: var(--ink); text-decoration: underline; }
+    .info-card strong {
+      color: var(--ink);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .contact-form-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 40px;
+    }
+    .contact-form-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-form-card h2::before {
+      content: '';
+      width: 3px;
+      height: 20px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+      transition: all .3s var(--ease);
+      border-radius: var(--radius);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: var(--white);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); font-weight: 300; }
+    .form-group textarea { min-height: 140px; resize: vertical; }
+
+    .char-counter {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+      font-weight: 400;
+      letter-spacing: .3px;
+    }
+    .char-counter.warn { color: #e65100; }
+    .char-counter.over { color: #c62828; font-weight: 600; }
+
+    .contact-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold);
+      color: var(--ink);
+      border: 1px solid var(--gold);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .4s var(--ease);
+    }
+    .contact-submit:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--gold);
+    }
+    .contact-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+    #formStatus {
+      display: none;
+      margin: 16px 0 0;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      border-left: 3px solid var(--gold);
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 400;
+    }
+    #formStatus.error {
+      border-left-color: #c62828;
+      background: #ffebee;
+      color: #b71c1c;
+    }
+    #formStatus.success {
+      border-left-color: #2e7d32;
+      background: #e8f5e9;
+      color: #1b5e20;
+    }
+
+    .contact-faq {
+      margin-top: 48px;
+      padding: 40px;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+    .contact-faq h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      margin: 0 0 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-faq h2::before {
+      content: '';
+      width: 3px;
+      height: 22px;
+      background: var(--gold);
+    }
+    .faq-item { border-bottom: 1px solid var(--line); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 0;
+      background: none;
+      border: none;
+      text-align: left;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      transition: color .3s var(--ease);
+    }
+    .faq-question:hover { color: var(--gold); }
+    .faq-question::after {
+      content: '+';
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--gold);
+      transition: transform .3s var(--ease);
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-question::after { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s var(--ease), padding .4s var(--ease);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding-bottom: 20px;
+    }
+
+    .header .logo,
+    .header a { color: #fff; }
+    .header a:hover { color: var(--gold); }
+    .contact-back-link {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .3s var(--ease);
+    }
+    .contact-back-link:hover { color: var(--gold); }
+
+    .contact-footer {
+      background: #050505;
+      color: rgba(255,255,255,.6);
+      padding: 56px 48px 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      text-align: center;
+    }
+    .contact-footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .contact-footer-links a {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      transition: color .3s var(--ease);
+      font-weight: 500;
+    }
+    .contact-footer-links a:hover { color: var(--gold); }
+    .contact-copyright {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .contact-page { padding: 40px 24px 60px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 24px; }
+      .contact-form-card { padding: 32px 24px; }
+    }
+
+    @media (max-width: 500px) {
+      .contact-page { padding: 24px 14px 50px; }
+      .contact-header { margin-bottom: 32px; }
+      .contact-header h1 { font-size: 32px; }
+      .contact-header p { font-size: 14px; }
+      .contact-form-card { padding: 24px 18px; }
+      .contact-form-card h2 { font-size: 20px; }
+      .info-card { padding: 22px 20px; }
+      .contact-faq { padding: 24px 18px; margin-top: 32px; }
+      .contact-faq h2 { font-size: 22px; }
+      .faq-question { font-size: 16px; padding: 16px 0; }
+      .faq-answer { font-size: 13px; }
+      .contact-footer { padding: 40px 24px 20px; }
+      .contact-footer-links { gap: 18px; margin-bottom: 24px; }
+      .contact-footer-links a { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">WATCH<span>.T</span></a>
+  <a class="contact-back-link" href="index.html">← Back to Home</a>
+</header>
+
+<main class="contact-page">
+  <div class="contact-wrap">
+
+    <div class="contact-crumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Contact Us</span>
+    </div>
+
+    <div class="contact-header">
+      <h1>Get in <span>Touch</span></h1>
+      <p>
+        We are happy to help! If you have questions about our products, orders,
+        shipping, returns, or payments, please reach out — we typically respond
+        within 24 hours.
+      </p>
+    </div>
+
+    <div class="contact-layout">
+
+      <aside class="contact-info-col">
+
+        <div class="info-card">
+          <div class="info-icon">📧</div>
+          <h3>Email Us</h3>
+          <p>
+            <strong>Support</strong>
+            <a href="mailto:support@watcht.com" data-support-email-link>support@watcht.com</a>
+          </p>
+          <p>
+            <strong>Grievance</strong>
+            <a href="mailto:grievance@watcht.com" data-grievance-email>grievance@watcht.com</a>
+          </p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">💬</div>
+          <h3>WhatsApp</h3>
+          <p>
+            <strong>Chat with us</strong>
+            <a href="https://wa.me/919999999999" target="_blank" rel="noopener" data-whatsapp-link>+91 99999 99999</a>
+          </p>
+          <p style="font-size: 12px;">Fastest way to reach us</p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">📱</div>
+          <h3>Call Us</h3>
+          <p>
+            <strong>Phone Support</strong>
+            <a href="tel:+919999999999" data-support-phone-link>+91 99999 99999</a>
+          </p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">🕒</div>
+          <h3>Support Hours</h3>
+          <p>
+            <strong>Monday – Saturday</strong>
+            <span data-support-hours>10:00 AM – 6:00 PM IST</span>
+          </p>
+          <p>
+            <strong>Sunday</strong>
+            Closed
+          </p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-icon">🌐</div>
+          <h3>Follow Us</h3>
+          <p>
+            <strong>Instagram</strong>
+            <a href="https://instagram.com/watcht" target="_blank" rel="noopener" data-instagram-link>@watcht</a>
+          </p>
+          <p>
+            <strong>Facebook</strong>
+            <a href="https://facebook.com/watcht" target="_blank" rel="noopener" data-facebook-link>WATCH.T</a>
+          </p>
+        </div>
+
+        <div class="info-card" data-address-card style="display:none;">
+          <div class="info-icon">📍</div>
+          <h3>Visit Us</h3>
+          <p data-address>—</p>
+        </div>
+
+      </aside>
+
+      <section class="contact-form-card">
+        <h2>Send Us a Message</h2>
+
+        <form class="contact-form" id="contactForm" novalidate>
+
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" maxlength="100" placeholder="Enter your full name" autocomplete="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" maxlength="254" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a subject</option>
+              <option value="Order Inquiry">Order Inquiry</option>
+              <option value="Shipping">Shipping and Delivery</option>
+              <option value="Return">Return or Refund</option>
+              <option value="Product Information">Product Information</option>
+              <option value="Payment">Payment Issue</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" maxlength="5000" placeholder="Tell us how we can help..." required></textarea>
+            <div class="char-counter" id="charCounter">
+              <span id="charCount">0</span> / 5000
+            </div>
+          </div>
+
+          <button type="submit" class="contact-submit" id="submitBtn">Send Message</button>
+
+          <div id="formStatus" role="status" aria-live="polite"></div>
+
+        </form>
+      </section>
+
+    </div>
+
+    <section class="contact-faq">
+      <h2>Frequently Asked</h2>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button">How long does it take to get a response?</button>
+        <div class="faq-answer">
+          We typically respond within 24 business hours (Monday–Saturday). For urgent
+          order issues, WhatsApp is the fastest way to reach us.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button">How do I track my order?</button>
+        <div class="faq-answer">
+          Use the <a href="order.html" style="color: var(--gold);">Track Order</a> page with your
+          10-digit tracking number, or check your account on the <a href="my-orders.html" style="color: var(--gold);">My Orders</a> page.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button">How do I return or exchange a product?</button>
+        <div class="faq-answer">
+          Please read our <a href="return-policy.html" style="color: var(--gold);">Return & Refund Policy</a>.
+          You can initiate a return within 7 days of delivery by contacting support with your order number.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" type="button">Do you offer Cash on Delivery (COD)?</button>
+        <div class="faq-answer">
+          Yes, COD is available for most pin codes across India. You can select COD at checkout.
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+</main>
+
+<footer class="contact-footer">
+  <div class="contact-footer-links">
+    <a href="index.html">Home</a>
+    <a href="shipping.html">Shipping Policy</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="return-policy.html">Return Policy</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="contact-copyright">
+    © 2026 WATCH.T. All rights reserved.
+  </div>
+</footer>
+
+<script type="module">
+  import { supabase, supabaseConfigured } from "./supabase.js";
+
+  /* ================================================
+     LOAD CONTACT SETTINGS FROM SUPABASE
+     ================================================ */
+  async function loadContactSettings() {
+    if (!supabaseConfigured) {
+      console.warn("⚠ Supabase not configured — using hardcoded contact info");
+      return;
+    }
+
+    console.log("🔄 Loading contact settings...");
+
+    try {
+      const { data, error } = await supabase
+        .from("site_settings")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle();
+
+      if (error) {
+        console.error("❌ Supabase error:", error.message);
+        return;
+      }
+
+      if (!data) {
+        console.warn("⚠ No site_settings row (id=1). Using defaults.");
+        return;
+      }
+
+      console.log("✅ Settings loaded:", data);
+
+      // ===== SUPPORT EMAIL =====
+      if (data.support_email) {
+        document.querySelectorAll("[data-support-email-link]").forEach(a => {
+          a.href = "mailto:" + data.support_email;
+          a.textContent = data.support_email;
+        });
+        document.querySelectorAll("[data-support-email]").forEach(el => {
+          el.textContent = data.support_email;
+        });
+      }
+
+      // ===== SUPPORT PHONE =====
+      if (data.support_phone) {
+        document.querySelectorAll("[data-support-phone-link]").forEach(a => {
+          a.href = "tel:" + data.support_phone.replace(/\s/g, "");
+          a.textContent = data.support_phone;
+        });
+        document.querySelectorAll("[data-support-phone]").forEach(el => {
+          el.textContent = data.support_phone;
+        });
+      }
+
+      // ===== WHATSAPP =====
+      if (data.whatsapp) {
+        const num = data.whatsapp.replace(/\D/g, "");
+        document.querySelectorAll("[data-whatsapp-link]").forEach(a => {
+          a.href = "https://wa.me/" + num;
+          a.textContent = data.whatsapp;
+        });
+        document.querySelectorAll("[data-whatsapp]").forEach(el => {
+          el.textContent = data.whatsapp;
+        });
+      }
+
+      // ===== SUPPORT HOURS =====
+      if (data.support_hours) {
+        document.querySelectorAll("[data-support-hours]").forEach(el => {
+          el.textContent = data.support_hours;
+        });
+      }
+
+      // ===== ADDRESS =====
+      if (data.address) {
+        document.querySelectorAll("[data-address]").forEach(el => {
+          el.textContent = data.address;
+        });
+        const addressCard = document.querySelector("[data-address-card]");
+        if (addressCard) addressCard.style.display = "block";
+      }
+
+      // ===== INSTAGRAM =====
+      if (data.instagram_url) {
+        document.querySelectorAll("[data-instagram-link]").forEach(a => {
+          a.href = data.instagram_url;
+          try {
+            const url = new URL(data.instagram_url);
+            const handle = url.pathname.replace(/\//g, "").split("?")[0];
+            if (handle) a.textContent = "@" + handle;
+          } catch (e) { /* keep default text */ }
+        });
+      }
+
+      // ===== FACEBOOK =====
+      if (data.facebook_url) {
+        document.querySelectorAll("[data-facebook-link]").forEach(a => {
+          a.href = data.facebook_url;
+        });
+      }
+
+      console.log("🎉 Contact info updated from admin settings");
+    } catch (err) {
+      console.error("❌ Contact settings error:", err);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadContactSettings);
+  } else {
+    loadContactSettings();
+  }
+
+  /* ================================================
+     FAQ ACCORDION
+     ================================================ */
+  document.querySelectorAll(".faq-question").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".faq-item");
+      const wasOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("open"));
+      if (!wasOpen) item.classList.add("open");
+    });
+  });
+
+  /* ================================================
+     CONTACT FORM
+     ================================================ */
+  const form = document.getElementById("contactForm");
+  const statusBox = document.getElementById("formStatus");
+  const submitButton = document.getElementById("submitBtn");
+  const messageInput = document.getElementById("message");
+  const charCount = document.getElementById("charCount");
+  const charCounter = document.getElementById("charCounter");
+
+  let statusTimer = null;
+
+  function showStatus(text, kind = "info") {
+    clearTimeout(statusTimer);
+    statusBox.textContent = text;
+    statusBox.className = kind === "error" ? "error" : kind === "success" ? "success" : "";
+    statusBox.style.display = "block";
+
+    if (kind === "success") {
+      statusTimer = setTimeout(() => {
+        statusBox.style.display = "none";
+      }, 6000);
+    }
+  }
+
+  function hideStatus() {
+    statusBox.style.display = "none";
+    statusBox.textContent = "";
+    statusBox.className = "";
+  }
+
+  messageInput?.addEventListener("input", () => {
+    const len = messageInput.value.length;
+    charCount.textContent = len;
+    charCounter.classList.toggle("warn", len > 4500 && len <= 4900);
+    charCounter.classList.toggle("over", len > 4900);
+  });
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideStatus();
+
+    if (!form.reportValidity()) return;
+
+    if (!supabaseConfigured) {
+      showStatus("Contact form is not configured. Please email us directly.", "error");
+      return;
+    }
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const subject = document.getElementById("subject").value;
+    const message = messageInput.value.trim();
+
+    if (!name || name.length > 100) {
+      showStatus("Please enter a valid name (max 100 characters).", "error");
+      return;
+    }
+    if (!email || email.length > 254) {
+      showStatus("Please enter a valid email address.", "error");
+      return;
+    }
+    if (!subject) {
+      showStatus("Please select a subject.", "error");
+      return;
+    }
+    if (!message || message.length > 5000) {
+      showStatus("Please enter a message (max 5000 characters).", "error");
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+    showStatus("Sending your message...", "info");
+
+    try {
+      const { error } = await supabase
+        .from("contact_messages")
+        .insert([{ name, email, subject, message }]);
+
+      if (error) throw error;
+
+      showStatus(
+        "Thank you! Your message has been submitted. We'll get back to you within 24 hours.",
+        "success"
+      );
+
+      form.reset();
+      charCount.textContent = "0";
+      charCounter.classList.remove("warn", "over");
+    } catch (error) {
+      console.error("Contact form submission error:", error);
+      showStatus(
+        "Message could not be sent. Please try again.",
+        "error"
+      );
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send Message";
+    }
+  });
+</script>
+
+</body>
+</html>

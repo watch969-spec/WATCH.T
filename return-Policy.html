@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Return & Refund Policy | WATCH.T</title>
+  <meta name="description" content="Read the WATCH.T return and refund policy — eligibility, timelines, damaged products, replacement and refunds.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .policy-page { min-height: 100vh; background: var(--paper); padding: 60px 48px 100px; }
+    .policy-wrap { max-width: 880px; margin: 0 auto; }
+
+    .policy-crumb {
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 24px;
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    }
+    .policy-crumb a { color: var(--muted); transition: color .3s var(--ease); }
+    .policy-crumb a:hover { color: var(--gold); }
+    .policy-crumb span:last-child { color: var(--ink); font-weight: 600; }
+
+    .policy-header { margin-bottom: 48px; }
+    .policy-header h1 {
+      font-size: clamp(36px, 5vw, 56px); font-weight: 500;
+      margin-bottom: 16px; line-height: 1.1;
+    }
+    .policy-header h1 span { color: var(--gold); font-style: italic; font-weight: 400; }
+    .policy-meta {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); font-weight: 500;
+    }
+    .policy-meta strong { color: var(--ink); font-weight: 600; }
+    .policy-meta::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+
+    .policy-intro {
+      font-size: 15px; line-height: 1.8; color: #444;
+      margin-bottom: 32px; font-weight: 300;
+    }
+
+    .policy-card {
+      background: var(--white); border: 1px solid var(--line); padding: 48px;
+    }
+
+    .policy-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 600; color: var(--ink);
+      margin: 36px 0 12px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .policy-card h2:first-child { margin-top: 0; }
+    .policy-card h2::before {
+      content: ''; width: 3px; height: 22px;
+      background: var(--gold); flex-shrink: 0;
+    }
+
+    .policy-card p {
+      font-size: 14px; line-height: 1.85; color: #444;
+      margin-bottom: 14px; font-weight: 300;
+    }
+    .policy-card p strong { color: var(--ink); font-weight: 600; }
+    .policy-card p:last-child { margin-bottom: 0; }
+
+    .policy-card ul, .policy-card ol { padding-left: 22px; margin: 12px 0 18px; }
+    .policy-card ul li, .policy-card ol li {
+      font-size: 14px; line-height: 1.85; color: #444;
+      margin-bottom: 8px; font-weight: 300;
+    }
+    .policy-card ul li strong, .policy-card ol li strong {
+      color: var(--ink); font-weight: 600;
+    }
+
+    .policy-highlight {
+      margin: 20px 0; padding: 18px 24px;
+      background: var(--paper); border-left: 3px solid var(--gold);
+      font-size: 14px; line-height: 1.7; color: #444;
+      font-style: italic; font-weight: 300;
+    }
+    .policy-highlight strong { color: var(--ink); font-style: normal; }
+
+    .policy-alert {
+      margin: 20px 0; padding: 18px 24px;
+      background: #fff8e1; border-left: 3px solid var(--gold);
+      font-size: 14px; line-height: 1.7; color: #5a4515; font-weight: 400;
+    }
+    .policy-alert strong {
+      color: var(--ink); font-weight: 700;
+      display: block; margin-bottom: 4px;
+      text-transform: uppercase; font-size: 11px; letter-spacing: 1.5px;
+    }
+
+    .policy-info-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--line); border: 1px solid var(--line);
+      margin: 24px 0;
+    }
+    .policy-info-grid > div {
+      background: var(--white); padding: 20px 16px; text-align: center;
+    }
+    .policy-info-grid .info-icon {
+      font-size: 22px; color: var(--gold); margin-bottom: 8px;
+    }
+    .policy-info-grid .info-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600; color: var(--ink);
+      margin-bottom: 4px; line-height: 1.3;
+    }
+    .policy-info-grid .info-label {
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); font-weight: 600;
+    }
+
+    .policy-contact {
+      margin-top: 32px; padding: 28px;
+      background: var(--paper); border: 1px solid var(--line);
+    }
+    .policy-contact h2 {
+      margin-top: 0; border-bottom: none;
+      padding-bottom: 0; margin-bottom: 16px;
+    }
+    .policy-contact p { margin-bottom: 10px; }
+    .policy-contact a {
+      color: var(--gold); text-decoration: none;
+      overflow-wrap: anywhere; font-weight: 500;
+      transition: color .3s var(--ease);
+    }
+    .policy-contact a:hover { color: var(--ink); text-decoration: underline; }
+    .policy-contact .contact-line {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0; font-size: 14px;
+    }
+    .policy-contact .contact-line span:first-child {
+      font-size: 16px; flex-shrink: 0;
+    }
+
+    .policy-thanks {
+      margin-top: 40px; padding: 24px;
+      background: var(--ink); color: var(--white); text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-style: italic; font-weight: 500;
+      letter-spacing: .3px;
+    }
+    .policy-thanks span { color: var(--gold); }
+
+    .policy-trust {
+      margin-top: 32px; padding: 24px;
+      background: var(--white); border: 1px solid var(--line);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; text-align: center;
+    }
+    .policy-trust > div {
+      font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); font-weight: 600;
+    }
+    .policy-trust > div strong {
+      display: block; color: var(--ink);
+      font-size: 12px; margin-top: 4px;
+      letter-spacing: .3px; text-transform: none;
+    }
+
+    .header .logo, .header a { color: #fff; }
+    .header a:hover { color: var(--gold); }
+    .policy-back-link {
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color .3s var(--ease);
+    }
+    .policy-back-link:hover { color: var(--gold); }
+
+    .policy-footer {
+      background: #050505; color: rgba(255,255,255,.6);
+      padding: 56px 48px 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      text-align: center;
+    }
+    .policy-footer-links {
+      display: flex; justify-content: center; gap: 32px;
+      flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .policy-footer-links a {
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      transition: color .3s var(--ease); font-weight: 500;
+    }
+    .policy-footer-links a:hover { color: var(--gold); }
+    .policy-copyright {
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,.06);
+      max-width: 880px; margin: 0 auto;
+    }
+
+    @media (max-width: 800px) {
+      .policy-page { padding: 40px 24px 60px; }
+      .policy-card { padding: 32px 24px; }
+      .policy-card h2 { font-size: 22px; margin-top: 30px; }
+      .policy-info-grid { grid-template-columns: 1fr; }
+      .policy-thanks { font-size: 17px; padding: 20px; }
+      .policy-footer { padding: 40px 24px 20px; }
+      .policy-footer-links { gap: 20px; margin-bottom: 24px; }
+    }
+
+    @media (max-width: 500px) {
+      .policy-page { padding: 24px 14px 50px; }
+      .policy-header { margin-bottom: 32px; }
+      .policy-header h1 { font-size: 32px; }
+      .policy-card { padding: 24px 18px; }
+      .policy-card h2 { font-size: 19px; margin-top: 26px; gap: 10px; }
+      .policy-card h2::before { height: 18px; }
+      .policy-card p, .policy-card ul li, .policy-card ol li {
+        font-size: 13px; line-height: 1.75;
+      }
+      .policy-highlight, .policy-alert {
+        padding: 14px 16px; font-size: 13px;
+      }
+      .policy-contact { padding: 20px; }
+      .policy-trust {
+        grid-template-columns: 1fr; gap: 12px; padding: 20px;
+      }
+      .policy-footer-links { gap: 14px; }
+      .policy-footer-links a { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">WATCH<span>.T</span></a>
+  <a class="policy-back-link" href="index.html">← Back to Home</a>
+</header>
+
+<main class="policy-page">
+  <div class="policy-wrap">
+
+    <div class="policy-crumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Return & Refund Policy</span>
+    </div>
+
+    <div class="policy-header">
+      <h1>Return & Refund <span>Policy</span></h1>
+      <div class="policy-meta">
+        <strong>Last Updated:</strong> October 13, 2026
+      </div>
+    </div>
+
+    <p class="policy-intro">
+      At WATCH.T, we want you to be fully satisfied with your purchase. Please read
+      this policy carefully before placing an order. If you have any questions, our
+      support team is here to help.
+    </p>
+
+    <!-- Key info grid (DYNAMIC) -->
+    <div class="policy-info-grid">
+      <div>
+        <div class="info-icon">↺</div>
+        <div class="info-value" id="returnWindowDisplay">7 Days</div>
+        <div class="info-label">Return Window</div>
+      </div>
+      <div>
+        <div class="info-icon">💰</div>
+        <div class="info-value">5–7 Days</div>
+        <div class="info-label">Refund Time</div>
+      </div>
+      <div>
+        <div class="info-icon">📦</div>
+        <div class="info-value">Free</div>
+        <div class="info-label">Return Pickup*</div>
+      </div>
+    </div>
+
+    <div class="policy-alert">
+      <strong>⚠ Important Notice</strong>
+      Please contact our support team before sending any product back. Returns and
+      refunds are subject to the eligibility conditions listed below. Products sent
+      without prior approval may not be accepted.
+    </div>
+
+    <div class="policy-card">
+
+      <h2>1. Return Eligibility</h2>
+      <p>
+        If a return or replacement is permitted for your order, please contact us
+        within <strong id="returnWindowInline">7 days of delivery</strong> (or as communicated on the product
+        page at the time of purchase).
+      </p>
+      <ul>
+        <li>The watch must be <strong>unused</strong> and in its original condition.</li>
+        <li>Original packaging, tags, warranty card and included accessories must be retained.</li>
+        <li>Proof of purchase or your <strong>order number</strong> is required.</li>
+        <li>Products damaged through misuse, accidents or normal wear may not qualify.</li>
+        <li>Items must be returned with all free gifts or bundled items, if any.</li>
+      </ul>
+
+      <h2>2. Non-Returnable Items</h2>
+      <p>The following items cannot be returned or refunded:</p>
+      <ul>
+        <li>Products marked as <strong>"Final Sale"</strong> or <strong>"Non-Returnable"</strong> on the product page.</li>
+        <li>Personal care items (for hygiene reasons).</li>
+        <li>Products that have been used, washed, altered or damaged by the customer.</li>
+        <li>Items returned without original packaging or missing accessories.</li>
+        <li>Gift cards and downloadable products.</li>
+      </ul>
+
+      <h2>3. Damaged, Defective or Incorrect Products</h2>
+      <p>
+        If you receive a damaged, defective or incorrect product, contact us
+        <strong>within 48 hours of delivery</strong>. Please share your order number
+        and clear photographs or a short video showing the issue. Our team will
+        review the request and explain the available resolution.
+      </p>
+      <p>
+        For damaged or wrong items, we cover return shipping and offer a
+        <strong>full replacement or refund</strong> as per your preference.
+      </p>
+
+      <h2>4. Replacement Policy</h2>
+      <p>
+        A replacement may be offered for an eligible damaged, defective or
+        incorrect product, subject to verification and stock availability. If a
+        replacement is unavailable, we will offer a full refund or an alternative
+        product of equal value.
+      </p>
+
+      <h2>5. Refund Policy</h2>
+      <p>
+        Refunds are processed only after an eligible return has been received,
+        inspected and approved.
+      </p>
+      <ul>
+        <li><strong>Prepaid orders</strong> — Refunded to the original payment method within <strong>5–7 business days</strong> after approval.</li>
+        <li><strong>COD orders</strong> — Refunded via bank transfer or UPI within <strong>5–7 business days</strong>. You will need to share your bank details.</li>
+        <li>Shipping charges (if any) are non-refundable unless the return is due to our error.</li>
+        <li>Bank or payment-provider processing may take an additional 2–3 days.</li>
+      </ul>
+
+      <h2>6. Order Cancellation</h2>
+      <p>
+        You can cancel your order <strong>before it is dispatched</strong>. Once shipped,
+        the order cannot be cancelled — but you may still be eligible for a return
+        after delivery, as per the eligibility rules above.
+      </p>
+      <p>
+        To cancel, contact us as soon as possible with your order number. Eligible
+        refunds will be processed per our refund policy.
+      </p>
+
+      <h2>7. Return Shipping</h2>
+      <p>
+        Contact our support team <strong>before shipping any item back</strong>. We
+        will guide you on the return process, pickup or courier options, and any
+        applicable charges.
+      </p>
+      <ul>
+        <li>For <strong>damaged, defective or incorrect</strong> items — return shipping is <strong>free</strong> (we arrange pickup).</li>
+        <li>For <strong>change of mind</strong> or non-defect returns — return shipping charges may apply and be deducted from the refund.</li>
+        <li>Please ensure the item is securely packed in its original packaging to avoid transit damage.</li>
+      </ul>
+
+      <h2>8. How to Request a Return</h2>
+      <ol>
+        <li>Keep your order number ready.</li>
+        <li>Contact WATCH.T support (email or WhatsApp) and explain the issue.</li>
+        <li>Provide requested photographs or a short video of the product.</li>
+        <li>Wait for return instructions and approval <strong>before</strong> sending the item.</li>
+        <li>Once approved, ship the item or wait for our pickup partner.</li>
+        <li>After inspection, your refund or replacement will be processed.</li>
+      </ol>
+
+      <h2>9. Policy Updates</h2>
+      <p>
+        WATCH.T may update this policy from time to time. The applicable terms
+        and any rights provided by law will continue to apply to your purchase.
+        Please review this page periodically to stay informed.
+      </p>
+
+      <!-- Contact box (DYNAMIC) -->
+      <div class="policy-contact">
+        <h2>Contact Us</h2>
+        <p>
+          For return, replacement or refund assistance, reach out to our support team:
+        </p>
+        <div class="contact-line">
+          <span>📧</span>
+          <a href="mailto:support@watcht.com" data-support-email-link>support@watcht.com</a>
+        </div>
+        <div class="contact-line">
+          <span>📱</span>
+          <a href="tel:+919999999999" data-support-phone-link>+91 99999 99999</a>
+        </div>
+        <div class="contact-line">
+          <span>💬</span>
+          <a href="https://wa.me/919999999999" data-whatsapp-link>WhatsApp Support</a>
+        </div>
+        <p style="margin-top: 14px;">
+          Please include your <strong>order number</strong> so we can help you faster.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="policy-thanks">
+      Thank you for shopping with <span>WATCH.T</span>
+    </div>
+
+    <div class="policy-trust">
+      <div>✓ 100%<strong>Original</strong></div>
+      <div>↺ 7-Day<strong>Returns</strong></div>
+      <div>🛡 1-Year<strong>Warranty</strong></div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="policy-footer">
+  <div class="policy-footer-links">
+    <a href="index.html">Home</a>
+    <a href="shipping.html">Shipping Policy</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="return-policy.html">Return Policy</a>
+  </div>
+  <div class="policy-copyright">
+    © 2026 WATCH.T. All rights reserved.
+  </div>
+</footer>
+
+<script type="module">
+  import { supabase, supabaseConfigured } from "./supabase.js";
+
+  /* ================================================
+     LOAD SETTINGS FROM SUPABASE
+     ================================================ */
+  async function loadPolicySettings() {
+    if (!supabaseConfigured) {
+      console.warn("⚠ Supabase not configured — using defaults");
+      return;
+    }
+
+    console.log("🔄 Loading return policy settings...");
+
+    try {
+      const { data, error } = await supabase
+        .from("site_settings")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle();
+
+      if (error) {
+        console.error("❌ Supabase error:", error.message);
+        return;
+      }
+
+      if (!data) {
+        console.warn("⚠ No site_settings row. Using defaults.");
+        return;
+      }
+
+      console.log("✅ Settings loaded:", data);
+
+      // Return window (dynamic)
+      if (data.return_window_days) {
+        const days = data.return_window_days;
+        const el1 = document.getElementById("returnWindowDisplay");
+        const el2 = document.getElementById("returnWindowInline");
+        if (el1) el1.textContent = `${days} Days`;
+        if (el2) el2.textContent = `${days} days of delivery`;
+      }
+
+      // Support email
+      if (data.support_email) {
+        document.querySelectorAll("[data-support-email-link]").forEach(a => {
+          a.href = "mailto:" + data.support_email;
+          a.textContent = data.support_email;
+        });
+      }
+
+      // Support phone
+      if (data.support_phone) {
+        document.querySelectorAll("[data-support-phone-link]").forEach(a => {
+          a.href = "tel:" + data.support_phone.replace(/\s/g, "");
+          a.textContent = data.support_phone;
+        });
+      }
+
+      // WhatsApp
+      if (data.whatsapp) {
+        document.querySelectorAll("[data-whatsapp-link]").forEach(a => {
+          const num = data.whatsapp.replace(/\D/g, "");
+          a.href = "https://wa.me/" + num;
+        });
+      }
+
+      console.log("🎉 Return policy settings applied");
+    } catch (err) {
+      console.error("❌ Policy settings error:", err);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadPolicySettings);
+  } else {
+    loadPolicySettings();
+  }
+</script>
+
+</body>
+</html>

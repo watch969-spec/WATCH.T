@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Privacy Policy | WATCH.T</title>
+  <meta name="description" content="Read the WATCH.T Privacy Policy to learn how we collect, use, and protect your personal information.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ---------- POLICY PAGE ---------- */
+    .policy-page {
+      min-height: 100vh;
+      background: var(--paper);
+      padding: 60px 48px 100px;
+    }
+    .policy-wrap {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    /* Breadcrumb */
+    .policy-crumb {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .policy-crumb a { color: var(--muted); transition: color .3s var(--ease); }
+    .policy-crumb a:hover { color: var(--gold); }
+    .policy-crumb span:last-child { color: var(--ink); font-weight: 600; }
+
+    /* Header */
+    .policy-header {
+      margin-bottom: 48px;
+    }
+    .policy-header h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 500;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .policy-header h1 span { color: var(--gold); font-style: italic; font-weight: 400; }
+    .policy-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .policy-meta strong { color: var(--ink); font-weight: 600; }
+    .policy-meta::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    /* Intro */
+    .policy-intro {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+
+    /* Content box */
+    .policy-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 48px;
+    }
+
+    .policy-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 36px 0 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .policy-card h2:first-child { margin-top: 0; }
+    .policy-card h2::before {
+      content: '';
+      width: 3px;
+      height: 22px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .policy-card p {
+      font-size: 14px;
+      line-height: 1.85;
+      color: #444;
+      margin-bottom: 14px;
+      font-weight: 300;
+    }
+    .policy-card p strong { color: var(--ink); font-weight: 600; }
+    .policy-card p:last-child { margin-bottom: 0; }
+
+    .policy-card ul,
+    .policy-card ol {
+      padding-left: 22px;
+      margin: 12px 0 18px;
+    }
+    .policy-card ul li,
+    .policy-card ol li {
+      font-size: 14px;
+      line-height: 1.85;
+      color: #444;
+      margin-bottom: 8px;
+      font-weight: 300;
+    }
+    .policy-card ul li strong,
+    .policy-card ol li strong { color: var(--ink); font-weight: 600; }
+
+    /* Highlight boxes */
+    .policy-highlight {
+      margin: 20px 0;
+      padding: 18px 24px;
+      background: var(--paper);
+      border-left: 3px solid var(--gold);
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+      font-style: italic;
+      font-weight: 300;
+    }
+    .policy-highlight strong { color: var(--ink); font-style: normal; }
+
+    .policy-alert {
+      margin: 20px 0;
+      padding: 18px 24px;
+      background: #fff8e1;
+      border-left: 3px solid var(--gold);
+      font-size: 14px;
+      line-height: 1.7;
+      color: #5a4515;
+      font-weight: 400;
+    }
+    .policy-alert strong {
+      color: var(--ink);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+    }
+
+    /* Info grid */
+    .policy-info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin: 24px 0;
+    }
+    .policy-info-grid > div {
+      background: var(--white);
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .policy-info-grid .info-icon {
+      font-size: 22px;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .policy-info-grid .info-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .policy-info-grid .info-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* Contact box */
+    .policy-contact {
+      margin-top: 32px;
+      padding: 28px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+    }
+    .policy-contact h2 {
+      margin-top: 0;
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 16px;
+    }
+    .policy-contact p { margin-bottom: 10px; }
+    .policy-contact a {
+      color: var(--gold);
+      text-decoration: none;
+      overflow-wrap: anywhere;
+      font-weight: 500;
+      transition: color .3s var(--ease);
+    }
+    .policy-contact a:hover { color: var(--ink); text-decoration: underline; }
+    .policy-contact .contact-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+    .policy-contact .contact-line span:first-child {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Thank you */
+    .policy-thanks {
+      margin-top: 40px;
+      padding: 24px;
+      background: var(--ink);
+      color: var(--white);
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: .3px;
+    }
+    .policy-thanks span { color: var(--gold); }
+
+    /* Trust row */
+    .policy-trust {
+      margin-top: 32px;
+      padding: 24px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+    .policy-trust > div {
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .policy-trust > div strong {
+      display: block;
+      color: var(--ink);
+      font-size: 12px;
+      margin-top: 4px;
+      letter-spacing: .3px;
+      text-transform: none;
+    }
+
+    /* Header override */
+    .header .logo,
+    .header a { color: #fff; }
+    .header a:hover { color: var(--gold); }
+    .policy-back-link {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .3s var(--ease);
+    }
+    .policy-back-link:hover { color: var(--gold); }
+
+    /* Footer */
+    .policy-footer {
+      background: #050505;
+      color: rgba(255,255,255,.6);
+      padding: 56px 48px 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      margin-top: 0;
+      text-align: center;
+    }
+    .policy-footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .policy-footer-links a {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      transition: color .3s var(--ease);
+      font-weight: 500;
+    }
+    .policy-footer-links a:hover { color: var(--gold); }
+    .policy-copyright {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .policy-page { padding: 40px 24px 60px; }
+      .policy-card { padding: 32px 24px; }
+      .policy-card h2 { font-size: 22px; margin-top: 30px; }
+      .policy-info-grid { grid-template-columns: 1fr; }
+      .policy-thanks { font-size: 17px; padding: 20px; }
+      .policy-footer { padding: 40px 24px 20px; }
+      .policy-footer-links { gap: 20px; margin-bottom: 24px; }
+    }
+
+    @media (max-width: 500px) {
+      .policy-page { padding: 24px 14px 50px; }
+      .policy-header { margin-bottom: 32px; }
+      .policy-header h1 { font-size: 32px; }
+      .policy-card { padding: 24px 18px; }
+      .policy-card h2 {
+        font-size: 19px;
+        margin-top: 26px;
+        gap: 10px;
+      }
+      .policy-card h2::before { height: 18px; }
+      .policy-card p,
+      .policy-card ul li,
+      .policy-card ol li { font-size: 13px; line-height: 1.75; }
+      .policy-highlight,
+      .policy-alert { padding: 14px 16px; font-size: 13px; }
+      .policy-contact { padding: 20px; }
+      .policy-trust {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 20px;
+      }
+      .policy-footer-links { gap: 14px; }
+      .policy-footer-links a { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">WATCH<span>.T</span></a>
+  <a class="policy-back-link" href="index.html">← Back to Home</a>
+</header>
+
+<main class="policy-page">
+  <div class="policy-wrap">
+
+    <!-- Breadcrumb -->
+    <div class="policy-crumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Privacy Policy</span>
+    </div>
+
+    <!-- Header -->
+    <div class="policy-header">
+      <h1>Privacy <span>Policy</span></h1>
+      <div class="policy-meta">
+        <strong>Last Updated:</strong> October 13, 2026
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <p class="policy-intro">
+      Welcome to WATCH.T. Your privacy is important to us. This Privacy Policy explains
+      how we collect, use, store, and protect your information when you visit our website
+      or purchase products from us.
+    </p>
+
+    <!-- Key info grid -->
+    <div class="policy-info-grid">
+      <div>
+        <div class="info-icon">🔒</div>
+        <div class="info-value">SSL Secured</div>
+        <div class="info-label">Encrypted</div>
+      </div>
+      <div>
+        <div class="info-icon">🚫</div>
+        <div class="info-value">No Selling</div>
+        <div class="info-label">Your Data</div>
+      </div>
+      <div>
+        <div class="info-icon">✓</div>
+        <div class="info-value">You Control</div>
+        <div class="info-label">Your Info</div>
+      </div>
+    </div>
+
+    <!-- Alert -->
+    <div class="policy-alert">
+      <strong>⚠ Your Rights</strong>
+      You have the right to access, correct, or delete your personal information at any
+      time. Contact us to exercise these rights. We never sell your data to third parties.
+    </div>
+
+    <div class="policy-card">
+
+      <h2>1. Information We Collect</h2>
+      <p>Depending on how you use our website, we may collect:</p>
+      <ul>
+        <li>Name and contact information (email, phone number).</li>
+        <li>Shipping and billing address.</li>
+        <li>Order and purchase details (products, quantities, amount).</li>
+        <li>Information you provide when contacting customer support.</li>
+        <li>Basic technical information such as browser type, device type, IP address, and approximate location (where collected).</li>
+        <li>Cookies and usage data (see section 3).</li>
+      </ul>
+      <p>
+        <strong>What we do NOT collect:</strong> We do not store your full payment card
+        numbers, CVV, or UPI PIN. Payment details are handled securely by our payment
+        provider (e.g., Razorpay) or collected at the time of COD delivery.
+      </p>
+
+      <h2>2. How We Use Your Information</h2>
+      <p>We may use your information to:</p>
+      <ul>
+        <li>Process, pack, and deliver your orders.</li>
+        <li>Send order confirmations, invoices, and shipping updates.</li>
+        <li>Respond to your questions and support requests.</li>
+        <li>Improve our website, products, and customer experience.</li>
+        <li>Prevent fraud and protect our website and users.</li>
+        <li>Send promotional offers, updates, or newsletters (only if you opt in — you can unsubscribe anytime).</li>
+        <li>Meet applicable legal obligations.</li>
+      </ul>
+
+      <h2>3. Cookies and Similar Technologies</h2>
+      <p>
+        Our website may use cookies and similar technologies to support functionality,
+        remember preferences, and understand usage. Here's how we use them:
+      </p>
+      <ul>
+        <li><strong>Essential cookies:</strong> Required for the website to work (cart, login, checkout). These cannot be disabled.</li>
+        <li><strong>Analytics cookies:</strong> Help us understand how visitors use the site (e.g., Google Analytics). You can opt out.</li>
+        <li><strong>Marketing cookies:</strong> Used to show relevant ads (e.g., Meta Pixel). You can opt out.</li>
+      </ul>
+      <p>
+        You can manage or disable cookies in your browser settings. Disabling essential
+        cookies may break parts of the website (like the cart).
+      </p>
+
+      <h2>4. Sharing of Information</h2>
+      <p>
+        <strong>We do not sell your personal information.</strong> We may share necessary
+        information only with trusted service providers who help us operate our business:
+      </p>
+      <ul>
+        <li>Delivery/courier partners (name, address, phone for delivery).</li>
+        <li>Payment processors (to process payments securely).</li>
+        <li>Website hosting and analytics providers.</li>
+        <li>Customer support services.</li>
+        <li>Legal authorities — only when required by applicable law.</li>
+      </ul>
+
+      <h2>5. Payment Security</h2>
+      <p>
+        All online payments are processed through secure third-party payment gateways
+        (such as Razorpay). These gateways use industry-standard encryption (SSL/TLS).
+        We do not store your full card details, CVV, or UPI PIN on our servers.
+      </p>
+      <p>
+        Please review the privacy policy of your chosen payment provider for more
+        details on how they protect your information.
+      </p>
+
+      <h2>6. Data Security</h2>
+      <p>
+        We take reasonable measures to protect your personal information against
+        unauthorized access, misuse, loss, or disclosure:
+      </p>
+      <ul>
+        <li>SSL/TLS encryption for all data transmission.</li>
+        <li>Restricted access to customer data (only authorized staff).</li>
+        <li>Regular security reviews of our systems.</li>
+      </ul>
+      <p>
+        However, no method of online transmission or electronic storage can be
+        guaranteed to be 100% secure. Please keep your account credentials safe
+        and contact us immediately if you suspect any unauthorized activity.
+      </p>
+
+      <h2>7. Data Retention</h2>
+      <p>
+        We retain personal information only as long as reasonably necessary for the
+        purposes described in this policy:
+      </p>
+      <ul>
+        <li><strong>Order records:</strong> Retained for 3 years (for warranty, returns, and legal compliance).</li>
+        <li><strong>Account information:</strong> Retained until you request deletion.</li>
+        <li><strong>Marketing data:</strong> Until you unsubscribe.</li>
+      </ul>
+
+      <h2>8. Your Privacy Rights</h2>
+      <p>Subject to applicable law (including India's DPDP Act, 2023), you have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> your personal information we hold.</li>
+        <li><strong>Correct</strong> any inaccurate or incomplete information.</li>
+        <li><strong>Delete</strong> your personal information (subject to legal retention).</li>
+        <li><strong>Withdraw consent</strong> for marketing communications.</li>
+        <li><strong>Opt out of cookies</strong> via your browser settings.</li>
+        <li><strong>Raise a grievance</strong> with our Grievance Officer.</li>
+      </ul>
+      <p>
+        To exercise any of these rights, contact us using the details in the "Contact Us"
+        section below. We aim to respond within 30 days.
+      </p>
+
+      <h2>9. Third-Party Links</h2>
+      <p>
+        Our website may contain links to third-party websites (e.g., payment gateways,
+        social media). We are not responsible for their privacy practices or content.
+        We recommend reviewing their privacy policies before sharing personal information.
+      </p>
+
+      <h2>10. Children's Privacy</h2>
+      <p>
+        Our website is not intended for children under 18. We do not knowingly collect
+        personal information from children in violation of applicable law. If you believe
+        a child has provided personal information improperly, please contact us and we
+        will delete it promptly.
+      </p>
+
+      <h2>11. Changes to This Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time. Changes will be posted on
+        this page along with the revised update date at the top. We encourage you to
+        review this page periodically. Your continued use of the website after changes
+        means you accept the updated policy.
+      </p>
+
+      <h2>12. Grievance Officer</h2>
+      <p>
+        In accordance with India's Information Technology Act and DPDP Act, our Grievance
+        Officer details are:
+      </p>
+      <ul>
+        <li><strong>Name:</strong> [Your Name]</li>
+        <li><strong>Email:</strong> <a href="mailto:grievance@watcht.com" style="color: var(--gold);">grievance@watcht.com</a></li>
+        <li><strong>Response Time:</strong> Within 30 days</li>
+      </ul>
+
+      <!-- Contact box -->
+      <div class="policy-contact">
+        <h2>13. Contact Us</h2>
+        <p>
+          If you have questions about this Privacy Policy or your personal information,
+          please contact us:
+        </p>
+        <div class="contact-line">
+          <span>📧</span>
+          <a href="mailto:support@watcht.com">support@watcht.com</a>
+        </div>
+        <div class="contact-line">
+          <span>📱</span>
+          <a href="tel:+919999999999">+91 99999 99999</a>
+        </div>
+        <div class="contact-line">
+          <span>💬</span>
+          <a href="https://wa.me/919999999999">WhatsApp Support</a>
+        </div>
+        <div class="contact-line">
+          <span>🌐</span>
+          <span>WATCH.T</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Thank you -->
+    <div class="policy-thanks">
+      Thank you for trusting <span>WATCH.T</span>
+    </div>
+
+    <!-- Trust row -->
+    <div class="policy-trust">
+      <div>🔒 SSL<strong>Encrypted</strong></div>
+      <div>🚫 No Data<strong>Selling</strong></div>
+      <div>✓ Your Rights<strong>Protected</strong></div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="policy-footer">
+  <div class="policy-footer-links">
+    <a href="index.html">Home</a>
+    <a href="shipping.html">Shipping Policy</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="return-policy.html">Return Policy</a>
+  </div>
+  <div class="policy-copyright">
+    © 2026 WATCH.T. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Shipping Policy | WATCH.T</title>
+  <meta name="description" content="Read the WATCH.T shipping policy for order processing, delivery times, shipping charges, tracking and damaged packages.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ---------- POLICY PAGE ---------- */
+    .policy-page {
+      min-height: 100vh;
+      background: var(--paper);
+      padding: 60px 48px 100px;
+    }
+    .policy-wrap {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    /* Breadcrumb */
+    .policy-crumb {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .policy-crumb a { color: var(--muted); transition: color .3s var(--ease); }
+    .policy-crumb a:hover { color: var(--gold); }
+    .policy-crumb span:last-child { color: var(--ink); font-weight: 600; }
+
+    /* Header */
+    .policy-header {
+      margin-bottom: 48px;
+    }
+    .policy-header h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 500;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .policy-header h1 span { color: var(--gold); font-style: italic; font-weight: 400; }
+    .policy-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .policy-meta strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .policy-meta::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    /* Content box */
+    .policy-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 48px;
+    }
+
+    .policy-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 36px 0 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .policy-card h2:first-child { margin-top: 0; }
+    .policy-card h2::before {
+      content: '';
+      width: 3px;
+      height: 22px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .policy-card p {
+      font-size: 14px;
+      line-height: 1.85;
+      color: #444;
+      margin-bottom: 14px;
+      font-weight: 300;
+    }
+    .policy-card p strong { color: var(--ink); font-weight: 600; }
+    .policy-card p:last-child { margin-bottom: 0; }
+
+    /* Highlight box */
+    .policy-highlight {
+      margin: 24px 0;
+      padding: 20px 24px;
+      background: var(--paper);
+      border-left: 3px solid var(--gold);
+      font-size: 14px;
+      line-height: 1.7;
+      color: #444;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* Thank you note */
+    .policy-thanks {
+      margin-top: 40px;
+      padding: 24px;
+      background: var(--ink);
+      color: var(--white);
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: .3px;
+    }
+    .policy-thanks span { color: var(--gold); }
+
+    /* Trust row */
+    .policy-trust {
+      margin-top: 32px;
+      padding: 24px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+    .policy-trust > div {
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .policy-trust > div strong {
+      display: block;
+      color: var(--ink);
+      font-size: 12px;
+      margin-top: 4px;
+      letter-spacing: .3px;
+      text-transform: none;
+    }
+
+    /* Header override */
+    .header .logo,
+    .header a { color: #fff; }
+    .header a:hover { color: var(--gold); }
+    .policy-back-link {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .3s var(--ease);
+    }
+    .policy-back-link:hover { color: var(--gold); }
+
+    /* Footer (match with site) */
+    .policy-footer {
+      background: #050505;
+      color: rgba(255,255,255,.6);
+      padding: 56px 48px 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      margin-top: 0;
+      text-align: center;
+    }
+    .policy-footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .policy-footer-links a {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      transition: color .3s var(--ease);
+      font-weight: 500;
+    }
+    .policy-footer-links a:hover { color: var(--gold); }
+    .policy-copyright {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .policy-page { padding: 40px 24px 60px; }
+      .policy-card { padding: 32px 24px; }
+      .policy-card h2 { font-size: 22px; margin-top: 30px; }
+      .policy-thanks { font-size: 17px; padding: 20px; }
+      .policy-footer { padding: 40px 24px 20px; }
+      .policy-footer-links { gap: 20px; margin-bottom: 24px; }
+    }
+
+    @media (max-width: 500px) {
+      .policy-page { padding: 24px 14px 50px; }
+      .policy-header { margin-bottom: 32px; }
+      .policy-header h1 { font-size: 32px; }
+      .policy-card { padding: 24px 18px; }
+      .policy-card h2 {
+        font-size: 19px;
+        margin-top: 26px;
+        gap: 10px;
+      }
+      .policy-card h2::before { height: 18px; }
+      .policy-card p { font-size: 13px; line-height: 1.75; }
+      .policy-highlight { padding: 16px 18px; font-size: 13px; }
+      .policy-trust {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 20px;
+      }
+      .policy-footer-links { gap: 14px; }
+      .policy-footer-links a { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="index.html">WATCH<span>.T</span></a>
+  <a class="policy-back-link" href="index.html">← Back to Home</a>
+</header>
+
+<main class="policy-page">
+  <div class="policy-wrap">
+
+    <!-- Breadcrumb -->
+    <div class="policy-crumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Shipping Policy</span>
+    </div>
+
+    <!-- Header -->
+    <div class="policy-header">
+      <h1>Shipping <span>Policy</span></h1>
+      <div class="policy-meta">
+        <strong>Last Updated:</strong> October 13, 2026
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="policy-card">
+
+      <h2>1. Order Processing</h2>
+      <p>
+        Orders are processed within <strong>1–3 business days</strong> after confirmation.
+        Orders placed on Sundays or public holidays may take additional time to process.
+      </p>
+
+      <h2>2. Shipping and Delivery Time</h2>
+      <p>
+        Estimated delivery time is <strong>3–7 business days</strong> for most locations in India.
+        Delivery to remote areas may take longer.
+      </p>
+
+      <h2>3. Shipping Charges</h2>
+      <p>
+        Shipping charges, if applicable, will be displayed at checkout before the order is placed.
+        Free shipping may be available on selected products or orders.
+      </p>
+
+      <h2>4. Order Tracking</h2>
+      <p>
+        Once your order has been shipped, tracking details may be shared through
+        SMS, email, or WhatsApp, where available.
+      </p>
+
+      <h2>5. Delayed or Lost Shipments</h2>
+      <p>
+        Delivery times are estimates and may be affected by weather conditions,
+        courier delays, public holidays, or other circumstances beyond our control.
+        Please contact our customer support team if your order is delayed.
+      </p>
+
+      <h2>6. Incorrect Shipping Address</h2>
+      <p>
+        Customers are responsible for providing a correct and complete shipping address
+        and contact number. Please contact us as soon as possible if you need to correct
+        your address after placing an order.
+      </p>
+
+      <h2>7. Damaged Packages</h2>
+      <p>
+        If your package arrives damaged, please contact our customer support team as
+        soon as possible and provide photographs of the package and product.
+      </p>
+
+      <h2>8. Contact Us</h2>
+      <p>
+        For shipping-related questions, please contact us using the contact details
+        provided on our website.
+      </p>
+
+      <div class="policy-highlight">
+        📦 <strong>Note:</strong> All delivery timelines are estimates and may vary
+        based on your location, courier partner and order volume.
+      </div>
+
+    </div>
+
+    <!-- Thank you -->
+    <div class="policy-thanks">
+      Thank you for shopping with <span>WATCH.T</span>
+    </div>
+
+    <!-- Trust row -->
+    <div class="policy-trust">
+      <div>✓ 100%<strong>Original</strong></div>
+      <div>↺ 7-Day<strong>Returns</strong></div>
+      <div>🛡 1-Year<strong>Warranty</strong></div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="policy-footer">
+  <div class="policy-footer-links">
+    <a href="index.html">Home</a>
+    <a href="shipping.html">Shipping Policy</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="return-policy.html">Return Policy</a>
+  </div>
+  <div class="policy-copyright">
+    © 2026 WATCH.T. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>
